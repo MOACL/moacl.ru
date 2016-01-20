@@ -1,3 +1,16 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<title>MOACL</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<script src="scripts/jquery-1.11.2.min.js" type="text/javascript"></script>
+	<script src="plugins/jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
+	<link href="plugins/jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.css" rel="stylesheet" type="text/css"/>
+	<link href="css/moacl_style.css" rel="stylesheet" type="text/css"/>
+</head>
+
 <?
 	session_start();
 	
@@ -19,66 +32,7 @@
 		$hash = crypt($password, $salt_db);
 	
 		if($hash==$password_db && $login =$login_db){
-			echo "Yes";
-			echo session_id();
-		}
-		else{
-			echo "No\n\r";
-			echo session_id();
-	/*		echo "login_db '$login_db'\n\r";
-			echo"pass_db '$password_db'\n\r";
-			echo "login '$login'\n\r";
-			echo "pass '$hash'";*/
-		}
-	
-	
-	
-	
-?>
-
-
-
-
-
-
-
-
-<!DOCTYPE html>
-<html lang="ru">
-	<head>
-		<title>MOACL</title>
-		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		
-		<script src="scripts/jquery-1.11.2.min.js" type="text/javascript"></script>	
-		<script src="plugins/jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
-		<link href="plugins/jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.css" rel="stylesheet" type="text/css"/>
-		<link href="css/moacl_style.css" rel="stylesheet" type="text/css"/>
-	</head>
-	
-<?
-if (empty($_SESSION['login']) or empty($_SESSION['id']))
-    {
-echo <<<YES
-    <body>
-		<section id="title_unreg" data-role = "page" data-position = "fixed" >
-			<header data-role = "header">
-				<h1>MOACL</h1>
-
-			</header>
-			<center>
-			<div id = "main" class="content moacl-common" data-role = "content" data-position = "fixed">
-				ACCESS DENIED
-			</div>
-			</center>
-			<footer data-role = "footer" data-position = "fixed"><h1>moacl.ru (c) 2015</h1></footer>
-		</section>
-	</body>
-YES;
-    }
-else
-    {
- echo <<<NO
+			echo <<<NO
     <body>
 		<section id="title_unreg" data-role = "page" data-position = "fixed" >
 			<header data-role = "header">
@@ -99,7 +53,7 @@ else
 			<footer data-role = "footer" data-position = "fixed"><h1>moacl.ru (c) 2015</h1></footer>
 		</section>
 	</body>
-	
+
 	<script>
 		$(document).ready(function(){
 				$("#to_about_btn").click( function(){location.href = $(this).attr("data-href");});
@@ -108,9 +62,30 @@ else
 				$("#to_obj_btn").click( function(){location.href = $(this).attr("data-href");});
 				$("#to_act_btn").click( function(){location.href = $(this).attr("data-href");});
 				$("#to_exit_btn").click( function(){location.href = $(this).attr("data-href");});
-		});	
+		});
 	</script>
 NO;
-    }
+		}
+		else{
+			echo <<<YES
+    <body>
+		<section id="title_unreg" data-role = "page" data-position = "fixed" >
+			<header data-role = "header">
+				<h1>MOACL</h1>
+
+			</header>
+			<center>
+			<div id = "main" class="content moacl-common" data-role = "content" data-position = "fixed">
+				ACCESS DENIED
+			</div>
+			</center>
+			<footer data-role = "footer" data-position = "fixed"><h1>moacl.ru (c) 2015</h1></footer>
+		</section>
+	</body>
+YES;
+
+		}
+	
 ?>
+
 </html>
