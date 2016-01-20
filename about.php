@@ -13,7 +13,6 @@
 	</head>
 	<body>
 		<section id="about" data-role = "page" data-position = "fixed" >
-
 			<header data-role = "header">
 				<h1>MOACL</h1>
 				<a href="javascript:history.back()" data-icon="back" data-iconpos="notext">Back</a>
