@@ -1,0 +1,115 @@
+#main_form #balance {
+	color: red; 
+	font-size: 16pt;
+	font-weight: bold; 
+	width: 100%;
+	text-align: right;
+	}
+	
+#main_form #Limit {
+	color: red; 
+	font-size: 16pt;
+	font-weight: bold; 
+	width: 100%;
+	text-align: right;
+	}
+#main_form #Capacity {
+	color: red; 
+	font-size: 16pt;
+	font-weight: bold; 
+	width: 100%;
+	text-align: right;
+	}
+	
+	
+#main_form table{
+	width: 100%;
+	//border: 1px black solid;
+}
+
+#main_form #sum {
+	text-align: right;
+	font-weight: bold;
+	font-size: 15pt;
+	color: blue;
+	text-align: right;
+}
+
+#main_form #Period {
+	text-align: right;
+	font-weight: bold;
+	font-size: 15pt;
+	color: blue;
+	text-align: right;
+}
+
+#main_form #Size {
+	text-align: right;
+	font-weight: bold;
+	font-size: 15pt;
+	color: blue;
+	text-align: right;
+}
+
+#main_form #date {
+	text-align: right;
+	font-weight: bold;
+	font-size: 15pt;
+	text-align: center;
+}
+
+#nav-panel{
+	line-height: 0;
+	padding-top: 1em;
+	padding-bottom: 1em;
+} 
+footer, header {
+	height: 50px;
+}
+#login_data{
+	width: 16em;
+}
+
+#main_form, #reg_data{
+  line-height: 0.3;
+ }
+
+#main{
+ padding-top: 0;
+ padding-bottom: 0;
+ }
+ 
+.data_list{
+ line-height: 0;
+ }
+
+.account_but button{
+	width: 190px;
+}
+.account_but{
+	bottom: 50px;
+	height: auto;
+}
+.moacl-reg-message {
+	/*border: 1px solid black;*/
+	color: rgba(255,0,0,0.7);
+	font-size: 9pt;
+	font-weight: bold;
+	height: 1em;
+	padding-top: 0em;
+	text-align: right;	
+}
+
+
+.moacl-field-reg {
+	max-width: 20em;
+	height: 4em;
+	text-align: right;
+	
+}
+.moacl-common{
+  max-width: 40em;
+ }
+
+
+	
