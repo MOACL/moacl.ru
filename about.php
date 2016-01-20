@@ -11,7 +11,6 @@
 		<link href="css/moacl_style.css" rel="stylesheet" type="text/css"/>
 
 	</head>
-	
 	<body>
 		<section id="about" data-role = "page" data-position = "fixed" >
 
