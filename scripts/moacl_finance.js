@@ -5,7 +5,7 @@
 	$(document).ready(function() {
 		
 		setInterval(function(){
-			var url = "./register_ajax.php?login=" + $("#login").val() + "&password1=" + $("#password1").val()
+			var url = "../../register_ajax.php?login=" + $("#login").val() + "&password1=" + $("#password1").val()
 			+ "&password2=" + $("#password2").val() + "&email=" + $("#email").val();
 			$.ajax({
 				url: url,            

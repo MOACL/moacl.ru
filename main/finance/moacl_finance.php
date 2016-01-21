@@ -54,13 +54,13 @@
 							<td>
 								<div data-role="fieldcontain">
 									<label for="category">Category:</label>
-									<select id = "category" name="category" data-native-menu = "false"/></select>
+									<select id = "category" name="category" data-native-menu = "false"></select>
 								</div>
 							</td>
 							<td>
 								<div data-role="fieldcontain">
 									<label for="item">Item:</label>
-									<select id = "item" name="item" data-native-menu = "false"/></select>
+									<select id = "item" name="item" data-native-menu = "false"></select>
 								</div>
 							</td>
 						</tr>
@@ -114,7 +114,7 @@
 		    </div><!-- /panel -->
 
 		</section>
-	<script src="../../scripts/moacl_finance.js" type="text/javascript" /></script>
+	<script src="../../scripts/moacl_finance.js" type="text/javascript"></script>
 	</body>
 </html>
 

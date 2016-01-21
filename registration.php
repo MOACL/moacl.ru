@@ -18,7 +18,7 @@
 			<header data-role = "header">
 				<h1>MOACL</h1>
 				<a href="javascript:history.back()" data-icon="back" data-iconpos="notext">Back</a>
-				<script type="text/javascript" src="scripts/moacl_finance.js"></script>
+				<script type="text/javascript" src="scripts/registration.js"></script>
 			</header>
 			
 			<br>
@@ -54,7 +54,7 @@
 			
 			
 			</center>
-			</div>
+
 			<footer data-role = "footer" data-position = "fixed"><h1>moacl.ru (c) 2015</h1></footer>
 		</section>
 	</body>
