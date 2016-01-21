@@ -1,11 +1,11 @@
 ﻿<!DOCTYPE html>
 <html lang="ru">
 	<head>
-		<title>MOACL</title>
+		<title>MOACL - DEMO</title>
 		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		
-		<script src="scripts/jquery-1.11.2.min.js" type="text/javascript"></script>	
+		<script src="scripts/jquery-1.11.2.min.js" type="text/javascript"></script>
 		<script src="plugins/jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
 		<script src="scripts/index.js" type="text/javascript" ></script>
 		<link href="plugins/jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.css" rel="stylesheet" type="text/css"/>
@@ -15,7 +15,7 @@
 	
 	<body>
 		<section id="title_unreg" data-role = "page" data-position = "fixed" >
-			<header data-role = "header"><h1>MOACL</h1></header>
+			<header data-role = "header"><h1>MOACL - DEMO</h1></header>
 			<center>
 			<div id = "main" class="content moacl-common" data-role = "content" data-position = "fixed">
 				<button id= "reg_button" class="ui-btn ui-shadow ui-corner-all ui-icon-lock ui-btn-icon-top" data-href = "registration.php" >Registration</button>
@@ -35,7 +35,7 @@
 				<button id ="to_donation_btn" class ="ui-btn ui-shadow ui-corner-all ui-icon-star ui-btn-icon-top" data-href = "donation.php" >Donation</button>
 			</div>
 			</center>
-			<footer data-role = "footer" data-position = "fixed"><h1>moacl.ru (c) 2015</h1></footer>
+			<footer data-role = "footer" data-position = "fixed"><h1>moacl.ru (c) 2016</h1></footer>
 		</section>
 	</body>
 		

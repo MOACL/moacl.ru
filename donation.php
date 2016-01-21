@@ -24,7 +24,7 @@
 			Donation
 			</div>
 			
-			<footer data-role = "footer" data-position = "fixed"><h1>moacl.ru (c) 2015</h1></footer>
+			<footer data-role = "footer" data-position = "fixed"><h1>moacl.ru (c) 2016</h1></footer>
 		</section>
 	</body>
 	
