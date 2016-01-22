@@ -1,75 +1,103 @@
-	
-	var MES_COLOR_WARNING = "rgba(255 ,0 ,0 , 0.7)";
-	var MES_COLOR_OK = "rgba(0, 128, 0, 1)";
-	
-	$(document).ready(function() {
-		
-		setInterval(function(){
-			var url = "../../register_ajax.php?login=" + $("#login").val() + "&password1=" + $("#password1").val()
-			+ "&password2=" + $("#password2").val() + "&email=" + $("#email").val();
-			$.ajax({
-				url: url,            
-				dataType : "json",                    
-				success: function (result) {
-					if (result.type == 'error') {
-						alert('error');
-						return(false);
-					}
-					else {
-						$("#login_mes").html(result.login_mes);
-						if (result.login_mes == "ok") $("#login_mes").css({color: MES_COLOR_OK});
-						else $("#login_mes").css({color: MES_COLOR_WARNING});
-							
-						$("#pass1_mes").html(result.pass1_mes);
-						if (result.pass1_mes == "ok") $("#pass1_mes").css({color: MES_COLOR_OK});
-						else $("#pass1_mes").css({color: MES_COLOR_WARNING});
-						
-						$("#pass2_mes").html(result.pass2_mes);
-						if (result.pass2_mes == "ok") $("#pass2_mes").css({color: MES_COLOR_OK});
-						else $("#pass2_mes").css({color: MES_COLOR_WARNING});
-						
-						$("#email_mes").html(result.email_mes);
-						if (result.email_mes == "ok") $("#email_mes").css({color: MES_COLOR_OK});
-						else $("#email_mes").css({color: MES_COLOR_WARNING});
-						
-						$("#complete").html(result.complete);
-					}
-				}
-			});
-		},1000);
-	});
-	
-	$( document ).on( "click", ".show-page-loading-msg", function() { //стандартная анимация при проводке
-		if($("#complete").html() == "false"){
-			//добавить popup
-			alert("вместо алерта нужно добавить попап");
-			//добавить popup
-			
-			return false;
+var $CURR = "RUR"
+var $MIN_TIME_OF_TRANSACT = 1.5 //в секундах
+//events begin
+//event 0
+$(document).ready(
+		function() {
+			//1.load of accounts
+			combobox_load("account", "Account", "getaccounts.php", SetBalance);
+
+
 		}
-			
-		$(".moacl-reg-message").css({display: "none"});	//скрываем ворнинги сразу после клика по регистрации
-    var $this = $( this ),
-        theme = $this.jqmData( "theme" ) || $.mobile.loader.prototype.options.theme,
-        msgText = $this.jqmData( "msgtext" ) || $.mobile.loader.prototype.options.text,
-        textVisible = $this.jqmData( "textvisible" ) || $.mobile.loader.prototype.options.textVisible,
-        textonly = !!$this.jqmData( "textonly" );
-        html = $this.jqmData( "html" ) || "";
+)
 
-    $.mobile.loading( "show", {
-            text: msgText,
-            textVisible: textVisible,
-            theme: theme,
-            textonly: textonly,
-            html: html
-    });
-})
-.on( "click", ".hide-page-loading-msg", function() {
-    $.mobile.loading( "hide" );
-});
+function SetBalance(){
+	var url = "getbalance.php?account_id=" + $("#account").val();
+
+	$.ajax({
+		url: url,
+		dataType : "json",
+		success: function (result) {
+			if (result.type == 'error') {
+				alert('error');
+				return(false);
+			}
+			else {
+				$("#balance").val($(result.row).attr("Balance"));
+				rur_format("#balance", true);
+			}
+		}
+	});
+}
+
+///////////////универсальные функции (для выделения в отдельный файл)///////////////
+
+function combobox_load(comboname, dbfieldname, url, changefunc){
+	var $select = $("#" + comboname);
+
+	$select.empty();
+	$.ajax({
+		url: url,
+		dataType : "json",
+		success: function (result) {
+			if (result.type == 'error') {
+				alert('error');
+				return(false);
+			}
+			else {
+
+				$(result.row).each(function() {
+
+					$select.append('<option value=' + $(this).attr(dbfieldname + "_ID") + '>' + $(this).attr(dbfieldname) + '</option>');
+					if ($(this).attr("Selected") == 1) {
+						$selVal = $(this).attr(dbfieldname + "_ID");
+					}
+				});
+			}
+			$select.val($selVal);
+			$select.change(changefunc);
+			changefunc();
+			$select.selectmenu("refresh"); //завершаем возвратную функцию обновлением комбобокса
+
+		}
+	});
+}
 
 
 
 
-	
-	
+//focus
+function rur_format(v, minus){
+	rur_format_clear(v);
+	var x = $(v).val();
+	if(x>0) {
+		x = "" + money_format((1)*x +"");
+	}
+	else if(x<0 && minus == true) {
+		x = "-" + money_format((-1)*x+"");
+	}
+	else {
+		x="";
+	}
+
+	$(v).val($CURR + " " + x);
+}
+
+//blur
+function rur_format_clear(v){
+	var t = $(v).val()
+	t = t.replace($CURR,"").replace(/\s/g,"");
+	$(v).val(t);
+}
+
+function money_format(s){
+	//s = s.trim();
+	var l = s.length;	//длинна суммы
+	var k = parseInt((l-1)/3); //количество необходимых пробелов в числе
+	var m = s.match(/\d/g);	//помещение суммы в массив
+	m.reverse();
+	for(var i = 0; i < k; i++){
+		m.splice((i+1)*3+i,0," "); //после какого эллемента массива следует вставить пробел
+	}
+	return m.reverse().join("");
+}
