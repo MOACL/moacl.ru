@@ -6,10 +6,22 @@ $(document).ready(
 		function() {
 			//1.load of accounts
 			combobox_load("account", "Account", "getaccounts.php", SetBalance);
-
-
 		}
 )
+
+
+$("#sum").focus(function(){
+			rur_format_clear("#sum");
+			$("#sum").css({"font-weight":"normal"});
+		}
+);
+//event 5
+$("#sum").blur(function(){
+			rur_format("#sum", false);
+			$("#sum").css({"font-weight":"bold"});
+		}
+);
+
 
 function SetBalance(){
 	var url = "getbalance.php?account_id=" + $("#account").val();
