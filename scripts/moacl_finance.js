@@ -1,5 +1,5 @@
-var $CURR = "RUR"
-var $MIN_TIME_OF_TRANSACT = 1.5 //в секундах
+var $CURR = "RUR";
+var $MIN_TIME_OF_TRANSACT = 0; //в секундах
 //events begin
 //event 0
 $(document).ready(
@@ -49,6 +49,7 @@ function SetBalance(){
 	$.ajax({
 		url: url,
 		dataType : "json",
+		cache: false,
 		success: function (result) {
 			if (result.type == 'error') {
 				alert('error');
@@ -101,6 +102,38 @@ function combobox_load(ajax, comboname, dbfieldname, url, changefunc){
 		changefunc(); //запускаем функцию в конце загрузки комбобокса
 	}
 }//end
+
+
+$('#main_form').submit(function(e){
+	e.preventDefault();
+
+	if (!$('#sum').val().replace($CURR,"").replace(/\s/g,"")>0){alert("Sum incorrect!"); return;}
+	if (!confirm("Are you sure?")) {return;}
+
+
+	var m_method=$(this).attr('method');
+	var m_action=$(this).attr('action');
+	var m_data=$(this).serialize();
+
+	$.ajax({
+		type: m_method,
+		url: m_action,
+		data: m_data,
+
+		success: function(result){
+			setTimeout(function(){
+
+
+				$("#sum").val("");
+				$("#date").val("");
+				$("#commentary").val("");
+				SetBalance();
+			}, $MIN_TIME_OF_TRANSACT*1000);
+
+		}
+	});
+});
+
 
 
 

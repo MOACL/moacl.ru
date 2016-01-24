@@ -19,7 +19,7 @@
 			</header>
 			
 			<div class="content" data-role = "content">
-				<form id = "main_form" name="main_form">
+				<form id = "main_form" name="main_form" action="transaction.php" method="post">
 					<div data-role="fieldcontain">
 						<center>
 						<fieldset data-role="controlgroup" data-type="horizontal" >
@@ -83,7 +83,7 @@
 						<tr>
 							<td>
 								<label for="commentary">Commentary:</label>
-								<textarea placeholder = "особенности транзакции" rows = "3" name="Commentary" wrap="hard" ></textarea>
+								<textarea placeholder = "особенности транзакции" rows = "3" id="commentary" name="commentary" wrap="hard" ></textarea>
 							</td>
 						</tr>
 						<tr>
