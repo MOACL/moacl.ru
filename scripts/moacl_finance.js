@@ -5,10 +5,30 @@ var $MIN_TIME_OF_TRANSACT = 1.5 //в секундах
 $(document).ready(
 		function() {
 			//1.load of accounts
-			combobox_load("account", "Account", "getaccounts.php", SetBalance);
-		}
-)
+			combobox_load(false,"account", "Account", "getaccounts.php", SetBalance);
+			//comboboxCatItem();
 
+
+				$revenue = $('input[name=radio_tt]:checked').val();
+
+			combobox_load(false,"category","Category", "getcategories.php?revenue=" + $revenue);
+
+			combobox_load(false, "item","Item", "getitems.php?category_id=" + $("#category").val());
+
+		}
+);
+
+$("#category").change(function(){
+	combobox_load(false, "item","Item", "getitems.php?category_id=" + $("#category").val());
+});
+
+$('input[type="radio"]').change( function() {
+	$revenue = $('input[name=radio_tt]:checked').val();
+
+	combobox_load(false,"category","Category", "getcategories.php?revenue=" + $revenue);
+	combobox_load(false, "item","Item", "getitems.php?category_id=" + $("#category").val());
+
+})
 
 $("#sum").focus(function(){
 			rur_format_clear("#sum");
@@ -44,12 +64,15 @@ function SetBalance(){
 
 ///////////////универсальные функции (для выделения в отдельный файл)///////////////
 
-function combobox_load(comboname, dbfieldname, url, changefunc){
+function combobox_load(ajax, comboname, dbfieldname, url, changefunc){
+	//alert(url);
 	var $select = $("#" + comboname);
-
+    $i=0;
+	$selVal=0;
 	$select.empty();
 	$.ajax({
 		url: url,
+		async: ajax,
 		dataType : "json",
 		success: function (result) {
 			if (result.type == 'error') {
@@ -57,24 +80,27 @@ function combobox_load(comboname, dbfieldname, url, changefunc){
 				return(false);
 			}
 			else {
-
 				$(result.row).each(function() {
-
 					$select.append('<option value=' + $(this).attr(dbfieldname + "_ID") + '>' + $(this).attr(dbfieldname) + '</option>');
-					if ($(this).attr("Selected") == 1) {
+					if (($(this).attr("Selected") == 1) || ($i=0)) {
 						$selVal = $(this).attr(dbfieldname + "_ID");
 					}
+					$i=$i+1;
 				});
+
+				if ($selVal > 0){$select.val($selVal);}
+				$select.selectmenu("refresh");
+
 			}
-			$select.val($selVal);
-			$select.change(changefunc);
-			changefunc();
-			$select.selectmenu("refresh"); //завершаем возвратную функцию обновлением комбобокса
 
-		}
-	});
-}
+		}//success
+	});//ajax
 
+	if(typeof changefunc == 'function' ){
+		$select.change(changefunc);
+		changefunc(); //запускаем функцию в конце загрузки комбобокса
+	}
+}//end
 
 
 
