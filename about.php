@@ -9,6 +9,8 @@
 		<script src="plugins/jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
 		<link href="plugins/jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.css" rel="stylesheet" type="text/css"/>
 		<link href="css/moacl_style.css" rel="stylesheet" type="text/css"/>
+		<link rel="stylesheet" href="themes/moacl_2.min.css" />
+		<link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" />
 
 	</head>
 	<body>
