@@ -18,7 +18,7 @@ include_once 'connect.php';
 	static $browser;
 	static $salt;
 	static $hash;
-	static $message;
+	static $messa333ge;
 	
 	function verificationRegData() {
 		//Login
