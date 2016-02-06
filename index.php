@@ -17,7 +17,7 @@
 	
 	<body>
 		<section id="title_unreg" data-role = "page" data-position = "fixed" >
-			<header data-role = "header"><h1>MOACL - DEMO</h1></header>
+			<header data-role = "header"><h1>MOACL</h1></header>
 			<center>
 			<div id = "main" class="content moacl-common" data-role = "content" data-position = "fixed">
 				<button id= "reg_button" class="ui-btn ui-shadow ui-corner-all ui-icon-lock ui-btn-icon-top" data-href = "registration.php" >Registration</button>
