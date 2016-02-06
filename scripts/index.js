@@ -7,15 +7,4 @@ $(document).ready(
 		$("#reg_button").click( function(){location.href = $(this).attr("data-href");});
 
 
-	});	
-		
-		
-		$(window).on('beforeunload', function(){
-      return 'Are you sure you want to leave?';
-});
-
-$(window).on('unload', function(){
-
-         logout();
-
-});
+	});
