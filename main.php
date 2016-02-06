@@ -23,7 +23,7 @@
 	$password= $_POST['password'];
 	$email = "gag@gag"; //заглушка
 	
-		prepare_reg_data(&$login,&$password,&$email);
+		prepare_reg_data($login,$password,$email);
 	
 		$result = mysql_query ("SELECT `Password`, `Salt`, `Login` FROM `users` WHERE `Login`= '$login' and `Deleted` = 0");
 		$row = mysql_fetch_array($result);
