@@ -18,15 +18,19 @@
 	
 	include_once 'connect.php';
 	include_once 'functions.php';
+
+	include_once 'moacl_framework.php';
+	$ss = New SecureSystem;
+
 	
 	$login= $_POST['login'];
 	$password= $_POST['password'];
 	$email = "gag@gag"; //заглушка
 	
 		prepare_reg_data($login,$password,$email);
-	
-		$result = mysql_query ("SELECT `Password`, `Salt`, `Login` FROM `users` WHERE `Login`= '$login' and `Deleted` = 0");
-		$row = mysql_fetch_array($result);
+		$query = "SELECT `Password`, `Salt`, `Login` FROM `users` WHERE `Login`= '$login' and `Deleted` = 0";
+		$result = $ss->$mysqli->query ($query);
+		$row = $result->fetch_array(MYSQLI_ASSOC);
 		$password_db = $row['Password'];
 		$salt_db = $row['Salt'];
 		$login_db = $row['Login'];

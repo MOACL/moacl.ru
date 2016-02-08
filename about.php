@@ -21,7 +21,7 @@
 			</header>
 			
 			<div id = "about_main" class="content" data-role = "content" data-position = "fixed">
-			About
+			About Moacl
 			</div>
 			
 			<footer data-role = "footer" data-position = "fixed"><h1>moacl.ru (c) 2016</h1></footer>

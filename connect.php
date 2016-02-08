@@ -1,11 +1,16 @@
 <?
-$hostname = "localhost";
-$username = "difomin";
-$password = "12345";
-$dbName = "mfin";
-$link = mysqli_connect($hostname,$username,$password) OR DIE("Don't connect with database!");
-mysqli_query ($link,"set character_set_client='utf8'");
-mysqli_query ($link,"set character_set_results='utf8'");
-mysqli_query ($link,"set collation_connection='utf8_general_ci'");
-mysqli_select_db($link, $dbName) or die(mysqli_error($link));
+//db configuration
+define("DBHOST", "localhost");
+define("DBUSER", "difomin");
+define("DBPASS", "12345");
+define("DB", "mfin");
+//db configuration
+
+$mysqli = new mysqli(DBHOST, DBUSER, DBPASS, DB);
+
+if (mysqli_connect_errno()) {
+    printf("Error database: %s\n", mysqli_connect_error());
+    exit();
+}
+
 ?>

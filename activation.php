@@ -21,7 +21,8 @@
 			<div id = "main" class="content" data-role = "content" data-position = "fixed">
 			<?
 				include_once 'moacl_framework.php';
-				Registration::activateUser();
+				$reg= New Registration;
+			    $reg->activateUser();
 				echo  SecureSystem::$message;
 				
 				session_unset(); 

@@ -7,8 +7,8 @@ function logout() {
 }
 
 function login($login,$password)    {
-	prepare_reg_data(&$login,&$password,'gag@gag')
-	$result = mysql_query ("SELECT `Password`, `Salt`, `Login`, `User_ID` FROM `users` WHERE `Login`= '$login' and `Deleted` = 0");
+	prepare_reg_data(&$login,&$password,'gag@gag');
+	$result = mysql_query ("SELECT `Password`, `Salt`, `Login`, `User_ID` FROM `users` WHERE `Login`= '$login' and `Deleted` = 0")
 		or die(mysql_error());
 		$row = mysql_fetch_array($result);
 		$password_db = $row['Password'];

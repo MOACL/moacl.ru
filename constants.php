@@ -1,5 +1,6 @@
 <?
 
+
 define("LOGIN_MAX_LEN", 25, true);
 
 define("PASSWORD_MAX_LEN", 25, true);

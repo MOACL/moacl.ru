@@ -1,8 +1,10 @@
+
 <?
 include_once 'constants.php';
-include_once 'connect.php';
+//include_once 'connect.php';
 
- class Moacl{ //Корневой класс фреймворка
+ class Moacl { //Корневой класс фреймворка
+
 	public $author = "Dmitry Fomin";
 	public $mission = "Diminish entropy";
 }
@@ -18,8 +20,24 @@ include_once 'connect.php';
 	static $browser;
 	static $salt;
 	static $hash;
-	static $messa333ge;
-	
+	static $message;
+	static $mysqli;
+
+	 function __construct(){
+		 //db configuration
+		 define("DBHOST", "localhost");
+		 define("DBUSER", "difomin");
+		 define("DBPASS", "12345");
+		 define("DB", "mfin");
+
+		 self::$mysqli = new mysqli(DBHOST, DBUSER, DBPASS, DB);
+
+		 if (mysqli_connect_errno()) {
+			 printf("Error database: %s\n", mysqli_connect_error());
+			 exit();
+		 }
+	 }
+
 	function verificationRegData() {
 		//Login
 		$feedback=self::loginExist();
@@ -31,7 +49,7 @@ include_once 'connect.php';
 			return $feedback;
 		}
 		elseif(mb_strlen(self::$login, ENCODING)==0){
-			$feedback="Login is mising! Please put <=" . LOGIN_MAX_LEN . "letters.";
+			$feedback="Login is missing! Please put <=" . LOGIN_MAX_LEN . "letters.";
 			return $feedback;
 		}//Login
 	
@@ -41,7 +59,7 @@ include_once 'connect.php';
 			return $feedback;
 		}
 		elseif(mb_strlen(self::$password, ENCODING)==0){
-			$feedback="Password is mising! Please put <=" . PASSWORD_MAX_LEN . "letters.";
+			$feedback="Password is missing! Please put <=" . PASSWORD_MAX_LEN . "letters.";
 			return $feedback;
 		}//Password
 	
@@ -59,20 +77,22 @@ include_once 'connect.php';
 		
 	function prepareRegData() { 
 		self::$login = trim(strtolower(self::$login));
-		self::$password = mysql_real_escape_string(self::$password);
+		self::$password = self::$mysqli->real_escape_string(self::$password);
 		self::$email = trim(strtolower(self::$email));
 	}
-	
+
 	function loginExist(){
+
 		$login = self::$login;
 		$query = "select `User_id` from `users` where `Deleted` = 0 and `Login` = '$login'";
-		$result = mysql_query($query); 
+		$result = self::$mysqli->query($query);
+
 		if (!$result) { 
 				$feedback = 'Error - Database Error! - '; 
-				$feedback .= mysql_error(); 
+				$feedback .= self::$mysqli->error;
 		}
 		else{
-			$myrow = mysql_fetch_array($result);
+			$myrow = $result->fetch_array(MYSQLI_ASSOC);
 			if (!empty($myrow['User_id'])) {
 				$feedback ="Login already exist!";
 			}
@@ -86,13 +106,13 @@ include_once 'connect.php';
 	function emailExist(){
 		$email = self::$email;
 		$query = "select `User_id` from `users` where `Deleted` = 0 and `E-mail` = '$email'";
-		$result = mysql_query($query); 
+		$result = self::$mysqli->query($query);
 		if (!$result) { 
 				$feedback = 'Error - Database Error! - '; 
-				$feedback .= mysql_error(); 
+				$feedback .= self::$mysqli->error;
 		}
 		else{
-			$myrow = mysql_fetch_array($result);
+			$myrow = $result->fetch_array(MYSQLI_ASSOC);
 			if (!empty($myrow['User_id'])) {
 				$feedback ="Email already exist!";
 			}
@@ -143,7 +163,7 @@ include_once 'connect.php';
 class Registration extends SecureSystem{
 
 	function __construct(){
-
+		parent::__construct();
 		self::$login= $_POST['login'];
 		self::$password= $_POST['password1'];
 		self::$email = $_POST['email'];
@@ -169,22 +189,22 @@ class Registration extends SecureSystem{
 		
 		
 		$query = "INSERT INTO `users` (`Login`, `Password`, `Salt`, `E-mail`, `IP`, `SID` ,`BROWSER`) VALUES ('$login' , '$hash' ,'$salt', '$email', '$ip', '$sid' , '$browser');";
-		$result = mysql_query($query); 
+		$result = self::$mysqli->query($query);
 		
 		if($result){
 			
 			$query = "SELECT`User_id` FROM `users` WHERE `Login` = '$login';";
-			$result = mysql_query ($query);
-			$row = mysql_fetch_array($result);
+			$result = self::$mysqli->query($query);
+			$row = $result->fetch_array(MYSQLI_ASSOC);
 			$uid= $row['User_id'];
 			$query = "INSERT INTO `users_sessions` (`SID`, `UID`, `IP`, `BROWSER`, `Action_ID`, `Date_of_start` ,`Date_of_end`) VALUES ('$sid' , '$uid' ,'$ip', '$browser', 1 , Now() , Now());"; // Action_ID =1 (registration)
-			$result = mysql_query($query); 
+			$result = self::$mysqli->query($query);
 		}
 		
 		
 		if (!$result) { 
 			$feedback = 'Error - Database Error! - '; 
-			$feedback .= mysql_error(); 
+			$feedback .= self::$mysqli->error;
 			self::$message = $feedback;
 		}
 		else{
@@ -197,8 +217,9 @@ class Registration extends SecureSystem{
 	function sendMail(){
 		 $email = self::$email;
 		 $login = self::$login;
-		 $result = mysql_query ("SELECT `User_id`, `Salt` FROM `users` WHERE `Login`='$login'");
-		 $row = mysql_fetch_array($result);
+		 $query = "SELECT `User_id`, `Salt` FROM `users` WHERE `Login`='$login'";
+		 $result = self::$mysqli->query($query);
+		 $row = $result->fetch_array(MYSQLI_ASSOC);
 		 $activation = crypt($row['User_id'].$login, $row['Salt']);
 		 $subject = "Registration confirmation.";
 		 $message    = "Уважаемый ".$login.", для активации акаунта на moacl.ru перейдите по ссылке:\nhttp://moacl.ru/activation.php?login=".$login."&code=".$activation;
@@ -210,11 +231,13 @@ class Registration extends SecureSystem{
 	
 	function activateUser(){
 			
-		$ip =self::getIp();
-		$browser =self::getBrowser();
-		$sid =self::getSID();
-		
-		mysql_query ("UPDATE `users` SET `Deleted`=1 WHERE Activation='0' AND UNIX_TIMESTAMP()- UNIX_TIMESTAMP(`Date_of_add`) > " . MAIL_REG_LIMIT . ";");
+		$ip = self::getIp();
+		$browser = self::getBrowser();
+		$sid = self::getSID();
+		$code = null;
+
+		$query = "UPDATE `users` SET `Deleted`=1 WHERE Activation='0' AND UNIX_TIMESTAMP()- UNIX_TIMESTAMP(`Date_of_add`) > " . MAIL_REG_LIMIT . ";";
+		self::$mysqli->query($query);
 		if(isset($_GET['code'])) {
 			$code =$_GET['code'];
 		}
@@ -228,25 +251,27 @@ class Registration extends SecureSystem{
 			self::$message = "Вы зашли на страницу без логина!";
 			exit;
 		}
-		$result = mysql_query("SELECT `User_id`, `Salt` FROM `users` WHERE Login='$login' and activation='0' ");
-		$row    = mysql_fetch_array($result); 
-		$activation    = crypt($row['User_id'].$login, $row['Salt']);
+		$query = "SELECT `User_id`, `Salt` FROM `users` WHERE Login='$login' and activation='0' ";
+		$result = self::$mysqli->query($query);
+		$row = $result->fetch_array(MYSQLI_ASSOC);
+		$activation = crypt($row['User_id'].$login, $row['Salt']);
 		
-		if(mysql_num_rows($result)==0){
+		if($result->num_rows==0){
 			self::$message =  "User $login already activated! <a href='index.php'>Moacl.ru</a>";
 		}
 		
 		elseif ($activation == $code) {
-			$result = mysql_query("UPDATE `users` SET `Activation`='1', `IP` = '$ip', `SID` = '$sid', `BROWSER` = '$browser' WHERE Login='$login'");
+			$query = "UPDATE `users` SET `Activation`='1', `IP` = '$ip', `SID` = '$sid', `BROWSER` = '$browser' WHERE Login='$login'";
+			$result = self::$mysqli->query($query);
 			
 			if($result){
 			
 			$query = "SELECT`User_id` FROM `users` WHERE `Login` = '$login';";
-			$result = mysql_query ($query);
-			$row = mysql_fetch_array($result);
+			$result = self::$mysqli->query ($query);
+			$row = $result->fetch_array(MYSQLI_ASSOC);
 			$uid= $row['User_id'];
 			$query = "INSERT INTO `users_sessions` (`SID`, `UID`, `IP`, `BROWSER`, `Action_ID`, `Date_of_start` ,`Date_of_end`) VALUES ('$sid' , '$uid' ,'$ip', '$browser', 2 , Now() , Now());"; // Action_ID =2 (activation)
-			$result = mysql_query($query); 
+			$result = self::$mysqli->query($query);
 			}
 			
 			self::$message = "Congratulations!<br>Now you are the owner of Moacl-account!";
@@ -266,7 +291,7 @@ class Registration extends SecureSystem{
 				//Login
 				self::$login= $val;
 				
-				$feedback=self::loginExist(); //false или "Login alredy exist"
+				$feedback=self::loginExist(); //false или "Login already exist"
 				if(!$feedback === false){
 					return $feedback;
 				}

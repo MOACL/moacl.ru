@@ -23,7 +23,7 @@
 			<center>
 			<div id = "main" class="content" data-role = "content" data-position = "fixed" >
 				<?
-					include_once 'moacl_framework.php';
+					include 'moacl_framework.php';
 					New Registration;
 					echo  SecureSystem::$message;
 
