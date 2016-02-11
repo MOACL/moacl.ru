@@ -160,6 +160,49 @@ include_once 'constants.php';
 	
 }
 
+class Authentication extends SecureSystem{
+
+	function __construct(){
+		parent::__construct();
+		define('SID',session_id());
+	}
+
+
+	function logout() {
+		unset($_SESSION['uid']); //Удаляем из сессии ID пользователя
+		die(header('Location: '.$_SERVER['PHP_SELF']));
+	}
+
+	function login($login,$password,$email)    {
+
+		self::$login=$login;
+		self::$password=$password;
+		self::$email=$email;
+		self::prepareRegData();
+
+		$query = "SELECT `Password`, `Salt`, `Login`, `User_ID` FROM `users` WHERE `Login`= '$login' and `Deleted` = 0;";
+		$result = self::$mysqli->query($query)	or die(self::$mysqli->error);
+		$row = $result->fetch_array(MYSQLI_ASSOC);
+		$password_db = $row['Password'];
+		$salt_db = $row['Salt'];
+		$login_db = $row['Login'];
+		$hash = crypt(self::$password, $salt_db);
+		$user_id = $row['User_ID'];
+		if($hash==$password_db && $login =$login_db) {
+			$_SESSION = array_merge($_SESSION,$user_id); //Добавляем массив с пользователем к массиву сессии
+
+			$query = "UPDATE `users` SET `SID`='".SID."' WHERE `User_ID`='$user_id';";
+			//примерный запрос для ддълогирования действия аутентификации $query = "INSERT INTO `users_sessions` (`SID`, `UID`, `IP`, `BROWSER`, `Action_ID`, `Date_of_start` ,`Date_of_end`) VALUES ('$sid' , '$uid' ,'$ip', '$browser', 1 , Now() , Now());"; // Action_ID =1 (registration)
+
+			self::$mysqli->query($query)or die(self::$mysqli->error);
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+}
 class Registration extends SecureSystem{
 
 	function __construct(){
@@ -301,7 +344,7 @@ class Registration extends SecureSystem{
 				}
 				elseif(mb_strlen(self::$login, ENCODING)==0){
 					$feedback="";
-					return $feedback;
+						return $feedback;
 				}
 				else{
 					$feedback=_OK;

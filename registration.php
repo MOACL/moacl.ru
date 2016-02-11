@@ -35,7 +35,7 @@
 					<div id ="login_mes" class = "moacl-reg-message"></div>
 				</li>
 				<li class="moacl-field-reg">
-					<label for="password">Password:</label>
+					<label for="password1">Password:</label>
 					<input type="password" data-clear-btn="true" name="password1" id="password1" autocomplete="off" >
 					<div id ="pass1_mes" class = "moacl-reg-message"></div>
 				</li>
@@ -45,7 +45,7 @@
 					<div id ="pass2_mes" class = "moacl-reg-message"></div>
 				</li>
 				<li class="moacl-field-reg">
-					<label for="e-mail">E-mail:</label>
+					<label for="email">E-mail:</label>
 					<input type="email" data-clear-btn="true" name="email" id="email" >
 					<div id ="email_mes" class = "moacl-reg-message"></div>
 				</li>
