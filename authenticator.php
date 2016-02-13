@@ -1,4 +1,6 @@
 <?
+//depricated
+/*
 define('SID',session_id());
 
 function logout() {
@@ -28,7 +30,7 @@ function login($login,$password)    {
     }
 }
 
-
+*/
 ?>
 
 
