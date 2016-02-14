@@ -1,10 +1,8 @@
-
 <?
 include_once 'constants.php';
 //include_once 'connect.php';
 
  class Moacl { //Корневой класс фреймворка
-
 	public $author = "Dmitry Fomin";
 	public $mission = "Diminish entropy";
 }
@@ -22,7 +20,6 @@ include_once 'constants.php';
 	static $hash;
 	static $message;
 	static $mysqli;
-
 	 function __construct(){
 		 //db configuration
 		 define("DBHOST", "localhost");
@@ -168,9 +165,20 @@ class Authentication extends SecureSystem{
 	}
 
 
-	function logout() {
+	static function logout() {
+		session_start();
 		unset($_SESSION['User_ID']); //Удаляем из сессии ID пользователя
-		die(header('Location: '.$_SERVER['PHP_SELF']));
+		session_destroy();
+		header('Location: index.php'); //header('Location: '.$_SERVER['HTTP_HOST'])
+	}
+
+	function authorizer() {
+		if(!empty($_SESSION['User_ID'])){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 
 	function login($login,$password,$email)    {
@@ -180,7 +188,7 @@ class Authentication extends SecureSystem{
 		self::$email=$email;
 		self::prepareRegData();
 
-		$query = "SELECT `Password`, `Salt`, `Login`, `User_ID` FROM `users` WHERE `Login`= '$login' and `Deleted` = 0;";
+		$query = "SELECT `Password`, `Salt`, `Login`, `User_ID` FROM `users` WHERE `Login`= '$login'  and `Activation` = 1 and `Deleted` = 0;";
 		$result = self::$mysqli->query($query)	or die(self::$mysqli->error);
 		$row = $result->fetch_array(MYSQLI_ASSOC);
 		$_USER = $row;
@@ -413,4 +421,87 @@ class Registration extends SecureSystem{
 		}
 	}
 }
+
+class Money extends SecureSystem{
+	function getAccounts(){
+		$result=self::$mysqli->query("SELECT Account_ID, Account, Selected FROM mfin.accounts WHERE Disabled = 0;");
+
+		if ($result) {
+			$num = $result->num_rows;
+			$i = 0;
+			while ($i < $num) {
+				$row[$i] = $result->fetch_array(MYSQLI_ASSOC);
+				$i++;
+			}
+			return array('row'=>$row);
+		}
+		else {
+			return array('type'=>'error');
+		}
+	}
+	function getBalance($account_id){
+		$result=self::$mysqli->query("select Balance from accounts where Account_ID =" . $account_id .";");
+
+		if ($result) {
+			$num = $result->num_rows;
+			$i = 0;
+			while ($i < $num) {
+				$row[$i] = $result->fetch_array(MYSQLI_ASSOC);
+				$i++;
+			}
+			return array('row'=>$row);
+		}
+		else {
+			return array('type'=>'error');
+		}
+	}
+	function getCategories($revenue){
+		$result=self::$mysqli->query("SELECT Category_ID, Category, Selected  FROM mfin.categories mc WHERE mc.Disabled = 0 AND mc.Revenue=" . $revenue .";");
+
+		if ($result) {
+			$num = $result->num_rows;
+			$i = 0;
+			while ($i < $num) {
+				$row[$i] = $result->fetch_array(MYSQLI_ASSOC);
+				$i++;
+			}
+			return array('row'=>$row);
+		}
+		else {
+			return array('type'=>'error');
+		}
+	}
+	function getItems($category_id){
+		$result=self::$mysqli->query("SELECT Item_ID, Item, Selected FROM mfin.items mg WHERE mg.Disabled = 0 AND mg.Category_ID=" . $category_id .";");
+
+		if ($result) {
+			$num = $result->num_rows;
+			$i = 0;
+			while ($i < $num) {
+				$row[$i] = $result->fetch_array(MYSQLI_ASSOC);
+				$i++;
+			}
+			return array('row'=>$row);
+		}
+		else {
+			return array('type'=>'error');
+		}
+	}
+	function transactionGo($account_id, $category_id, $item_id, $sum, $commentary, $date){
+
+		$query = "insert into transactions(Account_ID, Category_ID, Item_ID, Deleted, Sum, Date_of_realization, Commentary)
+			select " . $account_id . "," . $category_id . "," . $item_id . ",0," . $sum . ", '" . $date . "'," . $commentary . ";";
+
+		$result=self::$mysqli->query($query);
+
+		if ($result) {
+			return true;
+
+		} else {
+			return false;
+		}
+	}
+
+}
+
 ?>

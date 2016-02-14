@@ -31,7 +31,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'main_access.php' )
             <button id ="to_obj_btn" class ="ui-btn ui-btn-b ui-shadow ui-corner-all ui-icon-eye ui-btn-icon-top" data-href = "main/objects/moacl_objects.php" >Objects</button>
             <button id ="to_about_btn" class ="ui-btn ui-shadow ui-corner-all ui-icon-info ui-btn-icon-top" data-href = "about.php" >About</button>
             <button id ="to_donation_btn" class ="ui-btn ui-shadow ui-corner-all ui-icon-star ui-btn-icon-top" data-href = "donation.php" >Donation</button>
-            <button id ="to_exit_btn" class ="ui-btn ui-shadow ui-corner-all ui-icon-power ui-btn-icon-top" data-href = "index.php" >Exit</button>
+            <button id ="to_exit_btn" class ="ui-btn ui-shadow ui-corner-all ui-icon-power ui-btn-icon-top" data-href = "logout.php" >Exit</button>
 
         </div>
     </center>

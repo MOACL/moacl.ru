@@ -1,19 +1,12 @@
 <?
-include_once '../../connect.php';
+session_start();
 $revenue = $_GET['revenue'];
-$query=mysql_query("SELECT Category_ID, Category, Selected  FROM mfin.categories mc WHERE mc.Disabled = 0 AND mc.Revenue=" . $revenue .";");
-if ($query) {
-    $num = mysql_num_rows($query);     
-    $i = 0;
-    while ($i < $num) {
-       $row[$i] = mysql_fetch_assoc($query);  
-       $i++;
-    }    
-    $result = array('row'=>$row); 
+include_once '../../moacl_framework.php';
+$auth = New Authentication;
+if($auth->authorizer()){ //если пользователь авторизован, то даем доступ
+    $Money = New Money;
+    $result=$Money->getCategories($revenue);
+    print json_encode($result);
 }
-else {
-    $result = array('type'=>'error');
-}
-print json_encode($result);
-
 ?>
+
