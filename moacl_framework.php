@@ -1,6 +1,6 @@
 <?
 include_once 'constants.php';
-//include_once 'connect.php';
+
 
  class Moacl { //Корневой класс фреймворка
 	public $author = "Dmitry Fomin";

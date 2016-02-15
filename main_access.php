@@ -9,7 +9,6 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'main_access.php' )
     <title>MOACL</title>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <script src="scripts/jquery-1.11.2.min.js" type="text/javascript"></script>
     <script src="plugins/jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
     <link href="plugins/jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.css" rel="stylesheet" type="text/css"/>
@@ -32,11 +31,10 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'main_access.php' )
             <button id ="to_about_btn" class ="ui-btn ui-shadow ui-corner-all ui-icon-info ui-btn-icon-top" data-href = "about.php" >About</button>
             <button id ="to_donation_btn" class ="ui-btn ui-shadow ui-corner-all ui-icon-star ui-btn-icon-top" data-href = "donation.php" >Donation</button>
             <button id ="to_exit_btn" class ="ui-btn ui-shadow ui-corner-all ui-icon-power ui-btn-icon-top" data-href = "logout.php" >Exit</button>
-
         </div>
     </center>
-    <footer data-role = "footer" data-position = "fixed"><h1>moacl.ru (c) 2015</h1></footer>
-</section
+    <?require_once 'footer.php'?>
+</section>
 </body>
 
 <script>

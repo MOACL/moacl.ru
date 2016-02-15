@@ -43,7 +43,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'index_access.php' )
             <button id ="to_donation_btn" class ="ui-btn ui-shadow ui-corner-all ui-icon-star ui-btn-icon-top" data-href = "donation.php" >Donation</button>
         </div>
     </center>
-    <footer data-role = "footer" data-position = "fixed"><h1>moacl.ru (c) 2016</h1></footer>
+    <?require_once 'footer.php'?>
 </section>
 </body>
 

@@ -6,6 +6,8 @@ if($auth->authorizer()){ ////если пользователь авторизо�
 	require_once 'moacl_finance_access.php';
 }
 else{
-	require_once '../../access_denied.php';
+	//require_once '../../access_denied.php'
+	header("Location: ../../access_denied.php");
+	exit();
 }
 ?>

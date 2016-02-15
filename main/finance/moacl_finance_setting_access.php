@@ -1,11 +1,10 @@
 <?php
-
 //запрет на прямое обращение к файлу
-if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_finance_access.php' ) {
+if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_finance_setting_access.php' ){
     //require_once '../../access_denied.php'
     header("Location: ../../access_denied.php");
     exit();
- };
+};
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -20,17 +19,16 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_finance_access.php' ) {
     <link rel="stylesheet" href="../../themes/moacl_2.min.css" />
     <link rel="stylesheet" href="../../themes/jquery.mobile.icons.min.css" />
 </head>
-
 <body>
 <section id="mfin_1" data-role = "page" data-position = "fixed"  >
     <header data-role = "header">
-        <h1><b>MOACL-<i>finance</i></b></h1>
+        <h1><b>MOACL-<i>finance-setup</i></b></h1>
          <a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
-         <a href="moacl_finance_setting.php" data-ajax = "false" data-icon="gear" data-iconpos="notext right">Menu</a>
+         <a href="moacl_finance.php" data-ajax = "false" data-icon="gear" data-iconpos="notext right">Setting</a>
     </header>
 
     <div class="content" data-role = "content">
-        <form id = "main_form" name="main_form" action="transaction.php" method="post">
+        <form id = "main_form" name="main_form">
             <div data-role="fieldcontain">
                 <center>
                     <fieldset data-role="controlgroup" data-type="horizontal" >
@@ -53,6 +51,11 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_finance_access.php' ) {
                     </td>
                     <td>
                         <div data-role="fieldcontain" >
+                            <a href="moacl_finance_accounts.php" data-ajax = "false" class="ui-btn ui-shadow ui-corner-all ui-icon-gear ui-btn-icon-notext">Account_set</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div data-role="fieldcontain" >
                             <label for="balance">Balance:</label>
                             <input id = "balance" type="text" name="balance" readonly/>
                         </div>
@@ -69,9 +72,19 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_finance_access.php' ) {
                         </div>
                     </td>
                     <td>
+                        <div data-role="fieldcontain" >
+                            <a href="moacl_finance_categories.php" data-ajax = "false" class="ui-btn ui-shadow ui-corner-all ui-icon-gear ui-btn-icon-notext">Cat_set</a>
+                        </div>
+                    </td>
+                    <td>
                         <div data-role="fieldcontain">
                             <label for="item">Item:</label>
                             <select id = "item" name="item" data-native-menu = "false"></select>
+                        </div>
+                    </td>
+                    <td>
+                        <div data-role="fieldcontain" >
+                            <a href="moacl_finance_items.php" data-ajax = "false" class="ui-btn ui-shadow ui-corner-all ui-icon-gear ui-btn-icon-notext">Item_set</a>
                         </div>
                     </td>
                 </tr>
@@ -94,7 +107,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_finance_access.php' ) {
                 <tr>
                     <td>
                         <label for="commentary">Commentary:</label>
-                        <textarea placeholder = "особенности транзакции" rows = "3" id="commentary" name="commentary" wrap="hard" ></textarea>
+                        <textarea placeholder = "особенности транзакции" rows = "3" name="Commentary" wrap="hard" ></textarea>
                     </td>
                 </tr>
                 <tr>
@@ -121,8 +134,10 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_finance_access.php' ) {
 
                 	    </ul>
             </div><!-- /panel -->
-
-</section>
-<script src="../../scripts/moacl_finance.js" type="text/javascript"></script>
+<script src="../../scripts/moacl_finance.js" type="text/javascript" ></script>
+    </section>
 </body>
 </html>
+
+
+

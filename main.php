@@ -9,8 +9,9 @@ if($auth->authorizer() or  $auth->login($login, $password, "gag@gag")){ //уже
 	require_once 'main_access.php';
 		}
 else{
-	require_once 'access_denied.php';
-
+	//require_once 'access_denied.php'
+	header("Location: access_denied.php");
+	exit();
 }
 
 ?>
