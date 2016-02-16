@@ -19,8 +19,8 @@
 		<section id="activation" data-role = "page" data-position = "fixed" >
 
 			<header data-role = "header"><h1>MOACL</h1></header>
-			<center>
-			<div id = "main" class="content" data-role = "content" data-position = "fixed">
+
+			<div id = "main" class="content moacl-common" data-role = "content" data-position = "fixed">
 			<?
 				include_once 'moacl_framework.php';
 				$reg= New Registration;
@@ -31,7 +31,7 @@
 				session_destroy();
 			?>
 			</div>
-			</center>
+
 			<?require_once 'footer.php'?>
 		</section>
 	</body>

@@ -24,7 +24,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'index_access.php' )
 <body>
 <section id="title_unreg" data-role = "page" data-position = "fixed" >
     <header data-role = "header"><h1>MOACL</h1></header>
-    <center>
+
         <div id = "main" class="content moacl-common" data-role = "content" data-position = "fixed">
             <button id= "reg_button" class="ui-btn ui-shadow ui-corner-all ui-icon-lock ui-btn-icon-top" data-href = "registration.php" >Registration</button>
 
@@ -42,7 +42,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'index_access.php' )
             <button id ="to_about_btn" class ="ui-btn ui-shadow ui-corner-all ui-icon-info ui-btn-icon-top" data-href = "about.php" >About</button>
             <button id ="to_donation_btn" class ="ui-btn ui-shadow ui-corner-all ui-icon-star ui-btn-icon-top" data-href = "donation.php" >Donation</button>
         </div>
-    </center>
+
     <?require_once 'footer.php'?>
 </section>
 </body>

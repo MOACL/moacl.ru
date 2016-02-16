@@ -29,17 +29,17 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_finance_access.php' ) {
          <a href="moacl_finance_setting.php" data-ajax = "false" data-icon="gear" data-iconpos="notext right">Menu</a>
     </header>
 
-    <div class="content" data-role = "content">
+    <div class="content moacl-common" data-role = "content">
         <form id = "main_form" name="main_form" action="transaction.php" method="post">
             <div data-role="fieldcontain">
-                <center>
+
                     <fieldset data-role="controlgroup" data-type="horizontal" >
                         <input type="radio" id="radio_in" name="radio_tt" value=1 />
                         <label for="radio_in">&ensp;In</label>
                         <input type="radio" id="radio_out" name="radio_tt" value=0 checked = "Yes"  />
                         <label for="radio_out">Out</label>
                     </fieldset>
-                </center>
+
             </div>
 
             <table>

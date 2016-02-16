@@ -23,7 +23,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'main_access.php' )
         <h1>MOACL</h1>
         <a href="user.php" data-ajax = "false" data-icon="user" data-iconpos="notext right" >User</a>
     </header>
-    <center>
+
         <div id = "main" class="content moacl-common" data-role = "content" data-position = "fixed">
             <button id ="to_fin_btn" class ="ui-btn ui-btn-b ui-shadow ui-corner-all ui-icon-heart ui-btn-icon-top" data-href = "main/finance/moacl_finance.php" >Finance</button>
             <button id ="to_act_btn" class ="ui-btn ui-btn-b ui-shadow ui-corner-all ui-icon-action ui-btn-icon-top" data-href = "main/activities/moacl_activities.php" >Activities</button>
@@ -32,7 +32,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'main_access.php' )
             <button id ="to_donation_btn" class ="ui-btn ui-shadow ui-corner-all ui-icon-star ui-btn-icon-top" data-href = "donation.php" >Donation</button>
             <button id ="to_exit_btn" class ="ui-btn ui-shadow ui-corner-all ui-icon-power ui-btn-icon-top" data-href = "logout.php" >Exit</button>
         </div>
-    </center>
+
     <?require_once 'footer.php'?>
 </section>
 </body>

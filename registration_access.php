@@ -30,8 +30,10 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'index_access.php' )
 			</header>
 			
 			<br>
-			<center>
-			
+
+
+			<div class="content moacl-common ui-content" id="main_reg" role="main" data-role="content" data-position="fixed">
+
 			<form class = "moacl-common" id = "reg_data" name="reg_data" action="register.php" enctype="multipart/form-data" method="post"  target="_self" >
 				<ul data-role="listview" data-inset="true">
 			
@@ -59,10 +61,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'index_access.php' )
 					<button class ="show-page-loading-msg ui-btn ui-shadow ui-corner-all ui-icon-check ui-btn-icon-top" data-textonly="false" data-textvisible="false" data-msgtext="" data-inline="true">Register</button>
 					<div id ="complete" style ="display: none" >false</div> <!--скрытый индикатор готовности заполнения регистрационных данных-->
 			</form>
-			
-			
-			</center>
-
+			<div>
 			<?require_once 'footer.php'?>
 		</section>
 	</body>

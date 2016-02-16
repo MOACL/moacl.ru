@@ -21,8 +21,8 @@
 				<h1>MOACL</h1>
 				<a href="javascript:history.back()" data-icon="back" data-iconpos="notext">Back</a>
 			</header>
-			<center>
-			<div id = "main" class="content" data-role = "content" data-position = "fixed" >
+
+			<div id = "main" class="content moacl-common" data-role = "content" data-position = "fixed" >
 				<?
 					include 'moacl_framework.php';
 					New Registration;
@@ -32,7 +32,7 @@
 					session_destroy();
 				?>
 			</div>
-			</center>
+
 
 			<?require_once 'footer.php'?>
 		</section>
