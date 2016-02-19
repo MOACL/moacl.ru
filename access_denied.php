@@ -15,7 +15,10 @@
 
 <body>
 <section id="title_unreg" data-role = "page" data-position = "fixed" >
- <?require_once 'header.php'?>
+    <header data-role = "header">
+        <h1>MOACL</h1>
+        <a href="javascript:history.back()" data-icon="back" data-iconpos="notext">Back</a>
+    </header>
         <div id = "main" class="content moacl-common" data-role = "content" data-position = "fixed">
             ACCESS DENIED
         </div>

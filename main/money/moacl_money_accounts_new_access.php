@@ -1,6 +1,6 @@
 <?php
 //запрет на прямое обращение к файлу
-if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_finance_accounts_new_access.php' )
+if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_accounts_new_access.php' )
 	die (require_once '../../access_denied.php');
 ?>
 <!DOCTYPE html>
@@ -22,7 +22,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_finance_accounts_new_access
 		<section id="new_account" data-role = "page" data-position = "fixed" >
 			<header data-role = "header">
 				<h1><b>MOACL-<i>New Account</i></b></h1>
-				 <a href="moacl_finance_accounts.php" data-ajax = "false" data-icon="back" data-iconpos="notext">Menu</a>
+				 <a href="moacl_money_accounts.php" data-ajax = "false" data-icon="back" data-iconpos="notext">Menu</a>
 			</header>
 			<center>
 			<form id = "new_account_data"  style = "line-height: 0;">

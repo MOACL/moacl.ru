@@ -1,7 +1,7 @@
 <?php
 
 //запрет на прямое обращение к файлу
-if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_finance_access.php' ) {
+if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_access.php' ) {
     //require_once '../../access_denied.php'
     header("Location: ../../access_denied.php");
     exit();
@@ -10,7 +10,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_finance_access.php' ) {
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <title>MOACL-finance</title>
+    <title>MOACL-money</title>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="../../scripts/jquery-1.11.2.min.js" type="text/javascript"></script>
@@ -24,16 +24,16 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_finance_access.php' ) {
 <body>
 <section id="mfin_1" data-role = "page" data-position = "fixed"  >
     <header data-role = "header">
-        <h1><b>MOACL-<i>finance</i></b></h1>
+        <h1><b>MOACL-<i>money</i></b></h1>
          <a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
-         <a href="moacl_finance_setting.php" data-ajax = "false" data-icon="gear" data-iconpos="notext right">Menu</a>
+         <a href="moacl_money_setting.php" data-ajax = "false" data-icon="gear" data-iconpos="notext right">Menu</a>
     </header>
 
     <div class="content moacl-common" data-role = "content">
         <form id = "main_form" name="main_form" action="transaction.php" method="post">
             <div data-role="fieldcontain">
 
-                    <fieldset data-role="controlgroup" data-type="horizontal" >
+                    <fieldset data-role="controlgroup" data-type="horizontal"  >
                         <input type="radio" id="radio_in" name="radio_tt" value=1 />
                         <label for="radio_in">&ensp;In</label>
                         <input type="radio" id="radio_out" name="radio_tt" value=0 checked = "Yes"  />
@@ -123,6 +123,6 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_finance_access.php' ) {
             </div><!-- /panel -->
 
 </section>
-<script src="../../scripts/moacl_finance.js" type="text/javascript"></script>
+<script src="../../scripts/moacl_money.js" type="text/javascript"></script>
 </body>
 </html>

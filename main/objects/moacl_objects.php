@@ -100,7 +100,7 @@
 		
 			<div data-role="panel" data-position-fixed="true" data-display="push" data-theme="a" id="nav-panel">
 	        <ul data-role="listview">
-                <li data-theme="b"><a data-ajax = "false" href="../finance/moacl_finance.php">Finance</a></li>
+                <li data-theme="b"><a data-ajax = "false" href="../money/moacl_money.php">money</a></li>
                 <li data-theme="b"><a data-ajax = "false" href="../activities/moacl_activities.php">Activities</a></li>
                 <li><a data-ajax = "false" href="../about.php">About</a></li>
                 <li><a data-ajax = "false" href="../donation.php">Donation</a></li>

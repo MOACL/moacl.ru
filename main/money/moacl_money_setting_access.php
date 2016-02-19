@@ -1,6 +1,6 @@
 <?php
 //запрет на прямое обращение к файлу
-if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_finance_setting_access.php' ){
+if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_setting_access.php' ){
     //require_once '../../access_denied.php'
     header("Location: ../../access_denied.php");
     exit();
@@ -9,7 +9,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_finance_setting_access.php'
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <title>MOACL-finance</title>
+    <title>MOACL-money</title>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="../../scripts/jquery-1.11.2.min.js" type="text/javascript"></script>
@@ -22,9 +22,9 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_finance_setting_access.php'
 <body>
 <section id="mfin_1" data-role = "page" data-position = "fixed"  >
     <header data-role = "header">
-        <h1><b>MOACL-<i>finance-setup</i></b></h1>
+        <h1><b>MOACL-<i>money-setup</i></b></h1>
          <a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
-         <a href="moacl_finance.php" data-ajax = "false" data-icon="gear" data-iconpos="notext right">Setting</a>
+         <a href="moacl_money.php" data-ajax = "false" data-icon="gear" data-iconpos="notext right">Setting</a>
     </header>
 
     <div class="content" data-role = "content">
@@ -51,7 +51,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_finance_setting_access.php'
                     </td>
                     <td>
                         <div data-role="fieldcontain" >
-                            <a href="moacl_finance_accounts.php" data-ajax = "false" class="ui-btn ui-shadow ui-corner-all ui-icon-gear ui-btn-icon-notext">Account_set</a>
+                            <a href="moacl_money_accounts.php" data-ajax = "false" class="ui-btn ui-shadow ui-corner-all ui-icon-gear ui-btn-icon-notext">Account_set</a>
                         </div>
                     </td>
                     <td>
@@ -73,7 +73,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_finance_setting_access.php'
                     </td>
                     <td>
                         <div data-role="fieldcontain" >
-                            <a href="moacl_finance_categories.php" data-ajax = "false" class="ui-btn ui-shadow ui-corner-all ui-icon-gear ui-btn-icon-notext">Cat_set</a>
+                            <a href="moacl_money_categories.php" data-ajax = "false" class="ui-btn ui-shadow ui-corner-all ui-icon-gear ui-btn-icon-notext">Cat_set</a>
                         </div>
                     </td>
                     <td>
@@ -84,7 +84,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_finance_setting_access.php'
                     </td>
                     <td>
                         <div data-role="fieldcontain" >
-                            <a href="moacl_finance_items.php" data-ajax = "false" class="ui-btn ui-shadow ui-corner-all ui-icon-gear ui-btn-icon-notext">Item_set</a>
+                            <a href="moacl_money_items.php" data-ajax = "false" class="ui-btn ui-shadow ui-corner-all ui-icon-gear ui-btn-icon-notext">Item_set</a>
                         </div>
                     </td>
                 </tr>
@@ -134,7 +134,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_finance_setting_access.php'
 
                 	    </ul>
             </div><!-- /panel -->
-<script src="../../scripts/moacl_finance.js" type="text/javascript" ></script>
+<script src="../../scripts/moacl_money.js" type="text/javascript" ></script>
     </section>
 </body>
 </html>
