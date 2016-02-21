@@ -181,6 +181,15 @@ class Authentication extends SecureSystem{
 		}
 	}
 
+	function getUserName() {
+		if(!empty($_SESSION['User_ID'])){
+			return $_SESSION['Login'];
+		}
+		else{
+			return "?????";
+		}
+	}
+
 	function login($login,$password,$email)    {
 
 		self::$login=$login;
@@ -265,9 +274,7 @@ class Registration extends SecureSystem{
 			self::sendMail();
 		}	
 	}
-	
-	
-	
+
 	function sendMail(){
 		 $email = self::$email;
 		 $login = self::$login;

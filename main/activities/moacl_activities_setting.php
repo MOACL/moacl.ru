@@ -25,7 +25,7 @@
 						<fieldset data-role="controlgroup" data-type="horizontal" >
 							<input type="radio" id="radio_work" name="radio_tt" value="Work" />
 							<label for="radio_work">&ensp;Work</label>
-							<input type="radio" id="radio_free" name="radio_tt" value="Free" checked = "Yes"  />
+							<input type="radio" id="radio_free" name="radio_tt" value="Free" checked = "checked"  />
 							<label for="radio_free">Free</label>
 						</fieldset>
 						</center>

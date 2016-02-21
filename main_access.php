@@ -21,26 +21,34 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'main_access.php' )
 <section id="title_unreg" data-role = "page" data-position = "fixed" >
     <header data-role = "header">
         <h1>MOACL</h1>
-        <a href="user.php" data-ajax = "false" data-icon="user" data-iconpos="notext right" >User</a>
+
+        <a href="#UserMenu" data-rel="popup" data-transition="pop" data-icon="user" data-iconpos="notext">User</a>
     </header>
 
         <div id = "main" class="content moacl-common" data-role = "content" data-position = "fixed">
-            <button id ="to_fin_btn" class ="ui-btn ui-btn-b ui-shadow ui-corner-all ui-icon-heart ui-btn-icon-top" data-href = "main/money/moacl_money.php" >Money</button>
-            <button disabled ="" id ="to_act_btn" class ="ui-btn ui-btn-b ui-shadow ui-corner-all ui-icon-action ui-btn-icon-top" data-href = "main/activities/moacl_activities.php" >Activities</button>
+            <button id ="to_fin_btn" class ="ui-btn ui-btn-b ui-shadow ui-corner-all ui-icon-clock ui-btn-icon-top" data-href = "main/money/moacl_money.php" >Money</button>
             <button disabled ="" id ="to_obj_btn" class ="ui-btn ui-btn-b ui-shadow ui-corner-all ui-icon-eye ui-btn-icon-top" data-href = "main/objects/moacl_objects.php" >Objects</button>
-            <button id ="to_about_btn" class ="ui-btn ui-shadow ui-corner-all ui-icon-info ui-btn-icon-top" data-href = "about.php" >About</button>
-            <button id ="to_donation_btn" class ="ui-btn ui-shadow ui-corner-all ui-icon-star ui-btn-icon-top" data-href = "donation.php" >Donation</button>
-            <button id ="to_exit_btn" class ="ui-btn ui-shadow ui-corner-all ui-icon-power ui-btn-icon-top" data-href = "logout.php" >Exit</button>
+            <button disabled ="" id ="to_act_btn" class ="ui-btn ui-btn-b ui-shadow ui-corner-all ui-icon-action ui-btn-icon-top" data-href = "main/activities/moacl_activities.php" >Activities</button>
+            <button disabled id ="to_contacts_btn" class ="ui-btn ui-btn-b ui-shadow ui-corner-all ui-icon-bullets ui-btn-icon-top" data-href = "contacts.php" >Contacts</button>
+            <button disabled id ="to_love_btn" class ="ui-btn ui-btn-b ui-shadow ui-corner-all ui-icon-heart ui-btn-icon-top" data-href = "love.php" >Love</button>
         </div>
 
     <?require_once 'footer.php'?>
+    <div data-role="popup" id="UserMenu" data-theme="a" style="min-width:10em; line-height: 0;">
+        <ul data-role="listview" data-inset="true" >
+            <li data-role="list-divider" style = "text-align: center;"><? echo $auth->getUserName()?></li>
+            <li><a href="#">Profile</a></li>
+            <li id = "to_exit_btn" data-href = "logout.php"><a>Exit</a></li>
+
+        </ul>
+    </div>
 </section>
 </body>
 
 <script>
     $(document).ready(function(){
-        $("#to_about_btn").click( function(){location.href = $(this).attr("data-href");});
-        $("#to_donation_btn").click( function(){location.href = $(this).attr("data-href");});
+        $("#to_contacts_btn").click( function(){location.href = $(this).attr("data-href");});
+        $("#to_love_btn").click( function(){location.href = $(this).attr("data-href");});
         $("#to_fin_btn").click( function(){location.href = $(this).attr("data-href");});
         $("#to_obj_btn").click( function(){location.href = $(this).attr("data-href");});
         $("#to_act_btn").click( function(){location.href = $(this).attr("data-href");});

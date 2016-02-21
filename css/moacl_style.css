@@ -63,8 +63,18 @@
 	padding-top: 1em;
 	padding-bottom: 1em;
 } 
-footer, header {
+header {
 	height: 50px;
+}
+
+footer {
+	height: 3em;
+}
+#transactions footer, #mfin_1 footer, #mcont_1 footer, #contactlist footer {
+	height: 6em;
+}
+footer div ul li a {
+	height: 2em;
 }
 
 #login_data {
@@ -121,5 +131,15 @@ div.ui-controlgroup-controls {
 	float: none !important;;
 	width: auto !important;;
 }
+div.ui-field-contain{
+	border-bottom-width: 0;
+}
 
 
+a.ui-link{
+background-color: rgba(255,255,255,0) !important;
+}
+
+div.ui-navbar{
+	background-color: rgba(255, 255, 255, 1) !important;
+}

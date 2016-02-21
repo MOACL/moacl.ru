@@ -38,9 +38,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'index_access.php' )
                 </div>
             </form>
 
-
             <button id ="to_about_btn" class ="ui-btn ui-shadow ui-corner-all ui-icon-info ui-btn-icon-top" data-href = "about.php" >About</button>
-            <button id ="to_donation_btn" class ="ui-btn ui-shadow ui-corner-all ui-icon-star ui-btn-icon-top" data-href = "donation.php" >Donation</button>
         </div>
 
     <?require_once 'footer.php'?>
