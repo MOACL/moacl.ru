@@ -11,4 +11,9 @@ define("ENCODING", "UTF-8", true);
 
 define("_OK", "ok", true);
 
+define("DBHOST", "localhost");
+define("DBUSER", "difomin");
+define("DBPASS", "12345");
+define("DB", "mfin");
+
 ?>

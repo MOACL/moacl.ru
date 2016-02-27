@@ -27,98 +27,55 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_setting_access.php' )
          <a href="moacl_money.php" data-ajax = "false" data-icon="gear" data-iconpos="notext right">Setting</a>
     </header>
 
-    <div class="content" data-role = "content">
+    <div class="content moacl-common" data-role = "content">
         <form id = "main_form" name="main_form">
             <div data-role="fieldcontain">
-                <center>
+
                     <fieldset data-role="controlgroup" data-type="horizontal" >
                         <input type="radio" id="radio_in" name="radio_tt" value=1 />
                         <label for="radio_in">&ensp;In</label>
                         <input type="radio" id="radio_out" name="radio_tt" value=0 checked = "Yes"  />
                         <label for="radio_out">Out</label>
                     </fieldset>
-                </center>
+
             </div>
 
-            <table>
-                <tr>
-                    <td>
-                        <div data-role="fieldcontain" >
+                <div>
+                        <div data-role="fieldcontain" style = "display: inline-block; width: 80%; margin-bottom: 0em;">
                             <label for="account">Account:</label>
-
                             <select id="account" name="account" data-native-menu = "false"></select>
                         </div>
-                    </td>
-                    <td>
-                        <div data-role="fieldcontain" >
+
+                        <div data-role="fieldcontain" style = "display: inline-block; width: 10%; margin-bottom: 0em;">
                             <a href="moacl_money_accounts.php" data-ajax = "false" class="ui-btn ui-shadow ui-corner-all ui-icon-gear ui-btn-icon-notext">Account_set</a>
                         </div>
-                    </td>
-                    <td>
-                        <div data-role="fieldcontain" >
+
+                </div>
+                      <!--  <div data-role="fieldcontain" >
                             <label for="balance">Balance:</label>
                             <input id = "balance" type="text" name="balance" readonly/>
                         </div>
-                    </td>
+                        -->
 
-                </tr>
-            </table>
-            <table>
-                <tr>
-                    <td>
-                        <div data-role="fieldcontain">
+                <div>
+                        <div data-role="fieldcontain" style = "display: inline-block; width: 80%; margin-bottom: 0em; ">
                             <label for="category">Category:</label>
                             <select id = "category" name="category" data-native-menu = "false"></select>
                         </div>
-                    </td>
-                    <td>
-                        <div data-role="fieldcontain" >
+                       <div data-role="fieldcontain" style = "display: inline-block; width: 10%; margin-bottom: 0em;">
                             <a href="moacl_money_categories.php" data-ajax = "false" class="ui-btn ui-shadow ui-corner-all ui-icon-gear ui-btn-icon-notext">Cat_set</a>
                         </div>
-                    </td>
-                    <td>
-                        <div data-role="fieldcontain">
+                </div>
+                <div>
+                        <div data-role="fieldcontain" style = "display: inline-block; width: 80%; margin-bottom: 0em;">
                             <label for="item">Item:</label>
                             <select id = "item" name="item" data-native-menu = "false"></select>
                         </div>
-                    </td>
-                    <td>
-                        <div data-role="fieldcontain" >
+                        <div data-role="fieldcontain" style = "display: inline-block; width: 10%; margin-bottom: 0em;" >
                             <a href="moacl_money_items.php" data-ajax = "false" class="ui-btn ui-shadow ui-corner-all ui-icon-gear ui-btn-icon-notext">Item_set</a>
                         </div>
-                    </td>
-                </tr>
-            </table>
-            <table>
-                <tr>
-                    <td>
-                        <div data-role="date" data-inline ="true">
-                            <label for="date">Date:</label>
-                            <input id="date" type="datetime" name= "date" ><br>
-                        </div>
-                    </td>
-                    <td>
-                        <label for="sum">Sum:</label>
-                        <input id="sum" type="text" name= "sum" value = "RUR" data-clear-btn="true"><br>
-                    </td>
-                </tr>
-            </table>
-            <table>
-                <tr>
-                    <td>
-                        <label for="commentary">Commentary:</label>
-                        <textarea placeholder = "особенности транзакции" rows = "3" name="Commentary" wrap="hard" ></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <center>
-
-                            <input data-icon="check" data-iconpos="top" id = "submit"  type="submit" name="submit" value="Rightly!"/>
-                        </center>
-                    </td>
-                </tr>
-            </table>
+                </div>
+            
         </form>
     </div>
 

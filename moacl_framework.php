@@ -21,11 +21,6 @@ include_once 'constants.php';
 	static $message;
 	static $mysqli;
 	 function __construct(){
-		 //db configuration
-		 define("DBHOST", "localhost");
-		 define("DBUSER", "difomin");
-		 define("DBPASS", "12345");
-		 define("DB", "mfin");
 
 		 self::$mysqli = new mysqli(DBHOST, DBUSER, DBPASS, DB);
 
@@ -154,7 +149,7 @@ include_once 'constants.php';
 		 return self::$sid;
 	}
 	
-	
+
 }
 
 class Authentication extends SecureSystem{
