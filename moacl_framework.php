@@ -22,10 +22,15 @@ include_once 'constants.php';
 	static $mysqli;
 	 function __construct(){
 
-		 self::$mysqli = new mysqli(DBHOST, DBUSER, DBPASS, DB);
+		 if($_SERVER['HTTP_HOST'] == HTTPHOST){
+			 self::$mysqli = new mysqli(DBHOST, DBUSER, DBPASS, DB);
+		 }
+		 else{
+			 self::$mysqli = new mysqli(DBHOST_LOC, DBUSER_LOC, DBPASS_LOC, DB_LOC);
+		 }
 
-		 if (mysqli_connect_errno()) {
-			 printf("Error database: %s\n", mysqli_connect_error());
+		 if (self::$mysqli->connect_errno) {
+			 printf("Error database: %s\n", self::$mysqli->connect_error);
 			 exit();
 		 }
 	 }
@@ -426,7 +431,7 @@ class Registration extends SecureSystem{
 
 class Money extends SecureSystem{
 	function getAccounts(){
-		$result=self::$mysqli->query("SELECT Account_ID, Account, Selected FROM mfin.accounts WHERE Disabled = 0;");
+		$result=self::$mysqli->query("SELECT Account_ID, Account, Selected FROM accounts WHERE Disabled = 0;");
 
 		if ($result) {
 			$num = $result->num_rows;
@@ -458,7 +463,7 @@ class Money extends SecureSystem{
 		}
 	}
 	function getCategories($revenue){
-		$result=self::$mysqli->query("SELECT Category_ID, Category, Selected  FROM mfin.categories mc WHERE mc.Disabled = 0 AND mc.Revenue=" . $revenue .";");
+		$result=self::$mysqli->query("SELECT Category_ID, Category, Selected  FROM categories mc WHERE mc.Disabled = 0 AND mc.Revenue=" . $revenue .";");
 
 		if ($result) {
 			$num = $result->num_rows;
@@ -474,7 +479,7 @@ class Money extends SecureSystem{
 		}
 	}
 	function getItems($category_id){
-		$result=self::$mysqli->query("SELECT Item_ID, Item, Selected FROM mfin.items mg WHERE mg.Disabled = 0 AND mg.Category_ID=" . $category_id .";");
+		$result=self::$mysqli->query("SELECT Item_ID, Item, Selected FROM items mg WHERE mg.Disabled = 0 AND mg.Category_ID=" . $category_id .";");
 
 		if ($result) {
 			$num = $result->num_rows;
