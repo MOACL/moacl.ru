@@ -52,7 +52,7 @@ function SetBalance(){
 		cache: false,
 		success: function (result) {
 			if (result.type == 'error') {
-				alert('error');
+				alert('error SetBalance');
 				return(false);
 			}
 			else {
@@ -77,7 +77,7 @@ function combobox_load(ajax, comboname, dbfieldname, url, changefunc){
 		dataType : "json",
 		success: function (result) {
 			if (result.type == 'error') {
-				alert('error');
+				alert('error combobox_load'. url);
 				return(false);
 			}
 			else {

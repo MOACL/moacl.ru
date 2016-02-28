@@ -1,3 +1,11 @@
+<?php
+//запрет на прямое обращение к файлу
+if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_accounts_current_access.php' ){
+	//require_once '../../access_denied.php'
+	header("Location: ../../access_denied.php");
+	exit();
+};
+?>
 <!DOCTYPE html>
 <html lang="ru">
 	<head>
@@ -17,7 +25,7 @@
 		<section id="current_account" data-role = "page" data-position = "fixed" >
 			<header data-role = "header">
 				<h1><b>MOACL-<i>MIM222</i></b></h1>
-				 <a href="moacl_finance_accounts.php" data-ajax = "false" data-icon="back" data-iconpos="notext">Menu</a>
+				 <a href="moacl_money_accounts.php" data-ajax = "false" data-icon="back" data-iconpos="notext">Menu</a>
 			</header>
 			<center>
 			<form id = "current_account_data"  style = "line-height: 0;">
@@ -52,9 +60,9 @@
 			
 			</form>
 			</center>
-			
 
-		<footer data-role = "footer" data-position = "fixed"><h1>moacl.ru (c) 2015</h1></footer>
+
+			<?require_once '../../footer.php'?>
 		</section>
-	<body>
-<html>
+	</body>
+</html>

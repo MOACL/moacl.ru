@@ -25,7 +25,7 @@
 						<fieldset data-role="controlgroup" data-type="horizontal" >
 							<input type="radio" id="radio_work" name="radio_tt" value="Work" />
 							<label for="radio_work">&ensp;Work</label>
-							<input type="radio" id="radio_free" name="radio_tt" value="Free" checked = "Yes"  />
+							<input type="radio" id="radio_free" name="radio_tt" value="Free" checked = "checked"  />
 							<label for="radio_free">Free</label>
 						</fieldset>
 						</center>
@@ -120,7 +120,7 @@
 			<div data-role="panel" data-position-fixed="true" data-display="push" data-theme="a" id="nav-panel">
 	        <ul data-role="listview">
                 <li data-theme="b"><a data-ajax = "false" href="../objects/moacl_objects.php">Objects</a></li>
-                <li data-theme="b"><a data-ajax = "false" href="../finance/moacl_finance.php">Finance</a></li>
+                <li data-theme="b"><a data-ajax = "false" href="../money/moacl_money.php">money</a></li>
                 <li><a data-ajax = "false" href="../../about.php">About</a></li>
                 <li><a data-ajax = "false" href="../../donation.php">Donation</a></li>
                 <li><a data-ajax = "false" href="../../index.php">Exit</a></li>
@@ -129,7 +129,7 @@
 		    </div><!-- /panel -->
 
 		</section>
-	<script src="../../scripts/moacl_activities.js" type="text/javascript" /></script>
+	<script src="../../scripts/moacl_activities.js" type="text/javascript" ></script>
 	</body>
 </html>
 

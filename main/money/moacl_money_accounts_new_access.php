@@ -1,10 +1,15 @@
+<?php
+//запрет на прямое обращение к файлу
+if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_accounts_new_access.php' )
+	die (require_once '../../access_denied.php');
+?>
 <!DOCTYPE html>
 <html lang="ru">
 	<head>
 		<title>MOACL</title>
 		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		
+
 		<script src="../../scripts/jquery-1.11.2.min.js" type="text/javascript"></script>	
 		<script src="../../plugins/jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
 		<link href="../../plugins/jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.css" rel="stylesheet" type="text/css"/>
@@ -17,13 +22,13 @@
 		<section id="new_account" data-role = "page" data-position = "fixed" >
 			<header data-role = "header">
 				<h1><b>MOACL-<i>New Account</i></b></h1>
-				 <a href="moacl_finance_accounts.php" data-ajax = "false" data-icon="back" data-iconpos="notext">Menu</a>
+				 <a href="moacl_money_accounts.php" data-ajax = "false" data-icon="back" data-iconpos="notext">Menu</a>
 			</header>
 			<center>
 			<form id = "new_account_data"  style = "line-height: 0;">
 				
 				<div data-role="fieldcontain" style = "text-align: left; line-height: 0.5">
-					<label for="balance">Name of account:</label>
+					<label for="account_name">Name of account:</label>
 					<input id = "account_name" type="text" name="account_name" />
 				</div>
 			
@@ -79,9 +84,9 @@
 			
 			</form>
 			</center>
-			
 
-		<footer data-role = "footer" data-position = "fixed"><h1>moacl.ru (c) 2015</h1></footer>
+
+			<?require_once '../../footer.php'?>
 		</section>
-	<body>
-<html>
+	</body>
+</html>

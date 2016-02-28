@@ -10,7 +10,8 @@
 		<script src="plugins/jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
 		<link href="plugins/jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.css" rel="stylesheet" type="text/css"/>
 		<link href="css/moacl_style.css" rel="stylesheet" type="text/css"/>
-		
+		<link rel="stylesheet" href="themes/moacl_2.min.css" />
+		<link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" />
 	</head>
 	
 	<body>
@@ -20,10 +21,10 @@
 				<h1>MOACL</h1>
 				<a href="javascript:history.back()" data-icon="back" data-iconpos="notext">Back</a>
 			</header>
-			<center>
-			<div id = "main" class="content" data-role = "content" data-position = "fixed" >
+
+			<div id = "main" class="content moacl-common" data-role = "content" data-position = "fixed" >
 				<?
-					include_once 'moacl_framework.php';
+					include 'moacl_framework.php';
 					New Registration;
 					echo  SecureSystem::$message;
 
@@ -31,9 +32,9 @@
 					session_destroy();
 				?>
 			</div>
-			</center>
-			
-			<footer data-role = "footer" data-position = "fixed"><h1>moacl.ru (c) 2015</h1></footer>
+
+
+			<?require_once 'footer.php'?>
 		</section>
 	</body>
 	
