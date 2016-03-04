@@ -15,10 +15,7 @@
 	</head>
 	<body>
 		<section id="about" data-role = "page" data-position = "fixed" >
-			<header data-role = "header">
-				<h1>MOACL</h1>
-				<a href="javascript:history.back()" data-icon="back" data-iconpos="notext">Back</a>
-			</header>
+			<?require_once 'header.php'?>
 			
 			<div id = "about_main" class="content" data-role = "content" data-position = "fixed">
 			Moacl - is a system, which can help you win over entropy in all area in live.

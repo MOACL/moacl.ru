@@ -22,10 +22,8 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_accounts_access.php' 
 	
 	<body>
 		<section id="set_accounts" data-role = "page" data-position = "fixed" >
-			<header data-role = "header">
-			<h1><b>MOACL<i>-accounts</i></b></h1>
-			 <a href="moacl_money_setting.php" data-ajax = "false" data-icon="back" data-iconpos="notext">Menu</a>
-			</header>
+
+			<?require_once '../../header.php'?>
 			<form id = "accounts_data" class = "data_list">
 				<ul data-role="listview" data-count-theme="a" data-inset="true">
 				    <li data-theme = "b"><a href="moacl_money_accounts_new.php" data-ajax = "false" >NEW ACCOUNT </a></li>

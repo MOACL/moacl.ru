@@ -23,10 +23,8 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_items_access.php' ){
 	
 	<body>
 		<section id="set_items" data-role = "page" data-position = "fixed" >
-			<header data-role = "header">
-			<h1><b>MOACL<i>-items</i></b></h1>
-			 <a href="moacl_money_setting.php" data-ajax = "false" data-icon="back" data-iconpos="notext">Menu</a>
-			</header>
+
+			<?require_once '../../header.php'?>
 			<form id = "items_data" class = "data_list">
 				<ul data-role="listview" data-count-theme="a" data-inset="true">
 				    <li data-theme = "b"><a href="#" >NEW ITEM </a></li>

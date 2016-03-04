@@ -23,11 +23,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_access.php' ) {
 
 <body>
 <section id="mfin_1" data-role = "page" data-position = "fixed"  >
-    <header data-role = "header">
-        <h1><b>MOACL-<i>money</i></b></h1>
-         <a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
-         <a href="moacl_money_setting.php" data-ajax = "false" data-icon="gear" data-iconpos="notext right">Menu</a>
-    </header>
+    <?require_once '../../header.php'?>
 
     <div class="content moacl-common" data-role = "content">
         <form id = "main_form" name="main_form" action="transaction.php" method="post">

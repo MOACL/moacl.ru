@@ -122,7 +122,6 @@
                 <li data-theme="b"><a data-ajax = "false" href="../objects/moacl_objects.php">Objects</a></li>
                 <li data-theme="b"><a data-ajax = "false" href="../money/moacl_money.php">money</a></li>
                 <li><a data-ajax = "false" href="../../about.php">About</a></li>
-                <li><a data-ajax = "false" href="../../donation.php">Donation</a></li>
                 <li><a data-ajax = "false" href="../../index.php">Exit</a></li>
 
     	    </ul>

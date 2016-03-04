@@ -21,11 +21,8 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_setting_access.php' )
 </head>
 <body>
 <section id="mfin_1" data-role = "page" data-position = "fixed"  >
-    <header data-role = "header">
-        <h1><b>MOACL-<i>money-setup</i></b></h1>
-         <a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
-         <a href="moacl_money.php" data-ajax = "false" data-icon="gear" data-iconpos="notext right">Setting</a>
-    </header>
+
+    <?require_once '../../header.php'?>
 
     <div class="content moacl-common" data-role = "content">
         <form id = "main_form" name="main_form">
@@ -86,7 +83,6 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_setting_access.php' )
                             <li data-theme="b"><a data-ajax = "false" href="../objects/moacl_objects.php">Objects</a></li>
                             <li data-theme="b"><a data-ajax = "false" href="../activities/moacl_activities.php">Activities</a></li>
                             <li><a data-ajax = "false" href="../../about.php">About</a></li>
-                            <li><a data-ajax = "false" href="../../donation.php">Donation</a></li>
                             <li><a data-ajax = "false" href="../../index.php">Exit</a></li>
 
                 	    </ul>

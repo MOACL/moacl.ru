@@ -1,6 +1,6 @@
 <?php
 //запрет на прямое обращение к файлу
-if ( basename($_SERVER['SCRIPT_FILENAME']) == 'index_access.php' )
+if ( basename($_SERVER['SCRIPT_FILENAME']) == 'registration_access.php' )
 	die (require_once 'access_denied.php');
 ?>
 
@@ -23,11 +23,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'index_access.php' )
 	<body>
 		<section id="registration" data-role = "page" data-position = "fixed" >
 
-			<header data-role = "header">
-				<h1>MOACL</h1>
-				<a href="javascript:history.back()" data-icon="back" data-iconpos="notext">Back</a>
-				<script type="text/javascript" src="scripts/registration.js"></script>
-			</header>
+			<?require_once 'header.php'?>
 			
 			<br>
 

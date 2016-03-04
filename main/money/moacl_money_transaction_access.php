@@ -14,10 +14,8 @@
 
 <body>
 <section id="transactions" data-role = "page" data-position = "fixed">
-    <header data-role = "header">
-        <h1><b>MOACL-<i>money</i></b></h1>
-        <a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
-    </header>
+
+    <?require_once '../../header.php'?>
 
     <div class="content moacl-common" data-role = "content" >
 
@@ -943,15 +941,8 @@
         </ul>
     </div>
 
-    <footer data-role = "footer" data-position = "fixed" >
-        <div data-role="navbar">
-            <ul>
-                <li><a data-theme="b" href="moacl_money.php" data-ajax = "false">New transact</a></li>
-                <li><a data-theme="b" href="#">Analytics</a></li>
-            </ul>
-        </div><!-- /navbar -->
-        <h1>moacl.ru (c) 2015</h1>
-    </footer>
+    <?require_once '../../footer.php'?>
+
     <div data-role="panel" data-position-fixed="true" data-display="push" data-theme="a" id="nav-panel">
         <ul data-role="listview">
             <li data-role="list-divider" style = "text-align: center"><? echo $auth->getUserName()?></li>

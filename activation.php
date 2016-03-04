@@ -18,7 +18,7 @@
 	<body>
 		<section id="activation" data-role = "page" data-position = "fixed" >
 
-			<header data-role = "header"><h1>MOACL</h1></header>
+			<?require_once 'header.php'?>
 
 			<div id = "main" class="content moacl-common" data-role = "content" data-position = "fixed">
 			<?

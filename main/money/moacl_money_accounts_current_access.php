@@ -23,10 +23,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_accounts_current_acce
 	
 	<body>
 		<section id="current_account" data-role = "page" data-position = "fixed" >
-			<header data-role = "header">
-				<h1><b>MOACL-<i>MIM222</i></b></h1>
-				 <a href="moacl_money_accounts.php" data-ajax = "false" data-icon="back" data-iconpos="notext">Menu</a>
-			</header>
+			<?require_once '../../header.php'?>
 			<center>
 			<form id = "current_account_data"  style = "line-height: 0;">
 				<div data-role="fieldcontain" style = "width: 300px; line-height: 0.3;">

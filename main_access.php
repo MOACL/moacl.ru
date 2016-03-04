@@ -19,11 +19,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'main_access.php' )
 
 <body>
 <section id="title_unreg" data-role = "page" data-position = "fixed" >
-    <header data-role = "header">
-        <h1>MOACL</h1>
-
-        <a href="#UserMenu" data-rel="popup" data-transition="pop" data-icon="user" data-iconpos="notext">User</a>
-    </header>
+    <?require_once 'header.php'?>
 
         <div id = "main" class="content moacl-common" data-role = "content" data-position = "fixed">
             <button id ="to_fin_btn" class ="ui-btn ui-btn-b ui-shadow ui-corner-all ui-icon-clock ui-btn-icon-top" data-href = "main/money/moacl_money.php" >Money</button>
