@@ -21,7 +21,7 @@
 			</header>
 			
 			<div id = "about_main" class="content" data-role = "content" data-position = "fixed">
-			About Moacl
+			Moacl - is a system, which can help you win over entropy in all area in live.
 			</div>
 
 			<?require_once 'footer.php'?>
