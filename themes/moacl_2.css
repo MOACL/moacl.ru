@@ -738,7 +738,7 @@ button[disabled],
 	-webkit-box-shadow: none !important;
 	-moz-box-shadow: none !important;
 	box-shadow: none !important;
-}
+}/**/
 .ui-noboxshadow .ui-btn:focus,
 .ui-noboxshadow .ui-focus {
 	outline-width: 1px;
