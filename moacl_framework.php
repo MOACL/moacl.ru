@@ -4,7 +4,7 @@ include_once 'constants.php';
 
  class Moacl { //Корневой класс фреймворка
 	public $author = "Dmitry Fomin";
-	public $mission = "Diminish entropy";
+	public $mission = "The victory over entropy";
 }
 
  class SecureSystem extends Moacl{
