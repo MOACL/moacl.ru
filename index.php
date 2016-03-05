@@ -10,4 +10,3 @@ if($auth->authorizer()){ //уже авторизован
 else{
 	require_once 'index_access.php';
 }
-?>

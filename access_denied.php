@@ -22,3 +22,4 @@
     <?require_once 'footer.php'?>
 </section>
 </body>
+</html>

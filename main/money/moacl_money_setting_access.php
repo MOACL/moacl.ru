@@ -91,6 +91,3 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_setting_access.php' )
     </section>
 </body>
 </html>
-
-
-

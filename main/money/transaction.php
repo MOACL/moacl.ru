@@ -1,13 +1,18 @@
 <?
 session_start();
 $account_id = $_POST['account'];
-$category_id= $_POST['category'];
-$item_id= $_POST['item'];
-$sum = str_replace(" ","",str_replace("RUR" , "" , $_POST['sum']));
+$category_id = $_POST['category'];
+$item_id = $_POST['item'];
+$sum = $_POST['sum'];
+$commentary = $_POST['commentary'];
+$date = $_POST['date'];
+
+$sum = str_replace(" ","",str_replace("RUR" , "" , $sum));
 if($sum =="")$sum=0;
-$commentary= $_POST['commentary'];
+
 if($commentary == null)$commentary="null";
-$date = str_replace("." , "-",$_POST['date']);
+
+$date = str_replace("." , "-",$date);
 $date = date('Y-m-d',strtotime($date));
 
 include_once '../../moacl_framework.php';
@@ -22,4 +27,3 @@ if($auth->authorizer()){ //если пользователь авторизов�
         echo "Error of transaction." ;
     }
 }
-?>

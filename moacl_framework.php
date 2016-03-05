@@ -20,6 +20,20 @@ include_once 'constants.php';
 	static $hash;
 	static $message;
 	static $mysqli;
+	static $dbErrorString = "Error database: ";
+	static $longLoginString = "Very long Login, Please put <=";
+	static $missLoginString = "Login is missing! Please put <=";
+	static $longPswString = "Very long Password, Please put <=";
+	static $missPswString = "Password is missing! Please put <=";
+	static $existsLoginString = "Login already exists!";
+	static $lettersString = "letters.";
+	static $incorrectEmailString = "Incorrect Email!";
+	static $existsEmailString = "Email already exists!";
+	static $emailMask = "|^[-0-9a-z_\.]+@[-0-9a-z_^\.]+\.[a-z]{2,6}$|i";
+	static $notMatchPswString = "Passwords do not match.";
+	static $noConfirmString = "No confirm code.";
+	static $noLoginString = "No login."; //заход на страницу без логина
+
 	 function __construct(){
 
 		 if($_SERVER['HTTP_HOST'] == HTTPHOST){
@@ -30,46 +44,89 @@ include_once 'constants.php';
 		 }
 
 		 if (self::$mysqli->connect_errno) {
-			 printf("Error database: %s\n", self::$mysqli->connect_error);
+			 printf(self::$dbErrorString . self::$mysqli->connect_error);
 			 exit();
 		 }
 	 }
 
-	function verificationRegData() {
+	 function __destruct() {
+		 self::$mysqli->close();
+	 }
+
+
+	 function getParamSQL($queryName,$paramArray){
+		 $query = "select * from `sql_templates` where `Query_name` ='$queryName'";
+		 $result = self::$mysqli->query($query);
+		 $row = $result->fetch_array(MYSQLI_ASSOC);
+		 if (!$result) {
+			 return false;
+		 }
+		 else {
+			 $sqlTemlate = $row['SQL'];
+			 $parameters = $row['Parameters'];
+			 $m=0;
+			 $sql=$sqlTemlate;
+			 foreach($paramArray as $i => $value){
+				 $n=strpos($parameters, ";", $m + 1);
+				 $parameter = "@@" . substr($parameters, $m, $n - $m) . "@@";
+				 $sql = str_replace($parameter, $value,$sql);
+            	 $m = $n+1;
+			 }
+			 return $sql;
+		 }
+	 }
+
+	 function verificationRegData() {
 		//Login
-		$feedback=self::loginExist();
-		if(!$feedback === false){
-			return $feedback;
+		$loginExist=self::loginExist();
+		$emailExist=self::emailExist();
+		$login=mb_strlen(self::$login, ENCODING);
+		$password=mb_strlen(self::$password, ENCODING);
+		$email = self::$email;
+
+
+		//Login
+		if($loginExist === false){ //если такого логина еще нет в базе
+			if($login > LOGIN_MAX_LEN){
+				$feedback= self::$longLoginString . LOGIN_MAX_LEN . self::$lettersString ."\r\n";
+			}
+			elseif($login==0){
+				$feedback= self::$missLoginString . LOGIN_MAX_LEN . self::$lettersString ."\r\n";
+			}
+			else{ //все хорошо
+				$feedback =false;
+			}
 		}
-		if(mb_strlen(self::$login, ENCODING) > LOGIN_MAX_LEN){
-			$feedback="Very long Login, Please put <=" . LOGIN_MAX_LEN . "letters.";
-			return $feedback;
-		}
-		elseif(mb_strlen(self::$login, ENCODING)==0){
-			$feedback="Login is missing! Please put <=" . LOGIN_MAX_LEN . "letters.";
-			return $feedback;
+		else{
+			$feedback = self::$existsLoginString ."\r\n";
 		}//Login
+
 	
 		//Password
-		if(mb_strlen(self::$password, ENCODING) > PASSWORD_MAX_LEN){
-			$feedback="Very long Password! Please put <=" . PASSWORD_MAX_LEN . " letters.";
-			return $feedback;
+		if($password > PASSWORD_MAX_LEN){
+			$feedback.=self::$longPswString . PASSWORD_MAX_LEN . self::$lettersString ."\r\n";
 		}
-		elseif(mb_strlen(self::$password, ENCODING)==0){
-			$feedback="Password is missing! Please put <=" . PASSWORD_MAX_LEN . "letters.";
-			return $feedback;
+		elseif($password==0){
+			$feedback.=self::$missPswString . PASSWORD_MAX_LEN . self::$lettersString ."\r\n";
+		}
+		else{ //все хорошо
+			$feedback.=false;
 		}//Password
-	
+
 		//E-mail
-		$feedback=self::emailExist();
-		if(!$feedback === false){
-			return $feedback;
+		if($emailExist === false){ //если такого email еще нет в базе
+			if(!preg_match(self::$emailMask, $email)) {
+				$feedback.=self::$incorrectEmailString;
+			}
+			else{ //все хорошо
+				$feedback.=false;
+			}
 		}
-		if(!preg_match("|^[-0-9a-z_\.]+@[-0-9a-z_^\.]+\.[a-z]{2,6}$|i", self::$email)) { 
-			$feedback="Incorrect Email!";
-			return $feedback;
-		} //E-mail
-		
+		else{
+			$feedback.= self::$existsEmailString;
+		}//E-mail
+
+		return $feedback;
 	}
 		
 	function prepareRegData() { 
@@ -81,12 +138,11 @@ include_once 'constants.php';
 	function loginExist(){
 
 		$login = self::$login;
-		$query = "select `User_id` from `users` where `Deleted` = 0 and `Login` = '$login'";
+		$query = self::getParamSQL('UID_by_Login',Array($login));
 		$result = self::$mysqli->query($query);
 
 		if (!$result) { 
-				$feedback = 'Error - Database Error! - '; 
-				$feedback .= self::$mysqli->error;
+				$feedback = self::$dbErrorString . self::$mysqli->error;
 		}
 		else{
 			$myrow = $result->fetch_array(MYSQLI_ASSOC);
@@ -96,17 +152,16 @@ include_once 'constants.php';
 			else{
 				$feedback = false;
 			}
-			return $feedback;
 		}
+		return $feedback;
 	}
 	
 	function emailExist(){
 		$email = self::$email;
-		$query = "select `User_id` from `users` where `Deleted` = 0 and `E-mail` = '$email'";
+		$query = self::getParamSQL('UID_by_Email',Array($email));
 		$result = self::$mysqli->query($query);
-		if (!$result) { 
-				$feedback = 'Error - Database Error! - '; 
-				$feedback .= self::$mysqli->error;
+		if (!$result) {
+			$feedback = self::$dbErrorString . self::$mysqli->error;
 		}
 		else{
 			$myrow = $result->fetch_array(MYSQLI_ASSOC);
@@ -116,8 +171,8 @@ include_once 'constants.php';
 			else{
 				$feedback = false;
 			}
-			return $feedback;
 		}
+		return $feedback;
 	}
 	
 	function getSalt(){
@@ -153,7 +208,6 @@ include_once 'constants.php';
 		 self::$sid = session_id();
 		 return self::$sid;
 	}
-	
 
 }
 
@@ -163,7 +217,9 @@ class Authentication extends SecureSystem{
 		parent::__construct();
 		define('SID',session_id());
 	}
-
+	function __destruct(){
+		parent::__destruct();
+	}
 
 	static function logout() {
 		session_start();
@@ -197,7 +253,8 @@ class Authentication extends SecureSystem{
 		self::$email=$email;
 		self::prepareRegData();
 
-		$query = "SELECT `Password`, `Salt`, `Login`, `User_ID` FROM `users` WHERE `Login`= '$login'  and `Activation` = 1 and `Deleted` = 0;";
+		//$query = "SELECT `Password`, `Salt`, `Login`, `User_ID` FROM `users` WHERE `Login`= '$login'  and `Activation` = 1 and `Deleted` = 0;";
+		$query = self::getParamSQL('UserRegData_by_Login',Array(self::$login));
 		$result = self::$mysqli->query($query)	or die(self::$mysqli->error);
 		$row = $result->fetch_array(MYSQLI_ASSOC);
 		$_USER = $row;
@@ -209,7 +266,8 @@ class Authentication extends SecureSystem{
 		if($hash==$password_db && $login =$login_db) {
 			$_SESSION = array_merge($_SESSION,$_USER); //Добавляем массив с пользователем к массиву сессии
 
-			$query = "UPDATE `users` SET `SID`='".SID."' WHERE `User_ID`='$user_id';";
+			//$query = "UPDATE `users` SET `SID`='".SID."' WHERE `User_ID`='$user_id';";
+			$query = self::getParamSQL('NewSID_for_UID',Array(SID,$user_id));
 			//примерный запрос для ддълогирования действия аутентификации $query = "INSERT INTO `users_sessions`
 			// (`SID`, `UID`, `IP`, `BROWSER`, `Action_ID`, `Date_of_start` ,`Date_of_end`) VALUES
 			// ('$sid' , '$uid' ,'$ip', '$browser', 1 , Now() , Now());"; // Action_ID =1 (registration)
@@ -251,24 +309,25 @@ class Registration extends SecureSystem{
 		$sid =self::getSID();
 		
 		
-		$query = "INSERT INTO `users` (`Login`, `Password`, `Salt`, `E-mail`, `IP`, `SID` ,`BROWSER`) VALUES ('$login' , '$hash' ,'$salt', '$email', '$ip', '$sid' , '$browser');";
+		//$query = "INSERT INTO `users` (`Login`, `Password`, `Salt`, `E-mail`, `IP`, `SID` ,`BROWSER`) VALUES ('$login' , '$hash' ,'$salt', '$email', '$ip', '$sid' , '$browser');";
+		$query = self::getParamSQL('Add_NewUser',Array($login,$hash,$salt,$email,$ip,$sid,$browser));
 		$result = self::$mysqli->query($query);
 		
 		if($result){
 			
-			$query = "SELECT`User_id` FROM `users` WHERE `Login` = '$login';";
+			//$query = "SELECT `User_id` FROM `users` WHERE `Login` = '$login';";
+			$query = self::getParamSQL('UID_by_Login',Array($login));
 			$result = self::$mysqli->query($query);
 			$row = $result->fetch_array(MYSQLI_ASSOC);
 			$uid= $row['User_id'];
-			$query = "INSERT INTO `users_sessions` (`SID`, `UID`, `IP`, `BROWSER`, `Action_ID`, `Date_of_start` ,`Date_of_end`) VALUES ('$sid' , '$uid' ,'$ip', '$browser', 1 , Now() , Now());"; // Action_ID =1 (registration)
+			//$query = "INSERT INTO `users_sessions` (`SID`, `UID`, `IP`, `BROWSER`, `Action_ID`, `Date_of_start` ,`Date_of_end`) VALUES ('$sid' , '$uid' ,'$ip', '$browser', 1 , Now() , Now());"; // Action_ID =1 (registration)
+			$query = self::getParamSQL('Add_NewSession',Array($sid,$uid,$ip,$browser));
 			$result = self::$mysqli->query($query);
 		}
 		
 		
-		if (!$result) { 
-			$feedback = 'Error - Database Error! - '; 
-			$feedback .= self::$mysqli->error;
-			self::$message = $feedback;
+		if (!$result) {
+			self::$message = self::$dbErrorString . self::$mysqli->error;;
 		}
 		else{
 			self::sendMail();
@@ -278,7 +337,8 @@ class Registration extends SecureSystem{
 	function sendMail(){
 		 $email = self::$email;
 		 $login = self::$login;
-		 $query = "SELECT `User_id`, `Salt` FROM `users` WHERE `Login`='$login'";
+		 //$query = "SELECT `User_id`, `Salt` FROM `users` WHERE `Login`='$login'";
+		 $query = self::getParamSQL('UserRegData_by_Login',Array(self::$login));
 		 $result = self::$mysqli->query($query);
 		 $row = $result->fetch_array(MYSQLI_ASSOC);
 		 $activation = crypt($row['User_id'].$login, $row['Salt']);
@@ -297,19 +357,19 @@ class Registration extends SecureSystem{
 		$sid = self::getSID();
 		$code = null;
 
-		$query = "UPDATE `users` SET `Deleted`=1 WHERE Activation='0' AND UNIX_TIMESTAMP()- UNIX_TIMESTAMP(`Date_of_add`) > " . MAIL_REG_LIMIT . ";";
+		$query = "UPDATE `users` SET `Activation`=1 WHERE Deleted='0' AND UNIX_TIMESTAMP()- UNIX_TIMESTAMP(`Date_of_add`) > " . MAIL_REG_LIMIT . ";";
 		self::$mysqli->query($query);
 		if(isset($_GET['code'])) {
 			$code =$_GET['code'];
 		}
 		else {
-			self::$message = "Вы  зашли на страницу без кода подтверждения!";
+			self::$message = self::$noConfirmString;
 		}
 		if (isset($_GET['login'])) {
 			$login=$_GET['login'];
 		}
 		else {
-			self::$message = "Вы зашли на страницу без логина!";
+			self::$message = self::$noLoginString;
 			exit;
 		}
 		$query = "SELECT `User_id`, `Salt` FROM `users` WHERE Login='$login' and activation='0' ";
@@ -327,14 +387,15 @@ class Registration extends SecureSystem{
 			
 			if($result){
 			
-			$query = "SELECT`User_id` FROM `users` WHERE `Login` = '$login';";
+			$query = "SELECT `User_id` FROM `users` WHERE `Login` = '$login';";
 			$result = self::$mysqli->query ($query);
 			$row = $result->fetch_array(MYSQLI_ASSOC);
 			$uid= $row['User_id'];
 			$query = "INSERT INTO `users_sessions` (`SID`, `UID`, `IP`, `BROWSER`, `Action_ID`, `Date_of_start` ,`Date_of_end`) VALUES ('$sid' , '$uid' ,'$ip', '$browser', 2 , Now() , Now());"; // Action_ID =2 (activation)
 			$result = self::$mysqli->query($query);
 			}
-			
+
+
 			self::$message = "Congratulations!<br>Now you are the owner of Moacl-account!";
 			self::$message .=  "<br> <a href='main.php'>Go!</a>";
 		}
@@ -357,7 +418,7 @@ class Registration extends SecureSystem{
 					return $feedback;
 				}
 				elseif(mb_strlen(self::$login, ENCODING) > LOGIN_MAX_LEN){
-					$feedback="Very long Login, Please put <=" . LOGIN_MAX_LEN . "letters.";
+					$feedback=self::$longLoginString . LOGIN_MAX_LEN . self::$lettersString;
 					return $feedback;
 				}
 				elseif(mb_strlen(self::$login, ENCODING)==0){
@@ -375,7 +436,7 @@ class Registration extends SecureSystem{
 				self::$password= $val;
 			
 				if(mb_strlen(self::$password, ENCODING) > PASSWORD_MAX_LEN){
-					$feedback="Very long Password! Please put <=" . PASSWORD_MAX_LEN . " letters.";
+					$feedback=self::$longPswString . PASSWORD_MAX_LEN . self::$lettersString;
 					return $feedback;
 				}
 				elseif(mb_strlen(self::$password, ENCODING)==0){
@@ -397,7 +458,7 @@ class Registration extends SecureSystem{
 					return $feedback;
 				}
 				elseif(self::$password <> self::$password_repeat){
-					$feedback="Passwords do not match.";
+					$feedback=self::$notMatchPswString;
 					return $feedback;
 				}
 				else{
@@ -416,8 +477,8 @@ class Registration extends SecureSystem{
 					$feedback="";
 					return $feedback;
 				}
-				elseif(!preg_match("|^[-0-9a-z_\.]+@[-0-9a-z_^\.]+\.[a-z]{2,6}$|i", self::$email)) { 
-					$feedback="Incorrect Email!";
+				elseif(!preg_match(self::$emailMask, self::$email)) {
+					$feedback=self::$incorrectEmailString;
 					return $feedback;
 				}
 				else{
@@ -426,13 +487,16 @@ class Registration extends SecureSystem{
 				}//E-mail
 				break;
 		}
+		return false;
 	}
 }
 
 class Money extends SecureSystem{
-	function getAccounts(){
-		$result=self::$mysqli->query("SELECT Account_ID, Account, Selected FROM accounts WHERE Disabled = 0;");
 
+	function getAccounts(){
+
+		$result=self::$mysqli->query("SELECT Account_ID, Account, Selected FROM accounts WHERE Disabled = 0;");
+		$row = array();
 		if ($result) {
 			$num = $result->num_rows;
 			$i = 0;
@@ -448,7 +512,7 @@ class Money extends SecureSystem{
 	}
 	function getBalance($account_id){
 		$result=self::$mysqli->query("select Balance from accounts where Account_ID =" . $account_id .";");
-
+		$row = array();
 		if ($result) {
 			$num = $result->num_rows;
 			$i = 0;
@@ -464,7 +528,7 @@ class Money extends SecureSystem{
 	}
 	function getCategories($revenue){
 		$result=self::$mysqli->query("SELECT Category_ID, Category, Selected  FROM categories mc WHERE mc.Disabled = 0 AND mc.Revenue=" . $revenue .";");
-
+		$row = array();
 		if ($result) {
 			$num = $result->num_rows;
 			$i = 0;
@@ -480,7 +544,7 @@ class Money extends SecureSystem{
 	}
 	function getItems($category_id){
 		$result=self::$mysqli->query("SELECT Item_ID, Item, Selected FROM items mg WHERE mg.Disabled = 0 AND mg.Category_ID=" . $category_id .";");
-
+		$row = array();
 		if ($result) {
 			$num = $result->num_rows;
 			$i = 0;
@@ -508,7 +572,4 @@ class Money extends SecureSystem{
 			return false;
 		}
 	}
-
 }
-
-?>

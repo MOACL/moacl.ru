@@ -8,4 +8,3 @@ if($auth->authorizer()){ //если пользователь авторизов�
     $result=$Money->getBalance($account_id);
     print json_encode($result);
 }
-?>

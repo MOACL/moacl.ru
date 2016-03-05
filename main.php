@@ -13,5 +13,3 @@ else{
 	header("Location: access_denied.php");
 	exit();
 }
-
-?>

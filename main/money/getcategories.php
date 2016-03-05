@@ -8,5 +8,4 @@ if($auth->authorizer()){ //если пользователь авторизов�
     $result=$Money->getCategories($revenue);
     print json_encode($result);
 }
-?>
 

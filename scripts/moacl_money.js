@@ -1,5 +1,6 @@
 var $CURR = "RUR";
 var $MIN_TIME_OF_TRANSACT = 0; //в секундах
+
 //events begin
 //event 0
 $(document).ready(
@@ -8,7 +9,7 @@ $(document).ready(
 			combobox_load(false,"account", "Account", "getaccounts.php", SetBalance);
 			//comboboxCatItem();
 
-
+			var $revenue;
 				$revenue = $('input[name=radio_tt]:checked').val();
 
 			combobox_load(false,"category","Category", "getcategories.php?revenue=" + $revenue);
@@ -23,6 +24,7 @@ $("#category").change(function(){
 });
 
 $('input[type="radio"]').change( function() {
+	var $revenue;
 	$revenue = $('input[name=radio_tt]:checked').val();
 
 	combobox_load(false,"category","Category", "getcategories.php?revenue=" + $revenue);
@@ -156,7 +158,7 @@ function rur_format(v, minus){
 
 //blur
 function rur_format_clear(v){
-	var t = $(v).val()
+	var t = $(v).val();
 	t = t.replace($CURR,"").replace(/\s/g,"");
 	$(v).val(t);
 }

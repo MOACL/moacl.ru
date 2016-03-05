@@ -7,4 +7,3 @@ if($auth->authorizer()){ //если пользователь авторизов�
     $result=$Money->getAccounts();
     print json_encode($result);
 }
-?>
