@@ -35,33 +35,38 @@ CODE;
         break;
         case '/moacl.ru/main/money/moacl_money_items.php':
                         $navbar = <<<CODE
-        	<a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
+        <a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
+        <a href="moacl_money_setting.php" data-ajax = "false" data-icon="gear" data-iconpos="notext right">Setting</a>
 CODE;
         break;
         case '/moacl.ru/main/money/moacl_money_categories.php':
                         $navbar = <<<CODE
-        	<a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
+        <a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
+        <a href="moacl_money_setting.php" data-ajax = "false" data-icon="gear" data-iconpos="notext right">Setting</a>
 CODE;
         break;
         case '/moacl.ru/main/money/moacl_money_accounts_new.php':
                         $navbar = <<<CODE
-        	<a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
+        <a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
+        <a href="moacl_money_setting.php" data-ajax = "false" data-icon="gear" data-iconpos="notext right">Setting</a>
 CODE;
         break;
         case '/moacl.ru/main/money/moacl_money_accounts_current.php':
                         $navbar = <<<CODE
-        	<a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
+        <a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
+        <a href="moacl_money_setting.php" data-ajax = "false" data-icon="gear" data-iconpos="notext right">Setting</a>
 CODE;
         break;
         case '/moacl.ru/main/money/moacl_money_accounts.php':
                         $navbar = <<<CODE
-        	<a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
+        <a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
+        <a href="moacl_money_setting.php" data-ajax = "false" data-icon="gear" data-iconpos="notext right">Setting</a>
 CODE;
         break;
         case '/moacl.ru/main/money/moacl_money.php':
                         $navbar = <<<CODE
         	<a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
-            <a href="moacl_money_setting.php" data-ajax = "false" data-icon="gear" data-iconpos="notext right">Menu</a>
+            <a href="moacl_money_setting.php" data-ajax = "false" data-icon="gear" data-iconpos="notext right">Setting</a>
 CODE;
         break;
         case '/moacl.ru/main/money/moacl_money_setting.php':
@@ -70,9 +75,7 @@ CODE;
         <a href="moacl_money.php" data-ajax = "false" data-icon="gear" data-iconpos="notext right">Setting</a>
 CODE;
         break;
-
-
-        default:
+         default:
         $navbar = '';
 
         }

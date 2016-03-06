@@ -25,6 +25,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_items_access.php' ){
 		<section id="set_items" data-role = "page" data-position = "fixed" >
 
 			<?require_once '../../header.php'?>
+			<div class="content moacl-common" data-role = "content">
 			<form id = "items_data" class = "data_list">
 				<ul data-role="listview" data-count-theme="a" data-inset="true">
 				    <li data-theme = "b"><a href="#" >NEW ITEM </a></li>
@@ -33,9 +34,16 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_items_access.php' ){
 				    <li><a href="#">Other </a></li>
 				</ul>
 			</form>
+			</div>
 
 			<?require_once '../../footer.php'?>
+			<?require_once 'panel.php'?>
 		</section>
+		<script>
+			$(document).ready(function(){
+				$("#to_exit_btn").click( function(){location.href = $(this).attr("data-href");});
+			});
+		</script>
 	</body>
 </html>
 

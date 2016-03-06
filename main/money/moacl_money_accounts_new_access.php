@@ -21,7 +21,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_accounts_new_access.p
 	<body>
 		<section id="new_account" data-role = "page" data-position = "fixed" >
 			<?require_once '../../header.php'?>
-			<center>
+			<div class="content moacl-common" data-role = "content">
 			<form id = "new_account_data"  style = "line-height: 0;">
 				
 				<div data-role="fieldcontain" style = "text-align: left; line-height: 0.5">
@@ -80,10 +80,16 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_accounts_new_access.p
 			<input data-icon="check" data-iconpos="top" id = "submit"  type="submit" name="submit" value="Create!"/>
 			
 			</form>
-			</center>
+			</div>
 
 
 			<?require_once '../../footer.php'?>
+			<?require_once 'panel.php'?>
 		</section>
+		<script>
+			$(document).ready(function(){
+				$("#to_exit_btn").click( function(){location.href = $(this).attr("data-href");});
+			});
+		</script>
 	</body>
 </html>

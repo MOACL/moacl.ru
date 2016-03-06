@@ -24,7 +24,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_accounts_current_acce
 	<body>
 		<section id="current_account" data-role = "page" data-position = "fixed" >
 			<?require_once '../../header.php'?>
-			<center>
+			<div class="content moacl-common" data-role = "content">
 			<form id = "current_account_data"  style = "line-height: 0;">
 				<div data-role="fieldcontain" style = "width: 300px; line-height: 0.3;">
 					<label for="balance">Balance:</label>
@@ -56,10 +56,16 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_accounts_current_acce
 			</div>
 			
 			</form>
-			</center>
+			</div>
 
 
 			<?require_once '../../footer.php'?>
+			<?require_once 'panel.php'?>
 		</section>
+		<script>
+			$(document).ready(function(){
+				$("#to_exit_btn").click( function(){location.href = $(this).attr("data-href");});
+			});
+		</script>
 	</body>
 </html>

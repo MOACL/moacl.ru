@@ -105,28 +105,10 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_access.php' ) {
         </form>
     </div>
 
-    <footer data-role = "footer" data-position = "fixed" >
-        <div data-role="navbar">
-            <ul>
-                <li><a data-theme="a" href="moacl_money_transactions.php" data-ajax = "false">Transactions</a></li>
-                <!--<li><a data-theme="a" href="#">Analytics</a></li>-->
-            </ul>
-        </div><!-- /navbar -->
-        <h1>moacl.ru (c) 2015</h1>
-    </footer>
+    <?require_once '../../footer.php'?>
+    <?require_once 'panel.php'?>
 
-    <div data-role="panel" data-position-fixed="true" data-display="push" data-theme="a" id="nav-panel">
-        <ul data-role="listview">
-            <li data-role="list-divider" style = "text-align: center"><? echo $auth->getUserName()?></li>
-            <li><a href="#">Profile</a></li>
-            <li id = "to_exit_btn" data-href = "../../logout.php"><a>Exit</a></li>
-            <li data-theme="b"><a data-ajax = "false" href="#">Objects</a></li>
-            <li data-theme="b"><a data-ajax = "false" href="#">Activities</a></li>
-            <li data-theme="b"><a data-ajax = "false" href="#">Contacts</a></li>
-            <li data-theme="b"><a data-ajax = "false" href="#">Love</a></li>
 
-        </ul>
-    </div><!-- /panel -->
 
 
     <a href="#transact_info" id = "transact" data-transition="slidedown" data-position-to="window" data-rel="popup" style = "display: none"></a>

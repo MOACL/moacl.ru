@@ -24,6 +24,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_accounts_access.php' 
 		<section id="set_accounts" data-role = "page" data-position = "fixed" >
 
 			<?require_once '../../header.php'?>
+			<div class="content moacl-common" data-role = "content">
 			<form id = "accounts_data" class = "data_list">
 				<ul data-role="listview" data-count-theme="a" data-inset="true">
 				    <li data-theme = "b"><a href="moacl_money_accounts_new.php" data-ajax = "false" >NEW ACCOUNT </a></li>
@@ -34,8 +35,16 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_accounts_access.php' 
 				    <li style = "opacity: 0.2"><a href="#">POCKET_2 <span class="ui-li-count">40 000 000 RUR</span></a></li>
 				</ul>
 			</form>
+			</div>
 
-			<?require_once '../../footer.php'?>
+			<? require_once '../../footer.php';?>
+			<? require_once 'panel.php'?>
+
 		</section>
+		<script>
+			$(document).ready(function(){
+				$("#to_exit_btn").click( function(){location.href = $(this).attr("data-href");});
+			});
+		</script>
 	</body>
 </html>

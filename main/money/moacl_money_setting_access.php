@@ -77,17 +77,14 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_setting_access.php' )
     </div>
 
     <?require_once '../../footer.php'?>
+    <?require_once 'panel.php'?>
 
-    <div data-role="panel" data-position-fixed="true" data-display="push" data-theme="a" id="nav-panel">
-                <ul data-role="listview">
-                            <li data-theme="b"><a data-ajax = "false" href="../objects/moacl_objects.php">Objects</a></li>
-                            <li data-theme="b"><a data-ajax = "false" href="../activities/moacl_activities.php">Activities</a></li>
-                            <li><a data-ajax = "false" href="../../about.php">About</a></li>
-                            <li><a data-ajax = "false" href="../../index.php">Exit</a></li>
-
-                	    </ul>
-            </div><!-- /panel -->
-<script src="../../scripts/moacl_money.js" type="text/javascript" ></script>
     </section>
+<script src="../../scripts/moacl_money.js" type="text/javascript" ></script>
+<script>
+    $(document).ready(function(){
+        $("#to_exit_btn").click( function(){location.href = $(this).attr("data-href");});
+    });
+</script>
 </body>
 </html>

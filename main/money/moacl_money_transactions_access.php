@@ -942,19 +942,7 @@
     </div>
 
     <?require_once '../../footer.php'?>
-
-    <div data-role="panel" data-position-fixed="true" data-display="push" data-theme="a" id="nav-panel">
-        <ul data-role="listview">
-            <li data-role="list-divider" style = "text-align: center"><? echo $auth->getUserName()?></li>
-            <li><a href="#">Profile</a></li>
-            <li id = "to_exit_btn" data-href = "../../logout.php"><a>Exit</a></li>
-            <li data-theme="b"><a data-ajax = "false" href="#">Objects</a></li>
-            <li data-theme="b"><a data-ajax = "false" href="#">Activities</a></li>
-            <li data-theme="b"><a data-ajax = "false" href="#">Contacts</a></li>
-            <li data-theme="b"><a data-ajax = "false" href="#">Love</a></li>
-
-        </ul>
-    </div><!-- /panel -->
+    <?require_once 'panel.php'?>
 
     <div data-role="popup" data-dismissible="false" id="oper" data-theme="a" data-overlay-theme="b" class="ui-content" style="max-width:340px; padding-bottom:2em;">
         <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
@@ -984,5 +972,6 @@
 
 </body>
 <script src="../../scripts/moacl_money.js" type="text/javascript" ></script>
+
 
 </html>

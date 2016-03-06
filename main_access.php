@@ -32,7 +32,14 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'main_access.php' )
     <?require_once 'footer.php'?>
     <div data-role="popup" id="UserMenu" data-theme="a" style="min-width:10em; line-height: 0;">
         <ul data-role="listview" data-inset="true" >
-            <li data-role="list-divider" style = "text-align: center;"><? echo $auth->getUserName()?></li>
+            <li data-role="list-divider" style = "text-align: center;">
+                <?
+                $auth = New Authentication;
+                $userName = $auth->getUserName();
+                unset($auth);
+                echo $userName;
+                ?>
+            </li>
             <li><a href="#">Profile</a></li>
             <li id = "to_exit_btn" data-href = "logout.php"><a>Exit</a></li>
 

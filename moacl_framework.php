@@ -35,7 +35,9 @@ include_once 'constants.php';
 	static $noLoginString = "No login."; //заход на страницу без логина
 
 	 function __construct(){
-
+		 if (isset(self::$mysqli)){
+			 exit;
+		 }
 		 if($_SERVER['HTTP_HOST'] == HTTPHOST){
 			 self::$mysqli = new mysqli(DBHOST, DBUSER, DBPASS, DB);
 		 }
@@ -50,9 +52,12 @@ include_once 'constants.php';
 	 }
 
 	 function __destruct() {
-		 self::$mysqli->close();
-	 }
+		 if (isset(self::$mysqli)){
+			 self::$mysqli->close();
+			 self::$mysqli=null;
+		 }
 
+	 }
 
 	 function getParamSQL($queryName,$paramArray){
 		 $query = "select * from `sql_templates` where `Query_name` ='$queryName'";
@@ -242,7 +247,7 @@ class Authentication extends SecureSystem{
 			return $_SESSION['Login'];
 		}
 		else{
-			return "?????";
+			return false;
 		}
 	}
 
@@ -297,6 +302,9 @@ class Registration extends SecureSystem{
 			self::prepareRegData();
 			self::addUser();
 		}
+	}
+	function __destruct(){
+		parent::__destruct();
 	}
 	
 	function addUser(){
@@ -492,6 +500,12 @@ class Registration extends SecureSystem{
 }
 
 class Money extends SecureSystem{
+	function __construct(){
+		parent::__construct();
+	}
+	function __destruct(){
+		parent::__destruct();
+	}
 
 	function getAccounts(){
 

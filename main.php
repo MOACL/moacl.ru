@@ -4,12 +4,16 @@ session_start();
 $login = $_POST['login'];
 $password = $_POST['password'];
 include_once 'moacl_framework.php';
+
 $auth = New Authentication;
-if($auth->authorizer() or  $auth->login($login, $password, "gag@gag")){ //уже авторизован или правлиьный пароль и логин
+$access = $auth->authorizer();
+$login_success = $auth->login($login, $password, "gag@gag");
+unset($auth);
+if($access or  $login_success){ //уже авторизован или правлиьный пароль и логин
 	require_once 'main_access.php';
 		}
 else{
 	//require_once 'access_denied.php'
-	header("Location: access_denied.php");
+	header("Location: index.php");
 	exit();
 }
