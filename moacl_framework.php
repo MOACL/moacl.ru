@@ -352,9 +352,23 @@ class Registration extends SecureSystem{
 		 $row = $result->fetch_array(MYSQLI_ASSOC);
 		 $activation = crypt($row['User_ID'].$login, $row['Salt']);
 		 $subject = "Registration confirmation.";
-		 $message    = "Для активации акаунта на moacl.ru перейдите по ссылке:\nhttp://moacl.ru/activation.php?login=".$login."&code=".$activation;
-		mail($email, $subject, $message, "Content-type:text/plane; Charset=utf-8\r\n");
-		$feedback = "На ".$email." отправлена cсылкa для подтверждения регистрации.<br> Внимание! Ссылка действительна 1 час."; 
+		 //$message    = "Для активации акаунта на moacl.ru перейдите по ссылке:\nhttp://moacl.ru/activation.php?login=".$login."&code=".$activation;
+		$message    ='<html>
+<head>
+  <title>Registration confirmation</title>
+</head>
+<body>
+  <div>
+  Для активации акаунта moacl.ru перейдите по <a href = "localhost:85/moacl.ru/activation.php?login='.$login.'&code='.$activation.'">ссылке</a>
+  </div>
+</body>
+</html>';
+		//$headers  = "Content-type:text/plane; Charset=utf-8\r\n"
+		$headers  = 'MIME-Version: 1.0' . "\r\n";
+		$headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
+		$headers .= 'From: Activator Moacl <activation@moacl.com>' . "\r\n";
+		mail($email, $subject, $message, $headers);
+		$feedback = "На ".$email." отправлена ссылка для подтверждения регистрации.<br> Внимание! Ссылка действительна 1 час.";
 		self::$message = $feedback;
 
 	}
