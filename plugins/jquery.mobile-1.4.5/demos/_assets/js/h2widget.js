@@ -112,7 +112,7 @@
 					bodyid = "ui-page-top",
 					panel = "<div data-role='panel' class='jqm-nav-panel jqm-quicklink-panel' data-position='right' data-display='overlay' data-theme='a'><ul data-role='listview' data-inset='false' data-theme='a' data-divider-theme='a' data-icon='false' class='jqm-list'><li data-role='list-divider'>Quick Links</li></ul></div>",
 					first = true,
-					h2dictionary = new Object();
+					h2dictionary = {};
 					if(typeof $("body").attr("id") === "undefined"){
 						$("body").attr("id",bodyid);
 					} else {
@@ -149,7 +149,7 @@
 						}
 					});
 					if( $(h2dictionary).length > 0 ){
-						this.element.prepend(panel)
+						this.element.prepend(panel);
 						this.element.find(".jqm-quicklink-panel").panel().find("ul").listview();
 					}
 					$.each(h2dictionary,function(id,text){

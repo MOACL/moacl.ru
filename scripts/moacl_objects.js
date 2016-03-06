@@ -57,13 +57,13 @@
 		
 		//тестовый код
 		switch(Place) {
-			case "KTCN": return "80%"
+			case "KTCN": return "80%";
 			break; 				
-			case "GARG": return "50%"
+			case "GARG": return "50%";
 			break; 				
-			case "LGGI": return "45%"
+			case "LGGI": return "45%";
 			break; 				
-			case "DACH": return "90%"
+			case "DACH": return "90%";
 			break; 				
 		}
 		//тестовый код

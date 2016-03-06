@@ -75,7 +75,7 @@ $( document ).on( "pagecreate", ".jqm-demos", function( event ) {
 
 	$( document ).on( "panelopen", ".jqm-search-panel", function() {
 		$( this ).find( "input" ).focus();
-	})
+	});
 
 	$( ".jqm-navmenu-link" ).on( "click", function() {
 		page.find( ".jqm-navmenu-panel:not(.jqm-panel-page-nav)" ).panel( "open" );
@@ -295,7 +295,7 @@ $( document ).on( "mobileinit", function() {
 				this.element.find( "li.ui-btn-active" ).toggleClass( "ui-btn-active" ).next().toggleClass( "ui-btn-active" ).find("a").toggleClass( "ui-btn-active" );
 				this.highlightDown();
 			}
-			return;
+
 		},
 		highlightUp: function() {
 			if ( this.element.find( "li.ui-btn-active" ).hasClass( "ui-screen-hidden" ) ) {
@@ -303,7 +303,7 @@ $( document ).on( "mobileinit", function() {
 				this.element.find( "li.ui-btn-active" ).toggleClass( "ui-btn-active" ).prev().toggleClass( "ui-btn-active" ).find("a").toggleClass( "ui-btn-active" );
 				this.highlightUp();
 			}
-			return;
+
 		}
 	});
 })( jQuery );

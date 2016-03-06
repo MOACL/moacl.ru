@@ -71,11 +71,13 @@ include_once 'constants.php';
 			 $parameters = $row['Parameters'];
 			 $m=0;
 			 $sql=$sqlTemlate;
-			 foreach($paramArray as $i => $value){
-				 $n=strpos($parameters, ";", $m + 1);
-				 $parameter = "@@" . substr($parameters, $m, $n - $m) . "@@";
-				 $sql = str_replace($parameter, $value,$sql);
-            	 $m = $n+1;
+			 if ($paramArray != null) {
+				 foreach ($paramArray as $i => $value) {
+					 $n = strpos($parameters, ";", $m + 1);
+					 $parameter = "@@" . substr($parameters, $m, $n - $m) . "@@";
+					 $sql = str_replace($parameter, $value, $sql);
+					 $m = $n + 1;
+				 }
 			 }
 			 return $sql;
 		 }
@@ -259,7 +261,7 @@ class Authentication extends SecureSystem{
 		self::prepareRegData();
 
 		//$query = "SELECT `Password`, `Salt`, `Login`, `User_ID` FROM `users` WHERE `Login`= '$login'  and `Activation` = 1 and `Deleted` = 0;";
-		$query = self::getParamSQL('UserRegData_by_Login',Array(self::$login));
+		$query = self::getParamSQL('UserRegData_by_Login',Array(self::$login,1)); //активированный юзер
 		$result = self::$mysqli->query($query)	or die(self::$mysqli->error);
 		$row = $result->fetch_array(MYSQLI_ASSOC);
 		$_USER = $row;
@@ -315,9 +317,7 @@ class Registration extends SecureSystem{
 		$ip =self::getIp();
 		$browser =self::getBrowser();
 		$sid =self::getSID();
-		
-		
-		//$query = "INSERT INTO `users` (`Login`, `Password`, `Salt`, `E-mail`, `IP`, `SID` ,`BROWSER`) VALUES ('$login' , '$hash' ,'$salt', '$email', '$ip', '$sid' , '$browser');";
+
 		$query = self::getParamSQL('Add_NewUser',Array($login,$hash,$salt,$email,$ip,$sid,$browser));
 		$result = self::$mysqli->query($query);
 		
@@ -329,33 +329,34 @@ class Registration extends SecureSystem{
 			$row = $result->fetch_array(MYSQLI_ASSOC);
 			$uid= $row['User_id'];
 			//$query = "INSERT INTO `users_sessions` (`SID`, `UID`, `IP`, `BROWSER`, `Action_ID`, `Date_of_start` ,`Date_of_end`) VALUES ('$sid' , '$uid' ,'$ip', '$browser', 1 , Now() , Now());"; // Action_ID =1 (registration)
-			$query = self::getParamSQL('Add_NewSession',Array($sid,$uid,$ip,$browser));
+			$query = self::getParamSQL('Add_NewSession',Array($sid,$uid,$ip,$browser, 1)); // Action_ID =1 (registration)
 			$result = self::$mysqli->query($query);
-		}
-		
-		
-		if (!$result) {
-			self::$message = self::$dbErrorString . self::$mysqli->error;;
+			if (!$result) {
+				self::$message = self::$dbErrorString . self::$mysqli->error;;
+			}
+			else{
+				self::sendMail();
+			}
 		}
 		else{
-			self::sendMail();
-		}	
+			self::$message = self::$dbErrorString . self::$mysqli->error;;
+		}
 	}
 
 	function sendMail(){
 		 $email = self::$email;
 		 $login = self::$login;
 		 //$query = "SELECT `User_id`, `Salt` FROM `users` WHERE `Login`='$login'";
-		 $query = self::getParamSQL('UserRegData_by_Login',Array(self::$login));
+		 $query = self::getParamSQL('UserRegData_by_Login',Array(self::$login, 0)); //неактивированный юзер
 		 $result = self::$mysqli->query($query);
 		 $row = $result->fetch_array(MYSQLI_ASSOC);
-		 $activation = crypt($row['User_id'].$login, $row['Salt']);
+		 $activation = crypt($row['User_ID'].$login, $row['Salt']);
 		 $subject = "Registration confirmation.";
-		 $message    = "Уважаемый ".$login.", для активации акаунта на moacl.ru перейдите по ссылке:\nhttp://moacl.ru/activation.php?login=".$login."&code=".$activation;
+		 $message    = "Для активации акаунта на moacl.ru перейдите по ссылке:\nhttp://moacl.ru/activation.php?login=".$login."&code=".$activation;
 		mail($email, $subject, $message, "Content-type:text/plane; Charset=utf-8\r\n");
 		$feedback = "На ".$email." отправлена cсылкa для подтверждения регистрации.<br> Внимание! Ссылка действительна 1 час."; 
 		self::$message = $feedback;
-		
+
 	}
 	
 	function activateUser(){
@@ -365,13 +366,14 @@ class Registration extends SecureSystem{
 		$sid = self::getSID();
 		$code = null;
 
-		$query = "UPDATE `users` SET `Activation`=1 WHERE Deleted='0' AND UNIX_TIMESTAMP()- UNIX_TIMESTAMP(`Date_of_add`) > " . MAIL_REG_LIMIT . ";";
+		$query = self::getParamSQL('DelAllOldNonActivatedUsers',Array(MAIL_REG_LIMIT));
 		self::$mysqli->query($query);
 		if(isset($_GET['code'])) {
 			$code =$_GET['code'];
 		}
 		else {
 			self::$message = self::$noConfirmString;
+			exit;
 		}
 		if (isset($_GET['login'])) {
 			$login=$_GET['login'];
@@ -380,27 +382,29 @@ class Registration extends SecureSystem{
 			self::$message = self::$noLoginString;
 			exit;
 		}
-		$query = "SELECT `User_id`, `Salt` FROM `users` WHERE Login='$login' and activation='0' ";
+		$query = self::getParamSQL('UID_Salt_by_login',Array($login));
 		$result = self::$mysqli->query($query);
 		$row = $result->fetch_array(MYSQLI_ASSOC);
 		$activation = crypt($row['User_id'].$login, $row['Salt']);
 		
 		if($result->num_rows==0){
-			self::$message =  "User $login already activated! <a href='index.php'>Moacl.ru</a>";
+			self::$message =  "User $login does not need activation! <a href='index.php'>Moacl.ru</a>";
 		}
 		
 		elseif ($activation == $code) {
-			$query = "UPDATE `users` SET `Activation`='1', `IP` = '$ip', `SID` = '$sid', `BROWSER` = '$browser' WHERE Login='$login'";
+			$query = self::getParamSQL('ActivateUser',Array($ip,$sid,$browser,$login));
 			$result = self::$mysqli->query($query);
 			
 			if($result){
-			
-			$query = "SELECT `User_id` FROM `users` WHERE `Login` = '$login';";
-			$result = self::$mysqli->query ($query);
-			$row = $result->fetch_array(MYSQLI_ASSOC);
-			$uid= $row['User_id'];
-			$query = "INSERT INTO `users_sessions` (`SID`, `UID`, `IP`, `BROWSER`, `Action_ID`, `Date_of_start` ,`Date_of_end`) VALUES ('$sid' , '$uid' ,'$ip', '$browser', 2 , Now() , Now());"; // Action_ID =2 (activation)
-			$result = self::$mysqli->query($query);
+				$query = self::getParamSQL('UID_by_Login',Array($login));
+				$result = self::$mysqli->query ($query);
+				$row = $result->fetch_array(MYSQLI_ASSOC);
+				$uid= $row['User_id'];
+				$query = self::getParamSQL('Add_NewSession',Array($sid,$uid,$ip,$browser, 2)); // Action_ID =2 (activation)
+				$result = self::$mysqli->query($query);
+				if (!$result) {
+					self::$message = self::$dbErrorString . self::$mysqli->error;;
+				}
 			}
 
 
@@ -508,8 +512,8 @@ class Money extends SecureSystem{
 	}
 
 	function getAccounts(){
-
-		$result=self::$mysqli->query("SELECT Account_ID, Account, Selected FROM accounts WHERE Disabled = 0;");
+		$query = self::getParamSQL('Accounts',null);
+		$result=self::$mysqli->query($query);
 		$row = array();
 		if ($result) {
 			$num = $result->num_rows;
@@ -525,7 +529,8 @@ class Money extends SecureSystem{
 		}
 	}
 	function getBalance($account_id){
-		$result=self::$mysqli->query("select Balance from accounts where Account_ID =" . $account_id .";");
+		$query = self::getParamSQL('Balance_by_Account',Array($account_id));
+		$result=self::$mysqli->query($query);
 		$row = array();
 		if ($result) {
 			$num = $result->num_rows;
@@ -541,7 +546,8 @@ class Money extends SecureSystem{
 		}
 	}
 	function getCategories($revenue){
-		$result=self::$mysqli->query("SELECT Category_ID, Category, Selected  FROM categories mc WHERE mc.Disabled = 0 AND mc.Revenue=" . $revenue .";");
+		$query = self::getParamSQL('Categories_by_revenue',Array($revenue));
+		$result=self::$mysqli->query($query);
 		$row = array();
 		if ($result) {
 			$num = $result->num_rows;
@@ -557,7 +563,8 @@ class Money extends SecureSystem{
 		}
 	}
 	function getItems($category_id){
-		$result=self::$mysqli->query("SELECT Item_ID, Item, Selected FROM items mg WHERE mg.Disabled = 0 AND mg.Category_ID=" . $category_id .";");
+		$query = self::getParamSQL('Items_by_category',Array($category_id));
+		$result=self::$mysqli->query($query);
 		$row = array();
 		if ($result) {
 			$num = $result->num_rows;
@@ -574,9 +581,7 @@ class Money extends SecureSystem{
 	}
 	function transactionGo($account_id, $category_id, $item_id, $sum, $commentary, $date){
 
-		$query = "insert into transactions(Account_ID, Category_ID, Item_ID, Deleted, Sum, Date_of_realization, Commentary)
-			select " . $account_id . "," . $category_id . "," . $item_id . ",0," . $sum . ", '" . $date . "'," . $commentary . ";";
-
+		$query = self::getParamSQL('Add_transaction',Array($account_id,$category_id,$item_id,$sum,$date,$commentary));
 		$result=self::$mysqli->query($query);
 
 		if ($result) {

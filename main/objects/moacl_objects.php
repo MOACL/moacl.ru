@@ -112,7 +112,7 @@
 		</section>
 	<script src="../../scripts/moacl_objects.js" type="text/javascript" /></script>
 	</body>
-</html>
+</html>;
 
 
 

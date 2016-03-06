@@ -30,7 +30,7 @@ $('input[type="radio"]').change( function() {
 	combobox_load(false,"category","Category", "getcategories.php?revenue=" + $revenue);
 	combobox_load(false, "item","Item", "getitems.php?category_id=" + $("#category").val());
 
-})
+});
 
 $("#sum").focus(function(){
 			rur_format_clear("#sum");

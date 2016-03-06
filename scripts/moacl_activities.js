@@ -58,13 +58,13 @@
 		
 		//тестовый код
 		switch(Phase) {
-			case "MRNG": return "3H"
+			case "MRNG": return "3H";
 			break; 				
-			case "DAY": return "10H"
+			case "DAY": return "10H";
 			break; 				
-			case "EVNG": return "3H"
+			case "EVNG": return "3H";
 			break; 				
-			case "NGHT": return "8H"
+			case "NGHT": return "8H";
 			break; 				
 		}
 		//тестовый код
