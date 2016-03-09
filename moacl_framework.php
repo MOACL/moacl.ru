@@ -355,7 +355,7 @@ class Registration extends SecureSystem{
 		 //$message    = "Для активации акаунта на moacl.ru перейдите по ссылке:\nhttp://moacl.ru/activation.php?login=".$login."&code=".$activation;
 		$message    ='<html>
 <head>
-  <title>Registration confirmation</title>
+  <title>Registration confirmation.</title>
 </head>
 <body>
   <div>
