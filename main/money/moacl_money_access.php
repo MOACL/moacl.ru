@@ -27,81 +27,84 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_access.php' ) {
 
     <div class="content moacl-common" data-role = "content">
         <form id = "main_form" name="main_form" action="transaction.php" method="post">
-            <div data-role="fieldcontain">
-
-                    <fieldset data-role="controlgroup" data-type="horizontal"  >
-                        <input type="radio" id="radio_in" name="radio_tt" value=1 />
-                        <label for="radio_in">&ensp;In</label>
-                        <input type="radio" id="radio_out" name="radio_tt" value=0 checked = "checked"  />
-                        <label for="radio_out">Out</label>
-                    </fieldset>
-
+            <div id = "accountblock" data-role="fieldcontain">
+            <div style = "display: inline-block; margin-bottom: 0em;width: 50%; vertical-align: top; text-align: left;">
+                <label for="account" style="
+    margin-right: 15px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    margin-left: 0px;
+">Account:</label>
+                <select id="account" name="account" data-native-menu = "false"></select>
+            </div>
+                <div  style = "display: inline-block;  margin-bottom: 0em; width: 40%; vertical-align: top; text-align: left; ">
+            <div id = "bal" style = "margin: 0 auto; width: 100%; vertical-align: bottom; text-align: left; ">
+                <label for="balance"></label>
+                <input id = "balance" type="text" name="balance" readonly/>
+            </div>
+                <div id = "balpas" style = "margin: 0 auto; width: 100%; vertical-align: top; text-align: left; ">
+                    <label for="balance_pass"></label>
+                    <input id = "balance_pass" type="text" name="balance_pass" value = "RUR 500" readonly/>
+                </div>
+                </div>
             </div>
 
-            <table>
-                <tr>
-                    <td>
-                        <div data-role="fieldcontain" >
-                            <label for="account">Account:</label>
+            <div id = "categoryblock" data-role="fieldcontain">
+                <div style = "display: inline-block; margin-bottom: 0em;width: 50%; vertical-align: top; text-align: left;">
+                    <label for="category" style="
+    margin-right: 15px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    margin-left: 0px;
+">Category:</label>
+                    <select id="category" name="category" data-native-menu = "false"></select>
+                </div>
+                <div style = "display: inline-block; margin-bottom: 0em; width: 40%; vertical-align: top;">
+                    <fieldset data-role="controlgroup" data-type="horizontal" >
+                        <input type="radio" id="radio_in" name="radio_tt" value=1 />
+                        <label for="radio_in">Gain</label>
+                        <input type="radio" id="radio_out" name="radio_tt" value=0 checked = "checked"  />
+                        <label for="radio_out">Cost</label>
+                    </fieldset>
+                </div>
+            </div>
+            <div id = "itemblock" data-role="fieldcontain">
+                <div style = "display: inline-block; margin-bottom: 0em;width: 50%; vertical-align: top; text-align: left;">
+                    <label for="item" style="
+    margin-right: 15px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    margin-left: 0px;
+">Item:</label>
+                    <select id="item" name="item" data-native-menu = "false"></select>
+                </div>
+                <div  style = "display: inline-block;  margin-bottom: 0em; width: 40%; vertical-align: top; text-align: left; ">
 
-                            <select id="account" name="account" data-native-menu = "false"></select>
-                        </div>
-                    </td>
-                    <td>
-                        <div data-role="fieldcontain" >
-                            <label for="balance">Balance:</label>
-                            <input id = "balance" type="text" name="balance" readonly/>
-                        </div>
-                    </td>
-
-                </tr>
-            </table>
-            <table>
-                <tr>
-                    <td>
-                        <div data-role="fieldcontain">
-                            <label for="category">Category:</label>
-                            <select id = "category" name="category" data-native-menu = "false"></select>
-                        </div>
-                    </td>
-                    <td>
-                        <div data-role="fieldcontain">
-                            <label for="item">Item:</label>
-                            <select id = "item" name="item" data-native-menu = "false"></select>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-            <table>
-                <tr>
-                    <td>
-                        <div data-role="date" data-inline ="true">
-                            <label for="date">Date:</label>
-                            <input id="date" type="datetime" name= "date" ><br>
-                        </div>
-                    </td>
-                    <td>
-                        <label for="sum">Sum:</label>
-                        <input id="sum" type="text" name= "sum" value = "RUR" data-clear-btn="true"><br>
-                    </td>
-                </tr>
-            </table>
-            <table>
-                <tr>
-                    <td>
-                        <label for="commentary">Commentary:</label>
-                        <textarea placeholder = "особенности транзакции" rows = "3" id="commentary" name="commentary" wrap="hard" ></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <center>
-
-                            <input data-icon="check" data-iconpos="top" id = "submit"  type="submit" name="submit" value="Rightly!"/>
-                        </center>
-                    </td>
-                </tr>
-            </table>
+                    <label for="sum" style="
+    margin-right: 15px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    margin-left: 0px;
+">Sum:</label>
+                    <input id="sum" type="text" name= "sum" value = "RUR" data-clear-btn="false" autocomplete="off">
+                </div>
+            </div>
+            <div id = "dateblock" data-role="fieldcontain">
+                <div style = "display: inline-block; margin-bottom: 0;width: 40%; min-width: 9.5em !important; vertical-align: top; text-align: center;">
+                <label for="date" style="
+    margin-right: 15px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    margin-left: 0;
+">Date of payment:</label>
+                <input id="date" name= "date" type="date" value="<?echo date("Y-m-d"); ?>" data-clear-btn="false">
+            </div>
+            </div>
+            <div id = "submitblock" data-role="fieldcontain">
+                <div style = "display: inline-block; margin-bottom: 0;width: 100%;vertical-align: top; text-align: center;">
+            <input data-icon="check" data-iconpos="top" id = "submit"  type="submit" name="submit" value="Rightly!"/>
+            </div>
+            </div>
         </form>
     </div>
 

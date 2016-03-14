@@ -32,17 +32,30 @@ $('input[type="radio"]').change( function() {
 
 });
 
-$("#sum").focus(function(){
-			rur_format_clear("#sum");
-			$("#sum").css({"font-weight":"normal"});
+var $sum = $("#sum");
+
+$sum.tap(function(){
+    rur_format_clear($sum);
+    $sum.attr('type','number'); //call numeric keypad
+		}
+);
+
+$sum.focus(function(){
+			//rur_format_clear($sum);
+    $sum.css({"font-weight":"normal"});
+
 		}
 );
 //event 5
-$("#sum").blur(function(){
-			rur_format("#sum", false);
-			$("#sum").css({"font-weight":"bold"});
+$sum.blur(function(){
+
+			$sum.attr('type','text');
+			rur_format($sum, false);
+    $sum.css({"font-weight":"bold"});
+
 		}
 );
+
 
 
 function SetBalance(){
@@ -58,8 +71,9 @@ function SetBalance(){
 				return(false);
 			}
 			else {
-				$("#balance").val($(result.row).attr("Balance"));
-				rur_format("#balance", true);
+				var $bal = $("#balance");
+                $bal.val($(result.row).attr("Balance"));
+				rur_format($bal, true);
 			}
 		}
 	});
@@ -97,7 +111,7 @@ function combobox_load(ajax, comboname, dbfieldname, url, changefunc){
 			}
 
 		}//success
-	});//ajax
+	});//ajax*
 
 	if(typeof changefunc == 'function' ){
 		$select.change(changefunc);
@@ -142,7 +156,7 @@ $('#main_form').submit(function(e){
 //focus
 function rur_format(v, minus){
 	rur_format_clear(v);
-	var x = $(v).val();
+	var x = v.val();
 	if(x>0) {
 		x = "" + money_format((1)*x +"");
 	}
@@ -153,14 +167,14 @@ function rur_format(v, minus){
 		x="";
 	}
 
-	$(v).val($CURR + " " + x);
+	v.val($CURR + " " + x);
 }
 
 //blur
 function rur_format_clear(v){
-	var t = $(v).val();
+	var t = v.val();
 	t = t.replace($CURR,"").replace(/\s/g,"");
-	$(v).val(t);
+	v.val(t);
 }
 
 function money_format(s){

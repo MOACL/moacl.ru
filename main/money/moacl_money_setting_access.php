@@ -31,7 +31,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_setting_access.php' )
                     <fieldset data-role="controlgroup" data-type="horizontal" >
                         <input type="radio" id="radio_in" name="radio_tt" value=1 />
                         <label for="radio_in">&ensp;In</label>
-                        <input type="radio" id="radio_out" name="radio_tt" value=0 checked = "Yes"  />
+                        <input type="radio" id="radio_out" name="radio_tt" value=0 checked = "checked"  />
                         <label for="radio_out">Out</label>
                     </fieldset>
 
