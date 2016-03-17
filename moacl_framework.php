@@ -593,9 +593,9 @@ class Money extends SecureSystem{
 			return array('type'=>'error');
 		}
 	}
-	function transactionGo($account_id, $category_id, $item_id, $sum, $commentary, $date){
+	function transactionGo($account_id, $category_id, $item_id, $sum, $comment, $date, $confirmed){
 
-		$query = self::getParamSQL('Add_transaction',Array($account_id,$category_id,$item_id,$sum,$date,$commentary));
+		$query = self::getParamSQL('Add_transaction',Array($account_id,$category_id,$item_id,$sum,$date,$comment,$confirmed));
 		$result=self::$mysqli->query($query);
 
 		if ($result) {

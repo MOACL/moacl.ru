@@ -101,8 +101,10 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_access.php' ) {
             </div>
             </div>
             <div id = "submitblock" data-role="fieldcontain">
-                <div style = "display: inline-block; margin-bottom: 0;width: 100%;vertical-align: top; text-align: center;">
-            <input data-icon="check" data-iconpos="top" id = "submit"  type="submit" name="submit" value="Rightly!"/>
+                <div style = "display: inline-block; margin-bottom: 0;width: 90%;vertical-align: top; text-align: center;">
+            <!--<input data-icon="check" data-iconpos="top" id = "submit"  type="submit" name="submit" value="Rightly!"/>-->
+                    <a href="#decisionTransact" id = "decisionTransact_rel" class ="ui-btn ui-shadow ui-corner-all ui-icon-check ui-btn-icon-top" data-rel="popup" data-position-to="window" data-transition="pop">Rightly!</a>
+
             </div>
             </div>
         </form>
@@ -111,6 +113,20 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_access.php' ) {
     <?require_once '../../footer.php'?>
     <?require_once 'panel.php'?>
 
+    <!--форма принятия решения о проводке -->
+    <div data-role="popup" id="decisionTransact" data-dismissible="false" data-theme="a" data-overlay-theme="b" class="ui-content" >
+    <form id = "decisionTransact_form" name="decisionTransact_form" action="transaction.php" method="post">
+
+        <div id = "summaryLabel" >Transaction</div>
+
+        <label for="comment">Comment:</label>
+        <textarea data-clear-btn="true" style="font-size: 10pt; min-width: 15em; min-height: 4em;" name="comment" id="comment"></textarea>
+
+        <a href="#" id="addInPlan" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-btn-b ui-icon-clock ui-btn-icon-left ui-mini">Add in plan</a>
+        <a href="#" id="implement" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-btn-b ui-icon-check ui-btn-icon-left ui-mini">Implement</a>
+        <a href="#" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-mini">Go back</a>
+    </form>
+    </div><!--форма принятия решения о проводке -->
 
 
 
@@ -129,6 +145,24 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_access.php' ) {
         $("#to_obj_btn").click( function(){location.href = $(this).attr("data-href");});
         $("#to_act_btn").click( function(){location.href = $(this).attr("data-href");});
         $("#to_exit_btn").click( function(){location.href = $(this).attr("data-href");});
+
+        $("#implement").click(function(){
+
+            var $transactData = $("#main_form").serialize() + '&' + $("#decisionTransact_form").serialize() + '&confirmed=1';
+            $.post( "transaction.php", $transactData);
+            
+        });
+        $("#addInPlan").click(function(){
+
+            var $transactData = $("#main_form").serialize() + '&' + $("#decisionTransact_form").serialize() + '&confirmed=0';
+            $.post( "transaction.php", $transactData);
+
+        });
+        $("#decisionTransact").click(function(){
+        $('#summaryLabel').html("<h3>wdwqdqwd</h3>")
+
+
+        });
     });
 </script>
 </body>
