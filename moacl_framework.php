@@ -82,7 +82,19 @@ include_once 'constants.php';
 			 return $sql;
 		 }
 	 }
+     function getSP($spName,$paramArray){
 
+         $query = "call $spName";
+             if ($paramArray != null) {
+                 //$query .= "(join(",", $paramArray))";
+                 $query .= "('" . implode("', '", $paramArray) . "');";
+
+
+
+
+         }
+         return $query;
+     }
 	 function verificationRegData() {
 		//Login
 		$loginExist=self::loginExist();
@@ -526,7 +538,9 @@ class Money extends SecureSystem{
 	}
 
 	function getAccounts(){
-		$query = self::getParamSQL('Accounts',null);
+		//$query = self::getParamSQL('Accounts',null);
+		//$query = "call sp_accounts_enabled();";
+        $query = self::getSP('sp_accounts_enabled',null);
 		$result=self::$mysqli->query($query);
 		$row = array();
 		if ($result) {
@@ -543,7 +557,8 @@ class Money extends SecureSystem{
 		}
 	}
 	function getBalance($account_id){
-		$query = self::getParamSQL('Balance_by_Account',Array($account_id));
+		//$query = self::getParamSQL('Balance_by_Account',Array($account_id));
+        $query = self::getSP('sp_balance_of_account',Array($account_id));
 		$result=self::$mysqli->query($query);
 		$row = array();
 		if ($result) {
@@ -595,7 +610,8 @@ class Money extends SecureSystem{
 	}
 	function transactionGo($account_id, $category_id, $item_id, $sum, $comment, $date, $confirmed){
 
-		$query = self::getParamSQL('Add_transaction',Array($account_id,$category_id,$item_id,$sum,$date,$comment,$confirmed));
+		//$query = self::getParamSQL('Add_transaction',Array($account_id,$category_id,$item_id,$sum,$date,$comment,$confirmed));
+        $query = self::getSP('sp_add_transaction',Array($account_id,$category_id,$item_id,$sum,$date,$comment,$confirmed));
 		$result=self::$mysqli->query($query);
 
 		if ($result) {

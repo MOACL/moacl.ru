@@ -15,9 +15,10 @@ if($sum =="")$sum=0;
 //$date = str_replace("." , "-",$date);
 //$date = date('Y-m-d',strtotime($date));
 
+$date=new DateTime($date);
+$date = $date->format('Y-m-d H:i:s');
 
 include_once '../../moacl_framework.php';
-
 //получение доступа
 $auth = New Authentication;
 $access = $auth->authorizer();
