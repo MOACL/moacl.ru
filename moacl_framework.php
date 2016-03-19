@@ -88,13 +88,10 @@ include_once 'constants.php';
              if ($paramArray != null) {
                  //$query .= "(join(",", $paramArray))";
                  $query .= "('" . implode("', '", $paramArray) . "');";
-
-
-
-
          }
          return $query;
      }
+
 	 function verificationRegData() {
 		//Login
 		$loginExist=self::loginExist();
@@ -614,11 +611,18 @@ class Money extends SecureSystem{
         $query = self::getSP('sp_add_transaction',Array($account_id,$category_id,$item_id,$sum,$date,$comment,$confirmed));
 		$result=self::$mysqli->query($query);
 
+		$row = array();
 		if ($result) {
-			return true;
-
-		} else {
-			return false;
+			$num = $result->num_rows;
+			$i = 0;
+			while ($i < $num) {
+				$row[$i] = $result->fetch_array(MYSQLI_ASSOC);
+				$i++;
+			}
+			return array('row'=>$row);
+		}
+		else {
+			return array('type'=>'error');
 		}
 	}
 }

@@ -25,7 +25,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_access.php' ) {
 <section id="mfin_1" data-role = "page" data-position = "fixed"  >
     <?require_once '../../header.php'?>
 
-    <div class="content moacl-common" data-role = "content">
+    <div class="content moacl-common" data-role = "content" >
         <form id = "main_form" name="main_form" action="transaction.php" method="post">
             <div id = "accountblock" data-role="fieldcontain">
             <div style = "display: inline-block; margin-bottom: 0em;width: 50%; vertical-align: top; text-align: left;">
@@ -44,7 +44,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_access.php' ) {
             </div>
                 <div id = "balpas" style = "margin: 0 auto; width: 100%; vertical-align: top; text-align: left; ">
                     <label for="balance_pass"></label>
-                    <input id = "balance_pass" type="text" name="balance_pass" value = "RUR 500" readonly/>
+                    <input id = "balance_pass" type="text" name="balance_pass" readonly/>
                 </div>
                 </div>
             </div>
@@ -91,21 +91,21 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_access.php' ) {
             </div>
             <div id = "dateblock" data-role="fieldcontain">
                 <div style = "display: inline-block; margin-bottom: 0;width: 40%; min-width: 9.5em !important; vertical-align: top; text-align: center;">
-                <label for="date" style="
+                    <label for="date" style="
     margin-right: 15px;
     margin-bottom: 15px;
     margin-top: 15px;
     margin-left: 0;
 ">Date of payment:</label>
-                <input id="date" name= "date" type="date" value="<?echo date("Y-m-d"); ?>" data-clear-btn="false">
-            </div>
+                    <input id="date" name= "date" type="date" value="<?echo date("Y-m-d"); ?>" data-clear-btn="false">
+                </div>
             </div>
             <div id = "submitblock" data-role="fieldcontain">
                 <div style = "display: inline-block; margin-bottom: 0;width: 90%;vertical-align: top; text-align: center;">
-            <!--<input data-icon="check" data-iconpos="top" id = "submit"  type="submit" name="submit" value="Rightly!"/>-->
+                    <!--<input data-icon="check" data-iconpos="top" id = "submit"  type="submit" name="submit" value="Rightly!"/>-->
                     <a href="#decisionTransact" id = "decisionTransact_rel" class ="ui-btn ui-shadow ui-corner-all ui-icon-check ui-btn-icon-top" data-rel="popup" data-position-to="window" data-transition="pop">Rightly!</a>
 
-            </div>
+                </div>
             </div>
         </form>
     </div>
@@ -117,26 +117,46 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_access.php' ) {
     <div data-role="popup" id="decisionTransact" data-dismissible="false" data-theme="a" data-overlay-theme="b" class="ui-content" >
     <form id = "decisionTransact_form" name="decisionTransact_form" action="transaction.php" method="post">
 
-        <div id = "summaryLabel" >Transaction</div>
+        <div id = "summaryLabel" style = "text-align: center;" ><h3>Transaction</h3></div>
 
-        <label for="comment">Comment:</label>
-        <textarea data-clear-btn="true" style="font-size: 10pt; min-width: 15em; min-height: 4em;" name="comment" id="comment"></textarea>
-
-        <a href="#" id="addInPlan" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-btn-b ui-icon-clock ui-btn-icon-left ui-mini">Add in plan</a>
-        <a href="#" id="implement" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-btn-b ui-icon-check ui-btn-icon-left ui-mini">Implement</a>
+        <div>
+            <label for="comment" style="font-size: 10pt;">Comment:</label>
+            <textarea data-clear-btn="true" style="font-size: 10pt; min-height: 4em; min-width: 15em;" name="comment" id="comment"></textarea>
+        </div>
+        <a href="#" id="addInPlan" data-rel="back" class="show-page-loading-msg ui-shadow ui-btn ui-corner-all ui-btn-b ui-icon-clock ui-btn-icon-left ui-mini" data-textonly="false" data-textvisible="true" data-msgtext="Please, wait..." data-inline="true">Add in plan</a>
+        <a href="#" id="implement" data-rel="back" class="show-page-loading-msg ui-shadow ui-btn ui-corner-all ui-btn-b ui-icon-check ui-btn-icon-left ui-mini" data-textonly="false" data-textvisible="true" data-msgtext="Please, wait..." data-inline="true">Implement</a>
         <a href="#" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-mini">Go back</a>
     </form>
     </div><!--форма принятия решения о проводке -->
 
+    <!--форма ворнинг -->
+    <div data-role="popup" id="warningTransact" data-dismissible="false" data-theme="a" data-overlay-theme="b" class="ui-content" >
+        <h3>First enter the amount!</h3>
+        <a href="#" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-mini">Ок</a>
+    </div><!--форма ворнинг -->
 
 
-    <a href="#transact_info" id = "transact" data-transition="slidedown" data-position-to="window" data-rel="popup" style = "display: none"></a>
-    <div data-role="popup" id="transact_info" class="ui-content" data-theme="b">
-        <p>#155362: Transport: Taxy: +100 RUR</p>
-        <b><center><p>Compleate!</p></center></b>
-    </div>
+
+    <a href="#transact_info" class = "hide-page-loading-msg" id = "transact"  data-position-to="window" data-rel="popup" style = "display: none"></a>
+    <!--форма после проводки транзакции -->
+    <div data-role="popup" id="transact_info" data-dismissible="false"  data-overlay-theme="b" class="ui-content" data-theme="a">
+        <form id = "postTransact_form" name="postTransact_form" action="" method="post">
+
+            <div id = "successTransact" style="font-size: 10pt;">
+                <!--заполняется программно-->
+            </div>
+
+            <a href="#" id="newTransact" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-btn-b ui-icon-check ui-btn-icon-left ui-mini">New transaction</a>
+            <a href="#" id="goToJournal" class="show-page-loading-msg ui-shadow ui-btn ui-corner-all ui-btn-b ui-icon-check ui-btn-icon-left ui-mini" data-textonly="false" data-textvisible="true" data-msgtext="Please, wait..." data-inline="true">Go to journal</a>
+            <a href="#" id="goToMain" class="show-page-loading-msg ui-shadow ui-btn ui-btn-a ui-corner-all ui-mini" data-textonly="false" data-textvisible="true" data-msgtext="Please, wait..." data-inline="true"">MOACL</a>
+
+        </form>
+    </div><!--форма после проводки транзакции -->
+
+
 </section>
 <script src="../../scripts/moacl_money.js" type="text/javascript"></script>
+<script src="../../scripts/date.format.js" type="text/javascript"></script>
 <script>
     $(document).ready(function(){
         $("#to_contacts_btn").click( function(){location.href = $(this).attr("data-href");});
@@ -146,23 +166,132 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_access.php' ) {
         $("#to_act_btn").click( function(){location.href = $(this).attr("data-href");});
         $("#to_exit_btn").click( function(){location.href = $(this).attr("data-href");});
 
+        $("#goToJournal").click( function(){location.href = "moacl_money_transactions.php";});
+        $("#goToMain").click( function(){location.href = "../../main.php";});
+
         $("#implement").click(function(){
 
             var $transactData = $("#main_form").serialize() + '&' + $("#decisionTransact_form").serialize() + '&confirmed=1';
-            $.post( "transaction.php", $transactData);
-            
+            $.post(
+                "transaction.php",
+                $transactData,
+                function(result) {
+                    if (result.type == 'error') {
+                        alert('error transaction');
+                        return(false);
+                    }
+                    else{
+                        var $rr = $(result.row);
+                        var $tid = $rr.attr("Transaction_ID");
+                        var $acc = $rr.attr("Account");
+                        var $cat = $rr.attr("Category");
+                        var $itm = $rr.attr("Item");
+                        var $val = $rr.attr("Valute");
+                        var $rev = $rr.attr("Revenue");
+                        var $sum = $rr.attr("Sum");
+                        var $date = $rr.attr("Date_of_realization");
+                        $date = Date.createFromMysql($date).format("dd.mm.yyyy");
+
+                        $("#successTransact").html(
+                            ('<b>TRNS #' +
+                                $tid + ' was implemented!</b><br>Payment Date: <b>' +
+                                $date + '</b><br>Account: <b>' +
+                                $acc + '</b><br>Item: <b>' +
+                                $cat + '(' +
+                                $itm + ')</b><br>Amount: <b>' +
+                                $val + ' ' +
+                                (($rev == 0) ? '-' : '+') +
+                                $sum + '</b>'
+                            )
+                        );
+                        SetBalance();
+                        $("#transact").click();
+                    }
+                },
+                "json"
+            );
+
         });
+        $( document ).on( "click", ".show-page-loading-msg", function() {
+                var $this = $( this ),
+                    theme = $this.jqmData( "theme" ) || $.mobile.loader.prototype.options.theme,
+                    msgText = $this.jqmData( "msgtext" ) || $.mobile.loader.prototype.options.text,
+                    textVisible = $this.jqmData( "textvisible" ) || $.mobile.loader.prototype.options.textVisible,
+                    textonly = !!$this.jqmData( "textonly" );
+                html = $this.jqmData( "html" ) || "";
+                $.mobile.loading( "show", {
+                    text: msgText,
+                    textVisible: textVisible,
+                    theme: theme,
+                    textonly: textonly,
+                    html: html
+                });
+            })
+            .on( "click", ".hide-page-loading-msg", function() {
+                    $.mobile.loading( "hide" );
+            });
         $("#addInPlan").click(function(){
-
             var $transactData = $("#main_form").serialize() + '&' + $("#decisionTransact_form").serialize() + '&confirmed=0';
-            $.post( "transaction.php", $transactData);
+            $.post(
+                "transaction.php",
+                $transactData,
+                function(result) {
+                    if (result.type == 'error') {
+                        alert('error transaction');
+                        return(false);
+                    }
+                    else{
+                        var $rr = $(result.row);
+                        var $tid = $rr.attr("Transaction_ID");
+                        var $acc = $rr.attr("Account");
+                        var $cat = $rr.attr("Category");
+                        var $itm = $rr.attr("Item");
+                        var $val = $rr.attr("Valute");
+                        var $rev = $rr.attr("Revenue");
+                        var $sum = $rr.attr("Sum");
+                        var $date = $rr.attr("Date_of_realization");
+                        $date = Date.createFromMysql($date).format("dd.mm.yyyy");
+
+                        $("#successTransact").html(
+                            ('<b>TRNS #' +
+                                $tid + ' was added in plan!</b><br>(Needs confirmation at <b>' +
+                                $date + '</b>)<br>Account: <b>' +
+                                $acc + '</b><br>Item: <b>' +
+                                $cat + '(' +
+                                $itm + ')</b><br>Amount: <b>' +
+                                $val + ' ' +
+                                (($rev == 0) ? '-' : '+') +
+                                $sum + '</b>'
+                            )
+                        );
+                        SetBalance();
+                        $("#transact").click();
+                    }
+                 },
+                "json"
+            );
 
         });
-        $("#decisionTransact").click(function(){
-        $('#summaryLabel').html("<h3>wdwqdqwd</h3>")
-
+        $("#newTransact").click(function(){
+            //очистка полей формы
+            $("#sum").val($CURR);
+            $("#date").val("<?echo date("Y-m-d"); ?>");
+            $("#commentary").val("");
 
         });
+        $("#decisionTransact_rel").click(function(e){
+            var $sum = $("#sum").val();
+            $sum = $sum.replace($CURR,"").replace(/\s/g,"");
+
+            if (($sum > 0)) {
+                $("#decisionTransact_rel").attr('href', '#decisionTransact');
+            }
+            else{
+                $("#decisionTransact_rel").attr('href', '#warningTransact');
+            }
+
+        });
+
     });
 </script>
 </body>
