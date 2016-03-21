@@ -11,5 +11,5 @@ unset($auth);
 if($access){
     $Money = New Money;
     $result=$Money->getAccounts();
-    print json_encode($result);
+    print $result;
 }

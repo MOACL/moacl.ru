@@ -37,6 +37,8 @@ var $sum = $("#sum");
 $sum.tap(function(){
     rur_format_clear($sum);
     $sum.attr('type','number'); //call numeric keypad
+   // $sum.removeAttr('readonly');
+
 		}
 );
 
@@ -48,8 +50,9 @@ $sum.focus(function(){
 );
 //event 5
 $sum.blur(function(){
-
+   // $sum.attr('readonly', 'readonly');
 			$sum.attr('type','text');
+
 			rur_format($sum, false);
     $sum.css({"font-weight":"bold"});
 

@@ -28,5 +28,5 @@ unset($auth);
 if($access){
     $Money = New Money;
     $result=$Money->transactionGo($account_id, $category_id, $item_id, $sum, $comment, $date, $confirmed);
-    print json_encode($result);
+    print $result;
 }

@@ -92,6 +92,30 @@ include_once 'constants.php';
          return $query;
      }
 
+     function getJsonFromSP($spName,$paramArray){
+
+         $query = "call $spName";
+         if ($paramArray != null) {
+             $query .= "('" . implode("', '", $paramArray) . "');";
+         }
+         $resultQuery=self::$mysqli->query($query);
+         $row = array();
+         if ($resultQuery) {
+             $num = $resultQuery->num_rows;
+             $i = 0;
+             while ($i < $num) {
+                 $row[$i] = $resultQuery->fetch_array(MYSQLI_ASSOC);
+                 $i++;
+             }
+             $result = array('row'=>$row);
+         }
+         else {
+             $result = array('type'=>'error');
+         }
+         $result = json_encode($result);
+         return $result;
+     }
+
 	 function verificationRegData() {
 		//Login
 		$loginExist=self::loginExist();
@@ -535,41 +559,12 @@ class Money extends SecureSystem{
 	}
 
 	function getAccounts(){
-		//$query = self::getParamSQL('Accounts',null);
-		//$query = "call sp_accounts_enabled();";
-        $query = self::getSP('sp_accounts_enabled',null);
-		$result=self::$mysqli->query($query);
-		$row = array();
-		if ($result) {
-			$num = $result->num_rows;
-			$i = 0;
-			while ($i < $num) {
-				$row[$i] = $result->fetch_array(MYSQLI_ASSOC);
-				$i++;
-			}
-			return array('row'=>$row);
-		}
-		else {
-			return array('type'=>'error');
-		}
+        $result = self::getJsonFromSP('sp_accounts_enabled',null);
+        return $result;
 	}
 	function getBalance($account_id){
-		//$query = self::getParamSQL('Balance_by_Account',Array($account_id));
-        $query = self::getSP('sp_balance_of_account',Array($account_id));
-		$result=self::$mysqli->query($query);
-		$row = array();
-		if ($result) {
-			$num = $result->num_rows;
-			$i = 0;
-			while ($i < $num) {
-				$row[$i] = $result->fetch_array(MYSQLI_ASSOC);
-				$i++;
-			}
-			return array('row'=>$row);
-		}
-		else {
-			return array('type'=>'error');
-		}
+        $result = self::getJsonFromSP('sp_balance_of_account',Array($account_id));
+        return $result;
 	}
 	function getCategories($revenue){
 		$query = self::getParamSQL('Categories_by_revenue',Array($revenue));
@@ -606,23 +601,11 @@ class Money extends SecureSystem{
 		}
 	}
 	function transactionGo($account_id, $category_id, $item_id, $sum, $comment, $date, $confirmed){
-
-		//$query = self::getParamSQL('Add_transaction',Array($account_id,$category_id,$item_id,$sum,$date,$comment,$confirmed));
-        $query = self::getSP('sp_add_transaction',Array($account_id,$category_id,$item_id,$sum,$date,$comment,$confirmed));
-		$result=self::$mysqli->query($query);
-
-		$row = array();
-		if ($result) {
-			$num = $result->num_rows;
-			$i = 0;
-			while ($i < $num) {
-				$row[$i] = $result->fetch_array(MYSQLI_ASSOC);
-				$i++;
-			}
-			return array('row'=>$row);
-		}
-		else {
-			return array('type'=>'error');
-		}
+        $result = self::getJsonFromSP('sp_add_transaction',Array($account_id,$category_id,$item_id,$sum,$date,$comment,$confirmed));
+        return $result;
+	}
+	function showTransactions($account_id,$category_id,$item_id,$date0,$date1,$confirmed,$revenue){
+        $result = self::getJsonFromSP('sp_show_transactions',Array($account_id,$category_id,$item_id,$date0,$date1,$confirmed,$revenue));
+        return $result;
 	}
 }
