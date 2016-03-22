@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="../../scripts/jquery-1.11.2.min.js" type="text/javascript"></script>
     <script src="../../plugins/jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
+    <script src="../../scripts/moacl_functions.js" type="text/javascript"></script>
+    <script src="../../scripts/date.format.js" type="text/javascript"></script>
     <link href="../../plugins/jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.css" rel="stylesheet" type="text/css"/>
     <link href="../../css/moacl_style.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="../../themes/moacl_2.min.css" />
@@ -21,33 +23,47 @@
 
         <div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
                 <h4>Advanced filter</h4>
-
-                <div data-role="fieldcontain"  >
-                    <label for="account">Account:</label>
-                    <select id="account" name="account" data-native-menu = "false" ></select>
-                </div>
-
+                 <div data-role="fieldcontain" >
+                     <label for="confirmed_filter">Confirmed:</label>
+                     <select id="confirmed_filter" name="confirmed_filter" data-native-menu = "false">
+                         <option value= null>ALL</option>
+                         <option value= 1>Yes</option>
+                         <option value= 0>No</option>
+                     </select>
+                 </div>
+                 <div data-role="fieldcontain" >
+                     <label for="account_filter">Account:</label>
+                     <select id="account_filter" name="account_filter" data-native-menu = "false" >
+                         <option value= null>ALL</option>
+                     </select>
+                 </div>
+                 <div data-role="fieldcontain" >
+                       <label for="itemType_filter">Item type:</label>
+                       <select id="itemType_filter" name="itemType_filter" data-native-menu = "false">
+                           <option value= null>ALL</option>
+                           <option value= 1>Gain</option>
+                           <option value= 0>Cost</option>
+                       </select>
+                 </div>
                 <div data-role="fieldcontain" >
-                        <label for="category">Category:</label>
-                        <select id="category" name="category" data-native-menu = "false"></select>
+                        <label for="category_filter">Category:</label>
+                        <select id="category_filter" name="category_filter" data-native-menu = "false">
+                            <option value= null>ALL</option>
+                        </select>
                 </div>
                 <div data-role="fieldcontain" >
-                        <label for="item">Item:</label>
-                        <select id="item" name="item" data-native-menu = "false"></select>
+                        <label for="item_filter">Item:</label>
+                        <select id="item_filter" name="item_filter" data-native-menu = "false">
+                            <option value= null>ALL</option>
+                        </select>
                </div>
-               <fieldset data-role="controlgroup" data-type="horizontal" style ="text-align: center; line-height: 0.5">
-                   <input type="checkbox" name="gain" id="gain" checked = "checked">
-                   <label for="gain">Gain</label>
-                   <input type="checkbox" name="cost" id="cost" checked = "checked">
-                   <label for="cost">Cost</label>
-                   <input type="checkbox" name="confirmed" id="confirmed" checked = "checked">
-                   <label for="confirmed">Confirmed</label>
-                   <input type="checkbox" name="notconfirmed" id="notconfirmed" checked = "checked">
-                   <label for="notconfirmed">Not confirmed</label>
-               </fieldset>
+            <div data-role="fieldcontain" >
+                <label for="date_0_filter">From:</label>
+                <input type="date" name="date_0_filter" id="date_0_filter" placeholder = "Начиная с">
+                <label for="date_1_filter">To:</label>
+                <input type="date" name="date_1_filter" id="date_1_filter" placeholder = "Заканчивая">
+            </div>
 
-            <input type="text" name="date_0" id="date_0" placeholder = "Начиная с">
-            <input type="text" name="date_1" id="date_1" placeholder = "Заканчивая">
             <button id ="load" class ="ui-btn ui-shadow ui-corner-all ui-icon-search ui-btn-icon-top moacl-butt">Load</button>
 
         </div>
@@ -98,7 +114,43 @@
 
 
 </body>
-<script src="../../scripts/moacl_money.js" type="text/javascript" ></script>
+
+<script>
+    function SetTransactions(){
+        var url = "gettransactions.php?"
+            + "account_id=" + $("#account_filter").val() + '&'
+            + "category_id=" + $("#category_filter").val() + '&'
+            + "item_id=" + $("#item_filter").val() + '&'
+            + "date0=" + $("#date_0_filter").val() + '&'
+            + "date1=" + $("#date_1_filter").val() + '&'
+            + "confirmed=" + $("#confirmed_filter").val() + '&'
+            + "revenue=" + $("#itemType_filter").val();
+
+        $.ajax({
+            url: url,
+            dataType : "json",
+            cache: false,
+            success: function (result) {
+                if (result.type == 'error') {
+                    alert('error SetTransactions');
+                    return(false);
+                }
+                else {
+                    var $account = $("#account");
+                    $account.val($(result.row).attr("Account_ID"));
+
+                }
+            }
+        });
+    }
+    $(document).ready(
+        function(){
+            //1.load of accounts
+            combobox_load(false,"account_filter", "Account", "getaccounts.php", 1);
+            $revenue = $("#itemType_filter").val();
+            combobox_load(false,"category","Category", "getcategories.php?revenue=" + $revenue, 1);
+        });
+</script>
 
 
 </html>

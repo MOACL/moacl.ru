@@ -13,5 +13,5 @@ unset($auth);
 if($access){
     $Money = New Money;
     $result=$Money->getCategories($revenue);
-    print json_encode($result);
+    print $result;
 }

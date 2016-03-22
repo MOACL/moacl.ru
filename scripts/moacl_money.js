@@ -6,29 +6,167 @@ var $MIN_TIME_OF_TRANSACT = 0; //в секундах
 $(document).ready(
 		function() {
 			//1.load of accounts
-			combobox_load(false,"account", "Account", "getaccounts.php", SetBalance);
+			combobox_load(false,"account", "Account", "getaccounts.php",0, SetBalance);
 			//comboboxCatItem();
 
 			var $revenue;
 				$revenue = $('input[name=radio_tt]:checked').val();
 
-			combobox_load(false,"category","Category", "getcategories.php?revenue=" + $revenue);
+			combobox_load(false,"category","Category", "getcategories.php?revenue=" + $revenue, 0);
 
-			combobox_load(false, "item","Item", "getitems.php?category_id=" + $("#category").val());
+			combobox_load(false, "item","Item", "getitems.php?category_id=" + $("#category").val(), 0);
 
-		}
-);
+			$("#to_contacts_btn").click( function(){location.href = $(this).attr("data-href");});
+			$("#to_love_btn").click( function(){location.href = $(this).attr("data-href");});
+			$("#to_fin_btn").click( function(){location.href = $(this).attr("data-href");});
+			$("#to_obj_btn").click( function(){location.href = $(this).attr("data-href");});
+			$("#to_act_btn").click( function(){location.href = $(this).attr("data-href");});
+			$("#to_exit_btn").click( function(){location.href = $(this).attr("data-href");});
+
+			$("#goToJournal").click( function(){location.href = "moacl_money_transactions.php";});
+			$("#goToMain").click( function(){location.href = "../../main.php";});
+
+			$("#implement").click(function(){
+
+				var $transactData = $("#main_form").serialize() + '&' + $("#decisionTransact_form").serialize() + '&confirmed=1';
+				$.post(
+						"transaction.php",
+						$transactData,
+						function(result) {
+							if (result.type == 'error') {
+								alert('error transaction');
+								return(false);
+							}
+							else{
+								var $rr = $(result.row);
+								var $tid = $rr.attr("Transaction_ID");
+								var $acc = $rr.attr("Account");
+								var $cat = $rr.attr("Category");
+								var $itm = $rr.attr("Item");
+								var $val = $rr.attr("Valute");
+								var $rev = $rr.attr("Revenue");
+								var $sum = $rr.attr("Sum");
+								var $date = $rr.attr("Date_of_realization");
+								$date = Date.createFromMysql($date).format("dd.mm.yyyy");
+
+								$("#successTransact").html(
+										('<b>TRNS #' +
+												$tid + ' was implemented!</b><br>Payment Date: <b>' +
+												$date + '</b><br>Account: <b>' +
+												$acc + '</b><br>Item: <b>' +
+												$cat + '(' +
+												$itm + ')</b><br>Amount: <b>' +
+												$val + ' ' +
+												(($rev == 0) ? '-' : '+') +
+												$sum + '</b>'
+										)
+								);
+								SetBalance();
+								$("#transact").click();
+							}
+						},
+						"json"
+				);
+
+			});
+			$( document ).on( "click", ".show-page-loading-msg", function() {
+						var $this = $( this ),
+								theme = $this.jqmData( "theme" ) || $.mobile.loader.prototype.options.theme,
+								msgText = $this.jqmData( "msgtext" ) || $.mobile.loader.prototype.options.text,
+								textVisible = $this.jqmData( "textvisible" ) || $.mobile.loader.prototype.options.textVisible,
+								textonly = !!$this.jqmData( "textonly" );
+						html = $this.jqmData( "html" ) || "";
+						$.mobile.loading( "show", {
+							text: msgText,
+							textVisible: textVisible,
+							theme: theme,
+							textonly: textonly,
+							html: html
+						});
+					})
+					.on( "click", ".hide-page-loading-msg", function() {
+						$.mobile.loading( "hide" );
+					});
+			$("#addInPlan").click(function(){
+				var $transactData = $("#main_form").serialize() + '&' + $("#decisionTransact_form").serialize() + '&confirmed=0';
+				$.post(
+						"transaction.php",
+						$transactData,
+						function(result) {
+							if (result.type == 'error') {
+								alert('error transaction');
+								return(false);
+							}
+							else{
+								var $rr = $(result.row);
+								var $tid = $rr.attr("Transaction_ID");
+								var $acc = $rr.attr("Account");
+								var $cat = $rr.attr("Category");
+								var $itm = $rr.attr("Item");
+								var $val = $rr.attr("Valute");
+								var $rev = $rr.attr("Revenue");
+								var $sum = $rr.attr("Sum");
+								var $date = $rr.attr("Date_of_realization");
+								$date = Date.createFromMysql($date).format("dd.mm.yyyy");
+
+								$("#successTransact").html(
+										('<b>TRNS #' +
+												$tid + ' was added in plan!</b><br>(Needs confirmation at <b>' +
+												$date + '</b>)<br>Account: <b>' +
+												$acc + '</b><br>Item: <b>' +
+												$cat + '(' +
+												$itm + ')</b><br>Amount: <b>' +
+												$val + ' ' +
+												(($rev == 0) ? '-' : '+') +
+												$sum + '</b>'
+										)
+								);
+								SetBalance();
+								$("#transact").click();
+							}
+						},
+						"json"
+				);
+
+			});
+			$("#newTransact").click(function(){
+				//очистка полей формы
+				$("#sum").val($CURR);
+                var now = new Date();
+                now = now.format("yyyy-mm-dd");
+				$("#date").val(now);
+				$("#commentary").val("");
+
+			});
+			$("#decisionTransact_rel").click(function(e){
+				var $sum = $("#sum").val();
+				$sum = $sum.replace($CURR,"").replace(/\s/g,"");
+
+				if (($sum > 0)) {
+					$("#decisionTransact_rel").attr('href', '#decisionTransact');
+				}
+				else{
+					$("#decisionTransact_rel").attr('href', '#warningTransact');
+				}
+
+			});
+
+
+
+
+
+		});
 
 $("#category").change(function(){
-	combobox_load(false, "item","Item", "getitems.php?category_id=" + $("#category").val());
+	combobox_load(false, "item","Item", "getitems.php?category_id=" + $("#category").val(), 0);
 });
 
 $('input[type="radio"]').change( function() {
 	var $revenue;
 	$revenue = $('input[name=radio_tt]:checked').val();
 
-	combobox_load(false,"category","Category", "getcategories.php?revenue=" + $revenue);
-	combobox_load(false, "item","Item", "getitems.php?category_id=" + $("#category").val());
+	combobox_load(false,"category","Category", "getcategories.php?revenue=" + $revenue, 0);
+	combobox_load(false, "item","Item", "getitems.php?category_id=" + $("#category").val(), 0);
 
 });
 
@@ -59,8 +197,6 @@ $sum.blur(function(){
 		}
 );
 
-
-
 function SetBalance(){
 	var url = "getbalance.php?account_id=" + $("#account").val();
 
@@ -85,119 +221,3 @@ function SetBalance(){
 	});
 }
 
-///////////////универсальные функции (для выделения в отдельный файл)///////////////
-
-function combobox_load(ajax, comboname, dbfieldname, url, changefunc){
-	//alert(url);
-	var $select = $("#" + comboname);
-    $i=0;
-	$selVal=0;
-	$select.empty();
-	$.ajax({
-		url: url,
-		async: ajax,
-		dataType : "json",
-		success: function (result) {
-			if (result.type == 'error') {
-				alert('error combobox_load'. url);
-				return(false);
-			}
-			else {
-				$(result.row).each(function() {
-					$select.append('<option value=' + $(this).attr(dbfieldname + "_ID") + '>' + $(this).attr(dbfieldname) + '</option>');
-					if (($(this).attr("Selected") == 1) || ($i=0)) {
-						$selVal = $(this).attr(dbfieldname + "_ID");
-					}
-					$i=$i+1;
-				});
-
-				if ($selVal > 0){$select.val($selVal);}
-				$select.selectmenu("refresh");
-
-			}
-
-		}//success
-	});//ajax*
-
-	if(typeof changefunc == 'function' ){
-		$select.change(changefunc);
-		changefunc(); //запускаем функцию в конце загрузки комбобокса
-	}
-}//end
-
-
-$('#main_form').submit(function(e){
-	e.preventDefault();
-
-	if (!$('#sum').val().replace($CURR,"").replace(/\s/g,"")>0){alert("Sum incorrect!"); return;}
-	if (!confirm("Are you sure?")) {return;}
-
-
-	var m_method=$(this).attr('method');
-	var m_action=$(this).attr('action');
-	var m_data=$(this).serialize();
-
-	$.ajax({
-		type: m_method,
-		url: m_action,
-		data: m_data,
-
-		success: function(result){
-			setTimeout(function(){
-
-
-				$("#sum").val("");
-				$("#date").val("");
-				$("#commentary").val("");
-				SetBalance();
-			}, $MIN_TIME_OF_TRANSACT*1000);
-
-		}
-	});
-});
-
-
-
-
-//focus
-function rur_format(v, minus){
-	rur_format_clear(v);
-	var x = v.val();
-	if(x>0) {
-		x = "" + money_format((1)*x +"");
-	}
-	else if(x<0 && minus == true) {
-		x = "-" + money_format((-1)*x+"");
-	}
-	else {
-		x="";
-	}
-
-	v.val($CURR + " " + x);
-}
-
-//blur
-function rur_format_clear(v){
-	var t = v.val();
-	t = t.replace($CURR,"").replace(/\s/g,"");
-	v.val(t);
-}
-
-function money_format(s){
-	//s = s.trim();
-	var l = s.length;	//длинна суммы
-	var k = parseInt((l-1)/3); //количество необходимых пробелов в числе
-	var m = s.match(/\d/g);	//помещение суммы в массив
-	m.reverse();
-	for(var i = 0; i < k; i++){
-		m.splice((i+1)*3+i,0," "); //после какого эллемента массива следует вставить пробел
-	}
-	return m.reverse().join("");
-}
-Date.createFromMysql = function(mysql_string) {
-	if(typeof mysql_string === 'string') {
-		var t = mysql_string.split(/[- :]/);
-		return new Date(t[0], t[1] - 1, t[2], t[3] || 0, t[4] || 0, t[5] || 0);
-	}
-	return null;
-};

@@ -13,6 +13,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_setting_access.php' )
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="../../scripts/jquery-1.11.2.min.js" type="text/javascript"></script>
+    <script src="../../scripts/moacl_functions.js" type="text/javascript"></script>
     <script src="../../plugins/jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
     <link href="../../plugins/jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.css" rel="stylesheet" type="text/css"/>
     <link href="../../css/moacl_style.css" rel="stylesheet" type="text/css"/>
@@ -30,9 +31,9 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_setting_access.php' )
 
                     <fieldset data-role="controlgroup" data-type="horizontal" >
                         <input type="radio" id="radio_in" name="radio_tt" value=1 />
-                        <label for="radio_in">&ensp;In</label>
+                        <label for="radio_in">Gain</label>
                         <input type="radio" id="radio_out" name="radio_tt" value=0 checked = "checked"  />
-                        <label for="radio_out">Out</label>
+                        <label for="radio_out">Cost</label>
                     </fieldset>
 
             </div>
@@ -48,11 +49,6 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_setting_access.php' )
                         </div>
 
                 </div>
-                      <!--  <div data-role="fieldcontain" >
-                            <label for="balance">Balance:</label>
-                            <input id = "balance" type="text" name="balance" readonly/>
-                        </div>
-                        -->
 
                 <div>
                         <div data-role="fieldcontain" style = "display: inline-block; width: 80%; margin-bottom: 0em; ">
@@ -80,11 +76,6 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_setting_access.php' )
     <?require_once 'panel.php'?>
 
     </section>
-<script src="../../scripts/moacl_money.js" type="text/javascript" ></script>
-<script>
-    $(document).ready(function(){
-        $("#to_exit_btn").click( function(){location.href = $(this).attr("data-href");});
-    });
-</script>
+<script src="../../scripts/moacl_money_setting.js" type="text/javascript"></script>
 </body>
 </html>

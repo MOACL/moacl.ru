@@ -567,21 +567,8 @@ class Money extends SecureSystem{
         return $result;
 	}
 	function getCategories($revenue){
-		$query = self::getParamSQL('Categories_by_revenue',Array($revenue));
-		$result=self::$mysqli->query($query);
-		$row = array();
-		if ($result) {
-			$num = $result->num_rows;
-			$i = 0;
-			while ($i < $num) {
-				$row[$i] = $result->fetch_array(MYSQLI_ASSOC);
-				$i++;
-			}
-			return array('row'=>$row);
-		}
-		else {
-			return array('type'=>'error');
-		}
+		$result = self::getJsonFromSP('sp_categories_by_revenue',Array($revenue));
+        return $result;
 	}
 	function getItems($category_id){
 		$query = self::getParamSQL('Items_by_category',Array($category_id));

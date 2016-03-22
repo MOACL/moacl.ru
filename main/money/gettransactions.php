@@ -6,9 +6,7 @@ $item_id = $_GET['item'];
 $date0 = $_GET['date_0'];
 $date1 = $_GET['date_1'];
 $confirmed = $_GET['confirmed'];
-$notconfirmed = $_GET['notconfirmed'];
-$gain = $_GET['gain'];
-$cost = $_GET['cost'];
+$revenue = $_GET['revenue'];
 
 include_once '../../moacl_framework.php';
 
@@ -20,6 +18,6 @@ unset($auth);
 
 if($access){
 $Money = New Money;
-$result=$Money->showTransactions($account_id,$category_id,$item_id,$date0,$date1,$conf,$revenue);
+$result=$Money->showTransactions($account_id,$category_id,$item_id,$date0,$date1,$confirmed,$revenue);
 print $result;
 }

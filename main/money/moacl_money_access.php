@@ -14,6 +14,8 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_access.php' ) {
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="../../scripts/jquery-1.11.2.min.js" type="text/javascript"></script>
+    <script src="../../scripts/moacl_functions.js" type="text/javascript"></script>
+    <script src="../../scripts/date.format.js" type="text/javascript"></script>
     <script src="../../plugins/jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
     <link href="../../plugins/jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.css" rel="stylesheet" type="text/css"/>
     <link href="../../css/moacl_style.css" rel="stylesheet" type="text/css"/>
@@ -142,9 +144,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_access.php' ) {
     <div data-role="popup" id="transact_info" data-dismissible="false"  data-overlay-theme="b" class="ui-content" data-theme="a">
         <form id = "postTransact_form" name="postTransact_form" action="" method="post">
 
-            <div id = "successTransact" style="font-size: 10pt;">
-                <!--заполняется программно-->
-            </div>
+            <div id = "successTransact" style="font-size: 10pt;"><!--заполняется программно-->   </div>
 
             <a href="#" id="newTransact" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-btn-b ui-icon-check ui-btn-icon-left ui-mini">New transaction</a>
             <a href="#" id="goToJournal" class="show-page-loading-msg ui-shadow ui-btn ui-corner-all ui-btn-b ui-icon-check ui-btn-icon-left ui-mini" data-textonly="false" data-textvisible="true" data-msgtext="Please, wait..." data-inline="true">Go to journal</a>
@@ -156,143 +156,6 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_access.php' ) {
 
 </section>
 <script src="../../scripts/moacl_money.js" type="text/javascript"></script>
-<script src="../../scripts/date.format.js" type="text/javascript"></script>
-<script>
-    $(document).ready(function(){
-        $("#to_contacts_btn").click( function(){location.href = $(this).attr("data-href");});
-        $("#to_love_btn").click( function(){location.href = $(this).attr("data-href");});
-        $("#to_fin_btn").click( function(){location.href = $(this).attr("data-href");});
-        $("#to_obj_btn").click( function(){location.href = $(this).attr("data-href");});
-        $("#to_act_btn").click( function(){location.href = $(this).attr("data-href");});
-        $("#to_exit_btn").click( function(){location.href = $(this).attr("data-href");});
 
-        $("#goToJournal").click( function(){location.href = "moacl_money_transactions.php";});
-        $("#goToMain").click( function(){location.href = "../../main.php";});
-
-        $("#implement").click(function(){
-
-            var $transactData = $("#main_form").serialize() + '&' + $("#decisionTransact_form").serialize() + '&confirmed=1';
-            $.post(
-                "transaction.php",
-                $transactData,
-                function(result) {
-                    if (result.type == 'error') {
-                        alert('error transaction');
-                        return(false);
-                    }
-                    else{
-                        var $rr = $(result.row);
-                        var $tid = $rr.attr("Transaction_ID");
-                        var $acc = $rr.attr("Account");
-                        var $cat = $rr.attr("Category");
-                        var $itm = $rr.attr("Item");
-                        var $val = $rr.attr("Valute");
-                        var $rev = $rr.attr("Revenue");
-                        var $sum = $rr.attr("Sum");
-                        var $date = $rr.attr("Date_of_realization");
-                        $date = Date.createFromMysql($date).format("dd.mm.yyyy");
-
-                        $("#successTransact").html(
-                            ('<b>TRNS #' +
-                                $tid + ' was implemented!</b><br>Payment Date: <b>' +
-                                $date + '</b><br>Account: <b>' +
-                                $acc + '</b><br>Item: <b>' +
-                                $cat + '(' +
-                                $itm + ')</b><br>Amount: <b>' +
-                                $val + ' ' +
-                                (($rev == 0) ? '-' : '+') +
-                                $sum + '</b>'
-                            )
-                        );
-                        SetBalance();
-                        $("#transact").click();
-                    }
-                },
-                "json"
-            );
-
-        });
-        $( document ).on( "click", ".show-page-loading-msg", function() {
-                var $this = $( this ),
-                    theme = $this.jqmData( "theme" ) || $.mobile.loader.prototype.options.theme,
-                    msgText = $this.jqmData( "msgtext" ) || $.mobile.loader.prototype.options.text,
-                    textVisible = $this.jqmData( "textvisible" ) || $.mobile.loader.prototype.options.textVisible,
-                    textonly = !!$this.jqmData( "textonly" );
-                html = $this.jqmData( "html" ) || "";
-                $.mobile.loading( "show", {
-                    text: msgText,
-                    textVisible: textVisible,
-                    theme: theme,
-                    textonly: textonly,
-                    html: html
-                });
-            })
-            .on( "click", ".hide-page-loading-msg", function() {
-                    $.mobile.loading( "hide" );
-            });
-        $("#addInPlan").click(function(){
-            var $transactData = $("#main_form").serialize() + '&' + $("#decisionTransact_form").serialize() + '&confirmed=0';
-            $.post(
-                "transaction.php",
-                $transactData,
-                function(result) {
-                    if (result.type == 'error') {
-                        alert('error transaction');
-                        return(false);
-                    }
-                    else{
-                        var $rr = $(result.row);
-                        var $tid = $rr.attr("Transaction_ID");
-                        var $acc = $rr.attr("Account");
-                        var $cat = $rr.attr("Category");
-                        var $itm = $rr.attr("Item");
-                        var $val = $rr.attr("Valute");
-                        var $rev = $rr.attr("Revenue");
-                        var $sum = $rr.attr("Sum");
-                        var $date = $rr.attr("Date_of_realization");
-                        $date = Date.createFromMysql($date).format("dd.mm.yyyy");
-
-                        $("#successTransact").html(
-                            ('<b>TRNS #' +
-                                $tid + ' was added in plan!</b><br>(Needs confirmation at <b>' +
-                                $date + '</b>)<br>Account: <b>' +
-                                $acc + '</b><br>Item: <b>' +
-                                $cat + '(' +
-                                $itm + ')</b><br>Amount: <b>' +
-                                $val + ' ' +
-                                (($rev == 0) ? '-' : '+') +
-                                $sum + '</b>'
-                            )
-                        );
-                        SetBalance();
-                        $("#transact").click();
-                    }
-                 },
-                "json"
-            );
-
-        });
-        $("#newTransact").click(function(){
-            //очистка полей формы
-            $("#sum").val($CURR);
-            $("#date").val("<?echo date("Y-m-d"); ?>");
-            $("#commentary").val("");
-
-        });
-        $("#decisionTransact_rel").click(function(e){
-            var $sum = $("#sum").val();
-            $sum = $sum.replace($CURR,"").replace(/\s/g,"");
-
-            if (($sum > 0)) {
-                $("#decisionTransact_rel").attr('href', '#decisionTransact');
-            }
-            else{
-                $("#decisionTransact_rel").attr('href', '#warningTransact');
-            }
-
-        });
-
-    });
-</script>
 </body>
 </html>
