@@ -125,6 +125,17 @@
 
         });
     function SetTransactions() {
+        //input vars
+        var account_filter = $("#account_filter").val();
+        var category_filter = $("#category_filter").val();
+        var item_filter = $("#item_filter").val();
+        var date_0_filter = $("#date_0_filter").val();
+        var date_1_filter = $("#date_1_filter").val();
+        var confirmed_filter = $("#confirmed_filter").val();
+        var itemType_filter = $("#itemType_filter").val();
+        var $len = 10;
+
+        //output vars
         var Date_of_realization;
         var Revenue;
         var Sum;
@@ -138,23 +149,27 @@
         var Sign;
         var colorConf;
         var colorSum;
-        var url = "gettransactions.php?"
-            + "account=" + $("#account_filter").val() + '&'
-            + "category=" + $("#category_filter").val() + '&'
-            + "item=" + $("#item_filter").val() + '&'
-            + "date_0=" + $("#date_0_filter").val() + '&'
-            + "date_1=" + $("#date_1_filter").val() + '&'
-            + "confirmed=" + $("#confirmed_filter").val() + '&'
-            + "revenue=" + $("#itemType_filter").val() + '&'
-            + "start_=" + $startFrom + '&'
-            + "len_=" + "10";
+
+
         var $tJournal = $("#transactJournal");
         if (!$inProgress) {
             $.ajax({
-                url: url,
+                url: "gettransactions.php",
+                data: {
+                    "account" : account_filter,
+                    "category": category_filter,
+                    "item": item_filter,
+                    "date_0": date_0_filter,
+                    "date_1": date_1_filter,
+                    "confirmed": confirmed_filter,
+                    "revenue": itemType_filter,
+                    "start_": $startFrom,
+                    "len_": $len
+                },
                 async: true,
                 beforeSend: function () {
                     $inProgress = true;
+
                 },
                 dataType: "json",
                 success: function (result) {
@@ -167,15 +182,16 @@
                             $(result.row).each(function () {
                                 Date_of_realization =$(this).attr('Date_of_realization');
                                 Revenue =$(this).attr('Revenue');
-                                if(Revenue== 0){
-                                    Sign = '-';
-                                    colorSum = 'Red';
-                                }
-                                else {
-                                    Sign = '+';
-                                    colorSum = 'Blue';
-                                }
+                                   if(Revenue== 0){
+                                        Sign = '-';
+                                        colorSum = 'Red';
+                                    }
+                                    else {
+                                        Sign = '+';
+                                        colorSum = 'Blue';
+                                    }
                                 Sum =$(this).attr('Sum');
+                                     Sum = money_format(Sum);
                                 Transaction_ID =$(this).attr('Transaction_ID');
                                 Account =$(this).attr('Account');
                                 Category =$(this).attr('Category');
@@ -183,20 +199,20 @@
                                 Comment =$(this).attr('Comment');
                                 Valute =$(this).attr('Valute');
                                 Confirmed =$(this).attr('Confirmed');
-                                if(Confirmed== 0){
-                                    Confirmed = 'Not confirmed';
-                                    colorConf = 'Red'
-                                }
-                                else {
-                                    Confirmed = 'Confirmed';
-                                    colorConf = 'Green'
-                                }
+                                    if(Confirmed== 0){
+                                        Confirmed = 'Not confirmed';
+                                        colorConf = 'Red'
+                                    }
+                                    else {
+                                        Confirmed = 'Confirmed';
+                                        colorConf = 'Green'
+                                    }
                                 $tJournal.append(
                                     '<li data-role="list-divider" role = "heading" class = "ui-li-divider ui-bar-inherit ui-li-has-count ui-first-child">' +
                                     Date_of_realization + '<span class="ui-li-count ui-body-inherit" style = "color: ' + colorConf + ';">' +
                                     Confirmed + '</span></li> ' +
                                     '<li class = "ui-li-has-alt ui-last-child"><a class = "ui-btn" href="#"> ' +
-                                    '<h2 class="ui-li-aside" style = "color: ' + colorSum + ';">' + Valute + ' ' + Sign +
+                                    '<h2 class="ui-li-aside" style = "min-width: 20%; text-align: left; color: ' + colorSum + ';">' + Valute + ' ' + Sign +
                                     '' + Sum + '</h2>' +
                                     '<p><strong>#' + Transaction_ID + ' ' + Account + ' </strong></p>' +
                                     '<p><strong>' + Category + ': ' + Item + '</strong></p>' +
@@ -222,6 +238,12 @@
     }
 
     $('#more').click(function(){
+        SetTransactions();
+    });
+    $('#load').click(function(){
+        $("#transactJournal").html('');
+        $startFrom = 0;
+        $inProgress = false;
         SetTransactions();
     });
 
