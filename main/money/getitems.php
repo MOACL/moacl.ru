@@ -13,6 +13,6 @@ unset($auth);
 if($access){
     $Money = New Money;
     $result=$Money->getItems($category_id);
-    print json_encode($result);
+    print $result;
 }
 

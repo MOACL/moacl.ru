@@ -9,7 +9,7 @@ var combobox_load = function (ajax, comboname, dbfieldname, url, checkall, chang
     $selVal=0;
     $select.empty();
     if (checkall == 1) {
-        $select.append('<option value= null>ALL</option>');
+        $select.append('<option value= -1>ALL</option>');
     }
     $.ajax({
         url: url,
@@ -29,10 +29,10 @@ var combobox_load = function (ajax, comboname, dbfieldname, url, checkall, chang
                     $i=$i+1;
                 });
                 if (checkall == 1) {
-                    $selVal = 'null';
+                    $selVal = -1;
                 }
 
-                if ($selVal > 0){$select.val($selVal);}
+                if ($selVal > 0 || $selVal == -1){$select.val($selVal);}
                 $select.selectmenu("refresh");
 
             }

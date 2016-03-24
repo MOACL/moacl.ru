@@ -93,7 +93,6 @@ include_once 'constants.php';
      }
 
      function getJsonFromSP($spName,$paramArray){
-
          $query = "call $spName";
          if ($paramArray != null) {
              $query .= "('" . implode("', '", $paramArray) . "');";
@@ -571,28 +570,15 @@ class Money extends SecureSystem{
         return $result;
 	}
 	function getItems($category_id){
-		$query = self::getParamSQL('Items_by_category',Array($category_id));
-		$result=self::$mysqli->query($query);
-		$row = array();
-		if ($result) {
-			$num = $result->num_rows;
-			$i = 0;
-			while ($i < $num) {
-				$row[$i] = $result->fetch_array(MYSQLI_ASSOC);
-				$i++;
-			}
-			return array('row'=>$row);
-		}
-		else {
-			return array('type'=>'error');
-		}
+		$result = self::getJsonFromSP('sp_items_of_category',Array($category_id));
+		return $result;
 	}
 	function transactionGo($account_id, $category_id, $item_id, $sum, $comment, $date, $confirmed){
         $result = self::getJsonFromSP('sp_add_transaction',Array($account_id,$category_id,$item_id,$sum,$date,$comment,$confirmed));
         return $result;
 	}
-	function showTransactions($account_id,$category_id,$item_id,$date0,$date1,$confirmed,$revenue){
-        $result = self::getJsonFromSP('sp_show_transactions',Array($account_id,$category_id,$item_id,$date0,$date1,$confirmed,$revenue));
+	function showTransactions($account_id,$category_id,$item_id,$date0,$date1,$confirmed,$revenue, $start, $len){
+        $result = self::getJsonFromSP('sp_show_transactions',Array($account_id,$category_id,$item_id,$date0,$date1,$confirmed,$revenue, $start, $len));
         return $result;
 	}
 }

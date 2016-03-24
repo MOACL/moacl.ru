@@ -23,38 +23,38 @@
 
         <div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
                 <h4>Advanced filter</h4>
-                 <div data-role="fieldcontain" >
+                 <div data-role="fieldcontain">
                      <label for="confirmed_filter">Confirmed:</label>
                      <select id="confirmed_filter" name="confirmed_filter" data-native-menu = "false">
-                         <option value= null>ALL</option>
+                         <option value= -1>ALL</option>
                          <option value= 1>Yes</option>
                          <option value= 0>No</option>
                      </select>
                  </div>
-                 <div data-role="fieldcontain" >
+                 <div data-role="fieldcontain"  >
                      <label for="account_filter">Account:</label>
                      <select id="account_filter" name="account_filter" data-native-menu = "false" >
-                         <option value= null>ALL</option>
+                         <option value= -1>ALL</option>
                      </select>
                  </div>
                  <div data-role="fieldcontain" >
                        <label for="itemType_filter">Item type:</label>
                        <select id="itemType_filter" name="itemType_filter" data-native-menu = "false">
-                           <option value= null>ALL</option>
+                           <option value= -1>ALL</option>
                            <option value= 1>Gain</option>
                            <option value= 0>Cost</option>
                        </select>
                  </div>
-                <div data-role="fieldcontain" >
+                <div data-role="fieldcontain" id = "cat_block" style = "display : none;">
                         <label for="category_filter">Category:</label>
                         <select id="category_filter" name="category_filter" data-native-menu = "false">
-                            <option value= null>ALL</option>
+                            <option value= -1>ALL</option>
                         </select>
                 </div>
-                <div data-role="fieldcontain" >
+                <div data-role="fieldcontain" id = "itm_block" style = "display : none;">
                         <label for="item_filter">Item:</label>
                         <select id="item_filter" name="item_filter" data-native-menu = "false">
-                            <option value= null>ALL</option>
+                            <option value= -1>ALL</option>
                         </select>
                </div>
             <div data-role="fieldcontain" >
@@ -68,21 +68,12 @@
 
         </div>
 
-
-
-        <ul data-role="listview" data-split-icon="action" data-split-theme="a" data-inset="true">
-            <li data-role="list-divider">Friday, October 8, 2010, 18:24:55<span class="ui-li-count" style = "color: lightgreen;">DONE</span></li>
-            <li><a href="#">
-                    <h2 class="ui-li-aside" style = "color: red;">-600 RUR</h2>
-                    <p><strong>#465465 POCKET </strong></p>
-                    <p><strong>Transport: Taxi</strong></p>
-                    <p>Поездка в магазин за покупками</p>
-                </a>
-                <a href="#oper" data-rel="popup" data-position-to="window" data-transition="pop">OPERATIONS</a>
-            </li>
-
+        <ul id = "transactJournal" data-role="listview" data-split-icon="action" data-split-theme="a" data-inset="true">
         </ul>
+        <button id="more">Show more</button>
+
     </div>
+
 
     <?require_once '../../footer.php'?>
     <?require_once 'panel.php'?>
@@ -116,40 +107,147 @@
 </body>
 
 <script>
-    function SetTransactions(){
-        var url = "gettransactions.php?"
-            + "account_id=" + $("#account_filter").val() + '&'
-            + "category_id=" + $("#category_filter").val() + '&'
-            + "item_id=" + $("#item_filter").val() + '&'
-            + "date0=" + $("#date_0_filter").val() + '&'
-            + "date1=" + $("#date_1_filter").val() + '&'
-            + "confirmed=" + $("#confirmed_filter").val() + '&'
-            + "revenue=" + $("#itemType_filter").val();
+    var $inProgress = false;
+    var $startFrom = 0;
+    $(document).ready(function(){
 
-        $.ajax({
-            url: url,
-            dataType : "json",
-            cache: false,
-            success: function (result) {
-                if (result.type == 'error') {
-                    alert('error SetTransactions');
-                    return(false);
-                }
-                else {
-                    var $account = $("#account");
-                    $account.val($(result.row).attr("Account_ID"));
+        /*$(window).scroll(function() {
+         Если высота окна + высота прокрутки больше или равны высоте всего документа и ajax-запрос в настоящий момент не выполняется, то запускаем ajax-запрос
+         if($(window).scrollTop() + $(window).height() >= $(document).height() - 200 && !inProgress) {
+         }  */
 
-                }
-            }
-        });
-    }
-    $(document).ready(
-        function(){
             //1.load of accounts
             combobox_load(false,"account_filter", "Account", "getaccounts.php", 1);
-            $revenue = $("#itemType_filter").val();
-            combobox_load(false,"category","Category", "getcategories.php?revenue=" + $revenue, 1);
+            combobox_load(false,"category_filter","Category", "getcategories.php?revenue=" + $("#itemType_filter").val(), 1);
+            combobox_load(false, "item_filter","Item", "getitems.php?category_id=" + $("#category_filter").val(), 1);
+
+        SetTransactions();
+
         });
+    function SetTransactions() {
+        var Date_of_realization;
+        var Revenue;
+        var Sum;
+        var Transaction_ID;
+        var Account;
+        var Category;
+        var Item;
+        var Comment;
+        var Valute;
+        var Confirmed;
+        var Sign;
+        var colorConf;
+        var colorSum;
+        var url = "gettransactions.php?"
+            + "account=" + $("#account_filter").val() + '&'
+            + "category=" + $("#category_filter").val() + '&'
+            + "item=" + $("#item_filter").val() + '&'
+            + "date_0=" + $("#date_0_filter").val() + '&'
+            + "date_1=" + $("#date_1_filter").val() + '&'
+            + "confirmed=" + $("#confirmed_filter").val() + '&'
+            + "revenue=" + $("#itemType_filter").val() + '&'
+            + "start_=" + $startFrom + '&'
+            + "len_=" + "10";
+        var $tJournal = $("#transactJournal");
+        if (!$inProgress) {
+            $.ajax({
+                url: url,
+                async: true,
+                beforeSend: function () {
+                    $inProgress = true;
+                },
+                dataType: "json",
+                success: function (result) {
+                    if (result.type == 'error') {
+                        alert('error SetTransactions'.url);
+                        return (false);
+                    }
+                    else {
+                        if ($(result.row).length> 0) {
+                            $(result.row).each(function () {
+                                Date_of_realization =$(this).attr('Date_of_realization');
+                                Revenue =$(this).attr('Revenue');
+                                if(Revenue== 0){
+                                    Sign = '-';
+                                    colorSum = 'Red';
+                                }
+                                else {
+                                    Sign = '+';
+                                    colorSum = 'Blue';
+                                }
+                                Sum =$(this).attr('Sum');
+                                Transaction_ID =$(this).attr('Transaction_ID');
+                                Account =$(this).attr('Account');
+                                Category =$(this).attr('Category');
+                                Item =$(this).attr('Item');
+                                Comment =$(this).attr('Comment');
+                                Valute =$(this).attr('Valute');
+                                Confirmed =$(this).attr('Confirmed');
+                                if(Confirmed== 0){
+                                    Confirmed = 'Not confirmed';
+                                    colorConf = 'Red'
+                                }
+                                else {
+                                    Confirmed = 'Confirmed';
+                                    colorConf = 'Green'
+                                }
+                                $tJournal.append(
+                                    '<li data-role="list-divider" role = "heading" class = "ui-li-divider ui-bar-inherit ui-li-has-count ui-first-child">' +
+                                    Date_of_realization + '<span class="ui-li-count ui-body-inherit" style = "color: ' + colorConf + ';">' +
+                                    Confirmed + '</span></li> ' +
+                                    '<li class = "ui-li-has-alt ui-last-child"><a class = "ui-btn" href="#"> ' +
+                                    '<h2 class="ui-li-aside" style = "color: ' + colorSum + ';">' + Valute + ' ' + Sign +
+                                    '' + Sum + '</h2>' +
+                                    '<p><strong>#' + Transaction_ID + ' ' + Account + ' </strong></p>' +
+                                    '<p><strong>' + Category + ': ' + Item + '</strong></p>' +
+                                    '<p>' + Comment + '</p>' +
+                                    '</a>' +
+                                    '<a title = "OPERATIONS" class = "ui-btn ui-btn-icon-notext ui-icon-action ui-btn-a" ' +
+                                    'aria-expanded = "false" aria-haspopup = "true" aria-owns = "oper" href="#oper" data-rel="popup" ' +
+                                    'data-position-to="window" data-transition="pop"></a>' +
+                                    '</li>'
+                                );
+                            });
+                            /* По факту окончания запроса снова меняем значение флага на false */
+                            $inProgress = false;
+                            // Увеличиваем на 10 порядковый номер статьи, с которой надо начинать выборку из базы
+                            $startFrom += 10;
+                        }
+
+
+                    }
+                }//success
+            });//ajax*
+        }
+    }
+
+    $('#more').click(function(){
+        SetTransactions();
+    });
+
+    $("#itemType_filter").change(function(){
+        $("#itm_block").css({"display":"none"});
+        if( $(this).val() == -1){
+            $("#cat_block").css({"display":"none"});
+        }
+        else{
+            $("#cat_block").css({"display":"block"});
+            combobox_load(false,"category_filter","Category", "getcategories.php?revenue=" + $(this).val(), 1);
+            combobox_load(false, "item_filter","Item", "getitems.php?category_id=" + $("#category_filter").val(), 1);
+        }
+    });
+
+    $("#category_filter").change(function(){
+        combobox_load(false, "item_filter","Item", "getitems.php?category_id=" + $(this).val(), 1);
+        if( $(this).val() == -1){
+            $("#itm_block").css({"display":"none"});
+        }
+        else{
+            $("#itm_block").css({"display":"block"});
+            combobox_load(false, "item_filter","Item", "getitems.php?category_id=" + $(this).val(), 1);
+        }
+    });
+
 </script>
 
 
