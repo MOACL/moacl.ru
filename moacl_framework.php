@@ -558,27 +558,27 @@ class Money extends SecureSystem{
 	}
 
 	function getAccounts(){
-        $result = self::getJsonFromSP('sp_accounts_enabled',null);
+        $result = self::getJsonFromSP('sp_accounts_enabled',Array(session_id(), $_SESSION['Password']));
         return $result;
 	}
 	function getBalance($account_id){
-        $result = self::getJsonFromSP('sp_balance_of_account',Array($account_id));
+        $result = self::getJsonFromSP('sp_balance_of_account',Array($account_id, session_id(), $_SESSION['Password']));
         return $result;
 	}
 	function getCategories($revenue){
-		$result = self::getJsonFromSP('sp_categories_by_revenue',Array($revenue));
+		$result = self::getJsonFromSP('sp_categories_by_revenue',Array($revenue, session_id(), $_SESSION['Password']));
         return $result;
 	}
 	function getItems($category_id){
-		$result = self::getJsonFromSP('sp_items_of_category',Array($category_id));
+		$result = self::getJsonFromSP('sp_items_of_category',Array($category_id, session_id(), $_SESSION['Password']));
 		return $result;
 	}
 	function transactionGo($account_id, $category_id, $item_id, $sum, $comment, $date, $confirmed){
-        $result = self::getJsonFromSP('sp_add_transaction',Array($account_id,$category_id,$item_id,$sum,$date,$comment,$confirmed));
+        $result = self::getJsonFromSP('sp_add_transaction',Array($account_id,$category_id,$item_id,$sum,$date,$comment,$confirmed, session_id(), $_SESSION['Password']));
         return $result;
 	}
 	function showTransactions($account_id,$category_id,$item_id,$date0,$date1,$confirmed,$revenue, $start, $len){
-        $result = self::getJsonFromSP('sp_show_transactions',Array($account_id,$category_id,$item_id,$date0,$date1,$confirmed,$revenue, $start, $len));
+        $result = self::getJsonFromSP('sp_show_transactions',Array($account_id,$category_id,$item_id,$date0,$date1,$confirmed,$revenue, $start, $len, session_id(), $_SESSION['Password']));
         return $result;
 	}
 }
