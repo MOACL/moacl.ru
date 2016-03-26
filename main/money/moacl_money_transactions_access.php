@@ -10,6 +10,7 @@
     <script src="../../scripts/date.format.js" type="text/javascript"></script>
     <link href="../../plugins/jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.css" rel="stylesheet" type="text/css"/>
     <link href="../../css/moacl_style.css" rel="stylesheet" type="text/css"/>
+    <link href="../../css/loader.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="../../themes/moacl_2.min.css" />
     <link rel="stylesheet" href="../../themes/jquery.mobile.icons.min.css" />
 </head>
@@ -70,6 +71,17 @@
 
         <ul id = "transactJournal" data-role="listview" data-split-icon="action" data-split-theme="a" data-inset="true">
         </ul>
+
+        <div id="ballsWaveG">
+            <div id="ballsWaveG_1" class="ballsWaveG"></div>
+            <div id="ballsWaveG_2" class="ballsWaveG"></div>
+            <div id="ballsWaveG_3" class="ballsWaveG"></div>
+            <div id="ballsWaveG_4" class="ballsWaveG"></div>
+            <div id="ballsWaveG_5" class="ballsWaveG"></div>
+            <div id="ballsWaveG_6" class="ballsWaveG"></div>
+            <div id="ballsWaveG_7" class="ballsWaveG"></div>
+            <div id="ballsWaveG_8" class="ballsWaveG"></div>
+        </div>
         <button id="more">Show more</button>
 
     </div>
@@ -125,6 +137,10 @@
 
         });
     function SetTransactions() {
+        var $loader = $("#ballsWaveG");
+        var $button = $("#more");
+        $loader.show();
+        $button.hide();
         //input vars
         var account_filter = $("#account_filter").val();
         var category_filter = $("#category_filter").val();
@@ -152,6 +168,7 @@
 
 
         var $tJournal = $("#transactJournal");
+        var $result_len;
         if (!$inProgress) {
             $.ajax({
                 url: "gettransactions.php",
@@ -173,12 +190,14 @@
                 },
                 dataType: "json",
                 success: function (result) {
+                  //  alert("!");
                     if (result.type == 'error') {
                         alert('error SetTransactions'.url);
                         return (false);
                     }
                     else {
-                        if ($(result.row).length> 0) {
+                        $result_len = $(result.row).length;
+                        if ($result_len> 0) {
                             $(result.row).each(function () {
                                 Date_of_realization =$(this).attr('Date_of_realization');
                                 Revenue =$(this).attr('Revenue');
@@ -228,13 +247,21 @@
                             $inProgress = false;
                             // Увеличиваем на 10 порядковый номер статьи, с которой надо начинать выборку из базы
                             $startFrom += 10;
+                            $loader.hide() ;
+                            if( $result_len==$len){
+                                $button.show();
+                            }
                         }
-
+                        else{
+                            $inProgress = false;
+                            $loader.hide();
+                        }
 
                     }
                 }//success
             });//ajax*
         }
+
     }
 
     $('#more').click(function(){
