@@ -5,7 +5,7 @@ $category_id = $_GET['category'];
 $item_id = $_GET['item'];
 $date0 = $_GET['date_0'];
 $date1 = $_GET['date_1'];
-$confirmed = $_GET['confirmed'];
+$status = $_GET['status'];
 $revenue = $_GET['revenue'];
 $start = $_GET['start_'];
 $len = $_GET['len_'];
@@ -20,6 +20,6 @@ unset($auth);
 
 if($access){
 $Money = New Money;
-$result=$Money->showTransactions($account_id,$category_id,$item_id,$date0,$date1,$confirmed,$revenue, $start, $len);
+$result=$Money->showTransactions($account_id,$category_id,$item_id,$date0,$date1,$status,$revenue, $start, $len);
 print $result;
 }

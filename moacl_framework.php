@@ -573,12 +573,12 @@ class Money extends SecureSystem{
 		$result = self::getJsonFromSP('sp_items_of_category',Array($category_id, session_id(), $_SESSION['Password']));
 		return $result;
 	}
-	function transactionGo($account_id, $category_id, $item_id, $sum, $comment, $date, $confirmed){
-        $result = self::getJsonFromSP('sp_add_transaction',Array($account_id,$category_id,$item_id,$sum,$date,$comment,$confirmed, session_id(), $_SESSION['Password']));
+	function transactionGo($account_id, $category_id, $item_id, $sum, $comment, $date, $status){
+        $result = self::getJsonFromSP('sp_add_transaction',Array($account_id,$category_id,$item_id,$sum,$date,$comment,$status, session_id(), $_SESSION['Password']));
         return $result;
 	}
-	function showTransactions($account_id,$category_id,$item_id,$date0,$date1,$confirmed,$revenue, $start, $len){
-        $result = self::getJsonFromSP('sp_show_transactions',Array($account_id,$category_id,$item_id,$date0,$date1,$confirmed,$revenue, $start, $len, session_id(), $_SESSION['Password']));
+	function showTransactions($account_id,$category_id,$item_id,$date0,$date1,$status,$revenue, $start, $len){
+        $result = self::getJsonFromSP('sp_show_transactions',Array($account_id,$category_id,$item_id,$date0,$date1,$status,$revenue, $start, $len, session_id(), $_SESSION['Password']));
         return $result;
 	}
 }

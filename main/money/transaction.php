@@ -6,7 +6,7 @@ $item_id = $_POST['item'];
 $sum = $_POST['sum'];
 $comment = $_POST['comment'];
 $date = $_POST['date'];
-$confirmed = $_POST['confirmed'];
+$status = $_POST['status'];
 
 $sum = str_replace(" ","",str_replace("RUR" , "" , $sum));
 if($sum =="")$sum=0;
@@ -27,6 +27,6 @@ unset($auth);
 
 if($access){
     $Money = New Money;
-    $result=$Money->transactionGo($account_id, $category_id, $item_id, $sum, $comment, $date, $confirmed);
+    $result=$Money->transactionGo($account_id, $category_id, $item_id, $sum, $comment, $date, $status);
     print $result;
 }

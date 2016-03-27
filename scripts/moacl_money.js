@@ -28,7 +28,7 @@ $(document).ready(
 
 			$("#implement").click(function(){
 
-				var $transactData = $("#main_form").serialize() + '&' + $("#decisionTransact_form").serialize() + '&confirmed=1';
+				var $transactData = $("#main_form").serialize() + '&' + $("#decisionTransact_form").serialize() + '&status=1';
 				$.post(
 						"transaction.php",
 						$transactData,
@@ -88,7 +88,7 @@ $(document).ready(
 						$.mobile.loading( "hide" );
 					});
 			$("#addInPlan").click(function(){
-				var $transactData = $("#main_form").serialize() + '&' + $("#decisionTransact_form").serialize() + '&confirmed=0';
+				var $transactData = $("#main_form").serialize() + '&' + $("#decisionTransact_form").serialize() + '&status=2';
 				$.post(
 						"transaction.php",
 						$transactData,
