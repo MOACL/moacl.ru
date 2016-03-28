@@ -19,6 +19,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_access.php' ) {
     <script src="../../plugins/jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
     <link href="../../plugins/jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.css" rel="stylesheet" type="text/css"/>
     <link href="../../css/moacl_style.css" rel="stylesheet" type="text/css"/>
+    <link href="../../css/loader.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="../../themes/moacl_2.min.css" />
     <link rel="stylesheet" href="../../themes/jquery.mobile.icons.min.css" />
 </head>
@@ -30,7 +31,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_access.php' ) {
     <div class="content moacl-common" data-role = "content" >
         <form id = "main_form" name="main_form" action="transaction.php" method="post">
             <div id = "accountblock" data-role="fieldcontain">
-            <div style = "display: inline-block; margin-bottom: 0em;width: 50%; vertical-align: top; text-align: left;">
+                <div style = "display: inline-block; margin-bottom: 0em;width: 50%; vertical-align: top; text-align: left;">
                 <label for="account" style="
     margin-right: 15px;
     margin-bottom: 15px;
@@ -39,15 +40,27 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_access.php' ) {
 ">Account:</label>
                 <select id="account" name="account" data-native-menu = "false"></select>
             </div>
-                <div  style = "display: inline-block;  margin-bottom: 0em; width: 40%; vertical-align: top; text-align: left; ">
-            <div id = "bal" style = "margin: 0 auto; width: 100%; vertical-align: bottom; text-align: left; ">
-                <label for="balance"></label>
-                <input id = "balance" type="text" name="balance" readonly/>
-            </div>
-                <div id = "balpas" style = "margin: 0 auto; width: 100%; vertical-align: top; text-align: left; ">
-                    <label for="balance_pass"></label>
-                    <input id = "balance_pass" type="text" name="balance_pass" readonly/>
+                <div id = "balset"  style = "display: inline-block;  margin-bottom: 0em; width: 40%; vertical-align: top; text-align: left; ">
+                    <div id = "bal" style = "margin: 0 auto; width: 100%; vertical-align: bottom; text-align: left; ">
+                        <label for="balance"></label>
+                        <input id = "balance" type="text" name="balance" readonly/>
+                    </div>
+                    <div id = "balpas" style = "margin: 0 auto; width: 100%; vertical-align: top; text-align: left; ">
+                        <label for="balance_pass"></label>
+                        <input id = "balance_pass" type="text" name="balance_pass" readonly/>
+                    </div>
                 </div>
+                <div id = "loaderset"  style = "display: inline-block;  margin-bottom: 1em; width: 40%; vertical-align: bottom; text-align: left; ">
+                    <div id="ballsWaveG" style = "margin: 0 auto; vertical-align: middle; text-align: left; ">
+                        <div id="ballsWaveG_1" class="ballsWaveG"></div>
+                        <div id="ballsWaveG_2" class="ballsWaveG"></div>
+                        <div id="ballsWaveG_3" class="ballsWaveG"></div>
+                        <div id="ballsWaveG_4" class="ballsWaveG"></div>
+                        <div id="ballsWaveG_5" class="ballsWaveG"></div>
+                        <div id="ballsWaveG_6" class="ballsWaveG"></div>
+                        <div id="ballsWaveG_7" class="ballsWaveG"></div>
+                        <div id="ballsWaveG_8" class="ballsWaveG"></div>
+                    </div>
                 </div>
             </div>
 

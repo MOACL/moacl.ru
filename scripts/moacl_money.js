@@ -198,6 +198,12 @@ $sum.blur(function(){
 );
 
 function SetBalance(){
+	var $loader = $("#loaderset");
+    var $balset = $("#balset");
+
+    $balset.hide();
+    $loader.show();
+
 	var url = "getbalance.php?account_id=" + $("#account").val();
 
 	$.ajax({
@@ -210,12 +216,15 @@ function SetBalance(){
 				return(false);
 			}
 			else {
-				var $bal = $("#balance");
-				var $bal_pass = $("#balance_pass");
+                var $bal = $("#balance");
+                var $bal_pass = $("#balance_pass");
                 $bal.val($(result.row).attr("Balance"));
 				$bal_pass.val($(result.row).attr("Balance_pass"));
 				rur_format($bal, true);
 				rur_format($bal_pass, true);
+
+                $loader.hide();
+                $balset.show();
 			}
 		}
 	});
