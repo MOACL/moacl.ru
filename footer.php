@@ -16,7 +16,7 @@
             </ul>
         </div><!-- /navbar -->
 CODE;
-            break;
+        break;
 
         case '/moacl.ru/main/money/moacl_money_transactions.php':
             $navbar = <<<CODE
@@ -28,6 +28,7 @@ CODE;
         </div><!-- /navbar -->
 CODE;
             break;
+
         case '/moacl.ru/main/contacts/moacl_contacts.php':
             $navbar = <<<CODE
         <div data-role="navbar">
