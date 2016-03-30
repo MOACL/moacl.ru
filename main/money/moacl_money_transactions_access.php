@@ -61,9 +61,9 @@
                </div>
             <div data-role="fieldcontain" >
                 <label for="date_0_filter">From:</label>
-                <input type="date" name="date_0_filter" id="date_0_filter" placeholder = "Начиная с">
+                <input class = "datafilter" type="date" name="date_0_filter" id="date_0_filter" placeholder = "Начиная с">
                 <label for="date_1_filter">To:</label>
-                <input type="date" name="date_1_filter" id="date_1_filter" placeholder = "Заканчивая">
+                <input class = "datafilter" type="date" name="date_1_filter" id="date_1_filter" placeholder = "Заканчивая">
             </div>
 
             <button id ="load" class ="ui-btn ui-shadow ui-corner-all ui-icon-search ui-btn-icon-top moacl-butt">Load</button>

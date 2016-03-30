@@ -25,7 +25,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'main_access.php' )
             <button id ="to_fin_btn" class ="ui-btn ui-btn-b ui-shadow ui-corner-all ui-icon-clock ui-btn-icon-top" data-href = "main/money/moacl_money.php" >Money</button>
             <button disabled ="" id ="to_obj_btn" class ="ui-btn ui-btn-b ui-shadow ui-corner-all ui-icon-eye ui-btn-icon-top" data-href = "main/objects/moacl_objects.php" >Objects</button>
             <button disabled ="" id ="to_act_btn" class ="ui-btn ui-btn-b ui-shadow ui-corner-all ui-icon-action ui-btn-icon-top" data-href = "main/activities/moacl_activities.php" >Activities</button>
-            <button disabled id ="to_contacts_btn" class ="ui-btn ui-btn-b ui-shadow ui-corner-all ui-icon-bullets ui-btn-icon-top" data-href = "contacts.php" >Contacts</button>
+            <button id ="to_contacts_btn" class ="ui-btn ui-btn-b ui-shadow ui-corner-all ui-icon-bullets ui-btn-icon-top" data-href = "main/contacts/moacl_contacts.php" >Contacts</button>
             <button disabled id ="to_love_btn" class ="ui-btn ui-btn-b ui-shadow ui-corner-all ui-icon-heart ui-btn-icon-top" data-href = "love.php" >Love</button>
         </div>
 

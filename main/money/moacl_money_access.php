@@ -105,7 +105,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_access.php' ) {
                 </div>
             </div>
             <div id = "dateblock" data-role="fieldcontain">
-                <div style = "display: inline-block; margin-bottom: 0;width: 40%; min-width: 9.5em !important; vertical-align: top; text-align: center;">
+                <div style = "display: inline-block; margin-bottom: 0;width: 40%; min-width: 14em !important; vertical-align: top; text-align: center;">
                     <label for="date" style="
     margin-right: 15px;
     margin-bottom: 15px;

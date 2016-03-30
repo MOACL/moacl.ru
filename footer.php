@@ -17,6 +17,7 @@
         </div><!-- /navbar -->
 CODE;
             break;
+
         case '/moacl.ru/main/money/moacl_money_transactions.php':
             $navbar = <<<CODE
         <div data-role="navbar">
@@ -25,6 +26,16 @@ CODE;
                 <li><a data-theme="b" href="#">Analytics</a></li>
             </ul>
         </div><!-- /navbar -->
+CODE;
+            break;
+        case '/moacl.ru/main/contacts/moacl_contacts.php':
+            $navbar = <<<CODE
+        <div data-role="navbar">
+				<ul>
+					<li><a data-theme="b" href="moacl_contacts_contactlist.html" data-ajax = "false">Contacts</a></li>
+					<li><a data-theme="b" href="#">Detail</a></li>
+				</ul>
+			</div><!-- /navbar -->
 CODE;
             break;
         default:

@@ -76,7 +76,7 @@ header {
 footer {
 	height: 3em;
 }
-#transactions footer, #mfin_1 footer, #mcont_1 footer, #contactlist footer {
+#mcon_1 footer, #transactions footer, #mfin_1 footer, #mcont_1 footer, #contactlist footer {
 	height: 6em;
 }
 footer div ul li a {
@@ -193,4 +193,7 @@ div#categoryblock, div#accountblock
      margin-bottom: 0;
 }
 
-
+input.datafilter
+{
+	text-align: center;
+}
