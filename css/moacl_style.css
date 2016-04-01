@@ -197,3 +197,8 @@ input.datafilter
 {
 	text-align: center;
 }
+#accountJournal li a
+{
+	border-bottom-width: 1px ;
+    border-top-width: 0 ;
+}
