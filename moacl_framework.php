@@ -581,4 +581,9 @@ class Money extends SecureSystem{
         $result = self::getJsonFromSP('sp_show_transactions',Array($account_id,$category_id,$item_id,$date0,$date1,$status,$revenue, $start, $len, session_id(), $_SESSION['Password']));
         return $result;
 	}
+	function getCashPositions(){
+		$result = self::getJsonFromSP('sp_cash_positions',null);
+		return $result;
+	}
+
 }

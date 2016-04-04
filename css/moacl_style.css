@@ -88,7 +88,7 @@ footer div ul li a {
 	margin: 0 auto;
 }
 
-#main_form, #reg_data{
+#main_form, #reg_data, #new_account_data{
   line-height: 0.3;
  }
 
@@ -184,7 +184,7 @@ input#balance
     bottom: 0;
     margin-bottom: 0;
 }
-div#categoryblock, div#accountblock
+div#categoryblock, div#accountblock, div#nameBlock
 {
     padding-bottom: 0;
 }

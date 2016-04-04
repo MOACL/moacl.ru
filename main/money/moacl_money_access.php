@@ -32,14 +32,14 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_access.php' ) {
         <form id = "main_form" name="main_form" action="transaction.php" method="post">
             <div id = "accountblock" data-role="fieldcontain">
                 <div style = "display: inline-block; margin-bottom: 0em;width: 50%; vertical-align: top; text-align: left;">
-                <label for="account" style="
+                     <label for="account" style="
     margin-right: 15px;
     margin-bottom: 15px;
     margin-top: 15px;
     margin-left: 0px;
 ">Account:</label>
-                <select id="account" name="account" data-native-menu = "false"></select>
-            </div>
+                     <select id="account" name="account" data-native-menu = "false"></select>
+                 </div>
                 <div id = "balset"  style = "display: inline-block;  margin-bottom: 0em; width: 40%; vertical-align: top; text-align: left; ">
                     <div id = "bal" style = "margin: 0 auto; width: 100%; vertical-align: bottom; text-align: left; ">
                         <label for="balance"></label>
