@@ -58,8 +58,6 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_accounts_new_access.p
                     </div>
                 </div>
 
-
-
                 <div id = "cashPositionblock" data-role="fieldcontain" style = "text-align: left;">
 	                <div style = "display: inline-block; width: 40%; margin-bottom: 0em;vertical-align: top; text-align: left;">
 	 	                <label for="cashPosition" style="
@@ -79,11 +77,6 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_accounts_new_access.p
                         <select id="valute" name="valute" data-native-menu = "false"></select>
                     </div>
 				</div>
-
-
-
-			
-			
 
 			<fieldset data-role="controlgroup">
 			        <input type="checkbox" name="checkbox-v-2d" id="checkbox-v-2d" >
@@ -152,82 +145,6 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_accounts_new_access.p
             </div><!--форма после проводки транзакции -->
 
 		</section>
-		<script>
-			$(document).ready(function(){
-                //1.load of cash positions
-                combobox_load(false,"cashPosition", "Cash_position", "getcashpositions.php",0);
-                //1.load valutes
-                combobox_load(false,"valute", "Valute", "getvalutes.php",0);
-
-				$("#to_exit_btn").click( function(){location.href = $(this).attr("data-href");});
-
-
-                $("#checkbox-v-2e").click(function(){
-                    var cacheval = $(this).attr('data-cacheval');
-
-                    if(cacheval == "true"){
-                        $("#creditBlock").hide();
-                    }
-                    else{
-                        $("#creditBlock").show();
-                    }
-                });
-
-                $("#addAccount").click(function(){
-                    var $selected = $("#checkbox-v-2d").attr('data-cacheval');
-                    var $revenues = $("#checkbox-v-2a").attr('data-cacheval');
-                    var $expenses = $("#checkbox-v-2b").attr('data-cacheval');
-                    var $purpose_id = $("#checkbox-v-2i").attr('data-cacheval');
-                    var $reserved = $("#checkbox-v-2f").attr('data-cacheval');
-
-                    var $accountData = $("#new_account_data").serialize() +
-                        '&' + 'selected=' + $selected +
-                        '&' + 'revenues=' + $revenues +
-                        '&' + 'expenses=' + $expenses +
-                        '&' + 'purpose_id=' + $purpose_id +
-                        '&' + 'reserved=' + $reserved;
-                    alert($accountData);
-                    $.post(
-                        "addaccount.php",
-                        $accountData,
-                        function(result) {
-                            if (result.type == 'error') {
-                                alert('error account');
-                                return(false);
-                            }
-                            else{
-                                var $rr = $(result.row);
-                                var $aid = $rr.attr("Account_ID");
-                                var $acc = $rr.attr("Account");
-                                var $sel = $rr.attr("Selected");
-                                var $lim = $rr.attr("Limit");
-                                var $vlt = $rr.attr("Valute");
-                                var $csp = $rr.attr("Cash_position");
-                                var $vth = $rr.attr("Valid_thrue");
-                                var $rev = $rr.attr("Revenues");
-                                var $exp = $rr.attr("Expenses");
-                                var $res = $rr.attr("Reserved");
-
-
-                                $("#successAccount").html(
-                                    ('<b>Account #' +
-                                        $aid + ' was created!</b><br>Account name: <b>' +
-                                        $acc + '</b><br>Limit: <b>' +
-                                        $lim + '</b><br>Valute: <b>' +
-                                        $vlt + $sel + $csp + $vth + $rev + $exp + $res + '</b>'
-                                    )
-                                );
-                                //SetBalance();
-                                $("#account").click();
-                            }
-                        },
-                        "json"
-                    );
-                });
-
-			});
-
-
-		</script>
+        <script src="../../scripts/moacl_money_accounts_new.js" type="text/javascript"></script>
 	</body>
 </html>
