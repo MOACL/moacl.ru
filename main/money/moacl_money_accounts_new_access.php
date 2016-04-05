@@ -107,7 +107,6 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_accounts_new_access.p
 
                 <div id = "createblock" data-role="fieldcontain">
                     <div style = "display: inline-block; margin-bottom: 0;width: 90%;vertical-align: top; text-align: center;">
-                        <!--<input data-icon="check" data-iconpos="top" id = "submit"  type="submit" name="submit" value="Create!"/>-->
                         <a href="#decisionAccount" id = "decisionAccount_rel" class ="ui-btn ui-shadow ui-corner-all ui-icon-check ui-btn-icon-top" data-rel="popup" data-position-to="window" data-transition="pop">Create!</a>
 
                     </div>
