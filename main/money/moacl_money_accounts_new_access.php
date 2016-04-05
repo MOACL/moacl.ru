@@ -115,7 +115,6 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_accounts_new_access.p
 			</form>
 			</div>
 
-
 			<?require_once '../../footer.php'?>
 			<?require_once 'panel.php'?>
 
