@@ -582,8 +582,15 @@ class Money extends SecureSystem{
         return $result;
 	}
 	function getCashPositions(){
-		$result = self::getJsonFromSP('sp_cash_positions',null);
+	$result = self::getJsonFromSP('sp_cash_positions',null);
+	return $result;
+    }
+	function getValutes(){
+		$result = self::getJsonFromSP('sp_valutes',null);
 		return $result;
 	}
-
+    function addAccount($account, $description, $balance, $balance_pass, $selected, $revenues, $expenses, $purpose_id, $reserved, $valid_thrue, $limit, $valute_id, $cash_position_id, $status_id){
+        $result = self::getJsonFromSP('sp_add_account',Array($account, $description, $balance, $balance_pass, $selected, $revenues, $expenses, $purpose_id, $reserved, $valid_thrue, $limit, $valute_id, $cash_position_id, $status_id, session_id(), $_SESSION['Password']));
+        return $result;
+    }
 }

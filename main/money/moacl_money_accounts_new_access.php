@@ -92,7 +92,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_accounts_new_access.p
 			        <label for="checkbox-v-2e">Credit position</label>
                 <div id = "creditBlock" style = "display: none;">
                 <fieldset data-role="controlgroup" data-type="horizontal" style ="text-align: left; line-height: 0.5">
-                    <legend >Credit position:</legend>
+                    <legend ></legend>
                     <input type="radio" id="radio_credit" name="radio_credit_pos" value="credit"  />
                     <label for="radio_credit">CREDIT</label>
                     <input type="radio" id="radio_debit" name="radio_credit_pos" value="debit" />
@@ -111,19 +111,53 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_accounts_new_access.p
 
 			</fieldset>
 						
-			<input data-icon="check" data-iconpos="top" id = "submit"  type="submit" name="submit" value="Create!"/>
-			
+
+                <div id = "createblock" data-role="fieldcontain">
+                    <div style = "display: inline-block; margin-bottom: 0;width: 90%;vertical-align: top; text-align: center;">
+                        <!--<input data-icon="check" data-iconpos="top" id = "submit"  type="submit" name="submit" value="Create!"/>-->
+                        <a href="#decisionAccount" id = "decisionAccount_rel" class ="ui-btn ui-shadow ui-corner-all ui-icon-check ui-btn-icon-top" data-rel="popup" data-position-to="window" data-transition="pop">Create!</a>
+
+                    </div>
+                </div>
 			</form>
 			</div>
 
 
 			<?require_once '../../footer.php'?>
 			<?require_once 'panel.php'?>
+
+            <!--форма принятия решения о проводке -->
+            <div data-role="popup" id="decisionAccount" data-dismissible="false" data-theme="a" data-overlay-theme="b" class="ui-content" >
+                <form id = "decisionAccount_form" name="decisionAccount_form" action="addaccount.php" method="post">
+
+                    <div id = "summaryLabel" style = "text-align: center;" ><h3>New Account</h3></div>
+
+                    <a href="#" id="addAccount" data-rel="back" class="show-page-loading-msg ui-shadow ui-btn ui-corner-all ui-btn-b ui-icon-check ui-btn-icon-left ui-mini" data-textonly="false" data-textvisible="true" data-msgtext="Please, wait..." data-inline="true">Create Account?</a>
+                    <a href="#" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-mini">Go back</a>
+                </form>
+            </div><!--форма принятия решения о проводке -->
+
+            <a href="#account_info" class = "hide-page-loading-msg" id = "account"  data-position-to="window" data-rel="popup" style = "display: none"></a>
+            <!--форма после проводки транзакции -->
+            <div data-role="popup" id="account_info" data-dismissible="false"  data-overlay-theme="b" class="ui-content" data-theme="a">
+                <form id = "postAccount_form" name="postAccount_form" action="" method="post">
+
+                    <div id = "successAccount" style="font-size: 10pt;"><!--заполняется программно-->   </div>
+
+                    <a href="#" id="newAccount" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-btn-b ui-icon-check ui-btn-icon-left ui-mini">New account</a>
+                    <a href="#" id="goToListAccounts" class="show-page-loading-msg ui-shadow ui-btn ui-corner-all ui-btn-b ui-icon-check ui-btn-icon-left ui-mini" data-textonly="false" data-textvisible="true" data-msgtext="Please, wait..." data-inline="true">List of accounts</a>
+                    <a href="#" id="goToMain" class="show-page-loading-msg ui-shadow ui-btn ui-btn-a ui-corner-all ui-mini" data-textonly="false" data-textvisible="true" data-msgtext="Please, wait..." data-inline="true">MOACL</a>
+
+                </form>
+            </div><!--форма после проводки транзакции -->
+
 		</section>
 		<script>
 			$(document).ready(function(){
                 //1.load of cash positions
                 combobox_load(false,"cashPosition", "Cash_position", "getcashpositions.php",0);
+                //1.load valutes
+                combobox_load(false,"valute", "Valute", "getvalutes.php",0);
 
 				$("#to_exit_btn").click( function(){location.href = $(this).attr("data-href");});
 
@@ -138,6 +172,59 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_accounts_new_access.p
                         $("#creditBlock").show();
                     }
                 });
+
+                $("#addAccount").click(function(){
+                    var $selected = $("#checkbox-v-2d").attr('data-cacheval');
+                    var $revenues = $("#checkbox-v-2a").attr('data-cacheval');
+                    var $expenses = $("#checkbox-v-2b").attr('data-cacheval');
+                    var $purpose_id = $("#checkbox-v-2i").attr('data-cacheval');
+                    var $reserved = $("#checkbox-v-2f").attr('data-cacheval');
+
+                    var $accountData = $("#new_account_data").serialize() +
+                        '&' + 'selected=' + $selected +
+                        '&' + 'revenues=' + $revenues +
+                        '&' + 'expenses=' + $expenses +
+                        '&' + 'purpose_id=' + $purpose_id +
+                        '&' + 'reserved=' + $reserved;
+                    alert($accountData);
+                    $.post(
+                        "addaccount.php",
+                        $accountData,
+                        function(result) {
+                            if (result.type == 'error') {
+                                alert('error account');
+                                return(false);
+                            }
+                            else{
+                                var $rr = $(result.row);
+                                var $aid = $rr.attr("Account_ID");
+                                var $acc = $rr.attr("Account");
+                                var $sel = $rr.attr("Selected");
+                                var $lim = $rr.attr("Limit");
+                                var $vlt = $rr.attr("Valute");
+                                var $csp = $rr.attr("Cash_position");
+                                var $vth = $rr.attr("Valid_thrue");
+                                var $rev = $rr.attr("Revenues");
+                                var $exp = $rr.attr("Expenses");
+                                var $res = $rr.attr("Reserved");
+
+
+                                $("#successAccount").html(
+                                    ('<b>Account #' +
+                                        $aid + ' was created!</b><br>Account name: <b>' +
+                                        $acc + '</b><br>Limit: <b>' +
+                                        $lim + '</b><br>Valute: <b>' +
+                                        $vlt + $sel + $csp + $vth + $rev + $exp + $res + '</b>'
+                                    )
+                                );
+                                //SetBalance();
+                                $("#account").click();
+                            }
+                        },
+                        "json"
+                    );
+                });
+
 			});
 
 

@@ -161,7 +161,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_access.php' ) {
 
             <a href="#" id="newTransact" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-btn-b ui-icon-check ui-btn-icon-left ui-mini">New transaction</a>
             <a href="#" id="goToJournal" class="show-page-loading-msg ui-shadow ui-btn ui-corner-all ui-btn-b ui-icon-check ui-btn-icon-left ui-mini" data-textonly="false" data-textvisible="true" data-msgtext="Please, wait..." data-inline="true">Go to journal</a>
-            <a href="#" id="goToMain" class="show-page-loading-msg ui-shadow ui-btn ui-btn-a ui-corner-all ui-mini" data-textonly="false" data-textvisible="true" data-msgtext="Please, wait..." data-inline="true"">MOACL</a>
+            <a href="#" id="goToMain" class="show-page-loading-msg ui-shadow ui-btn ui-btn-a ui-corner-all ui-mini" data-textonly="false" data-textvisible="true" data-msgtext="Please, wait..." data-inline="true">MOACL</a>
 
         </form>
     </div><!--форма после проводки транзакции -->
