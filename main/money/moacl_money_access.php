@@ -43,7 +43,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_access.php' ) {
                 <div id = "balset"  style = "display: inline-block;  margin-bottom: 0em; width: 40%; vertical-align: top; text-align: left; ">
                     <div id = "bal" style = "margin: 0 auto; width: 100%; vertical-align: bottom; text-align: left; ">
                         <label for="balance"></label>
-                        <input id = "balance" type="text" name="balance" readonly/>
+                        <input id = "balance" type="text" name="balance"  readonly/>
                     </div>
                     <div id = "balpas" style = "margin: 0 auto; width: 100%; vertical-align: top; text-align: left; ">
                         <label for="balance_pass"></label>
@@ -101,7 +101,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_access.php' ) {
     margin-top: 15px;
     margin-left: 0px;
 ">Sum:</label>
-                    <input id="sum" type="text" name= "sum" value = "RUR" data-clear-btn="false" autocomplete="off">
+                    <input id="sum" style="text-align: left;" type="text" name= "sum" value = "RUR" data-clear-btn="false" autocomplete="off">
                 </div>
             </div>
             <div id = "dateblock" data-role="fieldcontain">

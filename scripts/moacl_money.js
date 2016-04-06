@@ -154,7 +154,7 @@ $('input[type="radio"]').change( function() {
 var $sum = $("#sum");
 
 $sum.tap(function(){
-    rur_format_clear($sum);
+
     $sum.attr('type','number'); //call numeric keypad
    // $sum.removeAttr('readonly');
 
@@ -163,9 +163,11 @@ $sum.tap(function(){
 
 $sum.focus(function(){
 			//rur_format_clear($sum);
+    rur_format_clear($sum);
     $sum.css({"font-weight":"normal"});
+    $sum.css({"text-align":"right"});
 
-		}
+    }
 );
 //event 5
 $sum.blur(function(){
@@ -174,15 +176,10 @@ $sum.blur(function(){
 
 			rur_format($sum, false);
     $sum.css({"font-weight":"bold"});
+    $sum.css({"text-align":"left"});
 
 		}
 );
-
-//убираем рамки при фокусе
-var $bal = $("#balset").children();
-$bal.focus(function(){
-    alert($(".ui-focus").html());
-});//убираем рамки при фокусе
 
 function SetBalance(){
 	var $loader = $("#loaderset");

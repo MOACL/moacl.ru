@@ -4,6 +4,7 @@
 	font-weight: bold; 
 	width: 100%;
 	text-align: left;
+    padding-right: 0;
 	}
 #main_form #balance_pass {
 	color: lightgray;
@@ -11,6 +12,8 @@
 	font-weight: bold;
 	width: 100%;
 	text-align: left;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 #main_form #Limit {
 	color: red; 
@@ -60,9 +63,14 @@
 }
 
 #main_form #date {
-	text-align: right;
+	text-align: center;
 	font-weight: bold;
-	font-size: 1.24em;
+	font-size: 16px;
+    padding-top: 0.7em;
+    padding-bottom: 0.7em;
+    line-height: 1.3em;
+    min-height: 0;
+    height: 2.7em;
 }
 
 #nav-panel{
@@ -145,8 +153,6 @@ div.ui-field-contain{
     padding-bottom: 0;
     padding-top: 0;
 }
-
-
 a.ui-link{
 background-color: rgba(255,255,255,0) !important;
 }
@@ -173,11 +179,6 @@ div.ui-navbar{
     padding-top: 8px;
     margin-bottom: 0;
 }
-input#balance
-{
-	padding-right: 0;
-
-}
 
 #categoryblock fieldset.ui-controlgroup
 {
@@ -193,7 +194,6 @@ div#categoryblock, div#accountblock, div#nameBlock
 {
      margin-bottom: 0;
 }
-
 input.datafilter
 {
 	text-align: center;
