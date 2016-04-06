@@ -17,6 +17,9 @@ $(document).ready(function(){
             $("#creditBlock").hide();
         }
     });
+    $('#createblock').click(function(){
+        $('#summaryLabel').html('<h3>Account: ' + $('#account_name').val() + '</h3>');
+    });
 
     $("#addAccount").click(function(){
 
@@ -75,5 +78,17 @@ $(document).ready(function(){
             },
             "json"
         );
+    });
+
+    $("#decisionAccount_rel").click(function(e){
+        var $aName = $("#account_name").val();
+
+        if ($aName.length > 0) {
+            $("#decisionAccount_rel").attr('href', '#decisionAccount');
+        }
+        else{
+            $("#decisionAccount_rel").attr('href', '#warningAccount');
+        }
+
     });
 });

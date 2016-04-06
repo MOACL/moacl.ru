@@ -79,8 +79,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_accounts_new_access.p
 				</div>
 
 			<fieldset data-role="controlgroup">
-			        <input type="checkbox" name="checkbox-v-2d" id="checkbox-v-2d" >
-			        <label for="checkbox-v-2d">Set by default</label>
+
 			        <input type="checkbox" name="checkbox-v-2e" id="checkbox-v-2e">
 			        <label for="checkbox-v-2e">Credit position</label>
                 <div id = "creditBlock" style = "display: none;">
@@ -122,11 +121,20 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_accounts_new_access.p
                 <form id = "decisionAccount_form" name="decisionAccount_form" action="addaccount.php" method="post">
 
                     <div id = "summaryLabel" style = "text-align: center;" ><h3>New Account</h3></div>
-
-                    <a href="#" id="addAccount" data-rel="back" class="show-page-loading-msg ui-shadow ui-btn ui-corner-all ui-btn-b ui-icon-check ui-btn-icon-left ui-mini" data-textonly="false" data-textvisible="true" data-msgtext="Please, wait..." data-inline="true">Create Account?</a>
+                    <div>
+                        <input type="checkbox" name="checkbox-v-2d" id="checkbox-v-2d"  >
+                        <label for="checkbox-v-2d" style = "border-width: 0;">Set by default</label>
+                    </div>
+                    <a href="#" id="addAccount" data-rel="back" class="show-page-loading-msg ui-shadow ui-btn ui-corner-all ui-btn-b ui-icon-check ui-btn-icon-left ui-mini" data-textonly="false" data-textvisible="true" data-msgtext="Please, wait..." data-inline="true">Create!</a>
                     <a href="#" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-mini">Go back</a>
                 </form>
             </div><!--форма принятия решения о проводке -->
+
+            <!--форма ворнинг -->
+            <div data-role="popup" id="warningAccount" data-dismissible="false" data-theme="a" data-overlay-theme="b" class="ui-content" >
+                <h3>First enter the name of account!</h3>
+                <a href="#" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-mini">Ок</a>
+            </div><!--форма ворнинг -->
 
             <a href="#account_info" class = "hide-page-loading-msg" id = "account"  data-position-to="window" data-rel="popup" style = "display: none"></a>
             <!--форма после проводки транзакции -->

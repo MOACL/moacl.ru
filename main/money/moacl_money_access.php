@@ -84,7 +84,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_access.php' ) {
                 </div>
             </div>
             <div id = "itemblock" data-role="fieldcontain">
-                <div style = "display: inline-block; margin-bottom: 0em;width: 50%; vertical-align: top; text-align: left;">
+                <div style = "display: inline-block; margin-bottom: 0;width: 50%; vertical-align: top; text-align: left;">
                     <label for="item" style="
     margin-right: 15px;
     margin-bottom: 15px;
@@ -93,7 +93,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_access.php' ) {
 ">Item:</label>
                     <select id="item" name="item" data-native-menu = "false"></select>
                 </div>
-                <div  style = "display: inline-block;  margin-bottom: 0em; width: 40%; vertical-align: top; text-align: left; ">
+                <div  style = "display: inline-block;  margin-bottom: 0; width: 40%; vertical-align: top; text-align: left; ">
 
                     <label for="sum" style="
     margin-right: 15px;

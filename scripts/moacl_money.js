@@ -3,8 +3,7 @@ var $MIN_TIME_OF_TRANSACT = 0; //в секундах
 
 //events begin
 //event 0
-$(document).ready(
-		function() {
+$(document).ready(function() {
 			//1.load of accounts
 			combobox_load(false,"account", "Account", "getaccounts.php",0, SetBalance);
 			//comboboxCatItem();
@@ -178,6 +177,12 @@ $sum.blur(function(){
 
 		}
 );
+
+//убираем рамки при фокусе
+var $bal = $("#balset").children();
+$bal.focus(function(){
+    alert($(".ui-focus").html());
+});//убираем рамки при фокусе
 
 function SetBalance(){
 	var $loader = $("#loaderset");
