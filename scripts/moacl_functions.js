@@ -1,7 +1,6 @@
-/**
- * Created by Dmitry on 22.03.2016.
- */
 
+var $CURR = "RUR";
+var $MIN_TIME_OF_TRANSACT = 0; //в секундах
 $( document ).on( "click", ".show-page-loading-msg", function() {
         var $this = $( this ),
             theme = $this.jqmData( "theme" ) || $.mobile.loader.prototype.options.theme,

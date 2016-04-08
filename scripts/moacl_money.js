@@ -1,5 +1,4 @@
-var $CURR = "RUR";
-var $MIN_TIME_OF_TRANSACT = 0; //в секундах
+
 
 //events begin
 //event 0

@@ -593,4 +593,8 @@ class Money extends SecureSystem{
         $result = self::getJsonFromSP('sp_add_account',Array($account, $description, $balance, $balance_pass, $selected, $revenues, $expenses, $purpose_id, $reserved, $valid_thrue, $limit, $valute_id, $cash_position_id, $status_id, session_id(), $_SESSION['Password']));
         return $result;
     }
+	function existsAccount($account){
+		$result = self::getJsonFromSP('sp_account_exists',Array($account, session_id(), $_SESSION['Password']));
+		return $result;
+	}
 }

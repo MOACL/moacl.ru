@@ -12,12 +12,19 @@ $limit= $_POST['limit'];
 $valute_id= $_POST['valute'];
 $cash_position_id= $_POST['cashPosition'];
 
+$limit = str_replace(" ","",str_replace("RUR" , "" , $limit));
+if($limit =="")$limit=0;
+
 $status_id= 1; //status = 'open' //$_POST['status_id'];
 $balance= 0;//для нового счета нулевой баланс//$_POST['balance'];
 $balance_pass= 0;//для нового счета нулевой баланс//$_POST['balance_pass'];
 
 $valid_thrue=new DateTime($valid_thrue);
 $valid_thrue = $valid_thrue->format('Y-m-d H:i:s');
+
+if ($purpose_id == 0){
+    $purpose_id = '';
+}
 
 include_once '../../moacl_framework.php';
 //получение доступа

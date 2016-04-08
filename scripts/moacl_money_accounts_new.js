@@ -6,16 +6,16 @@ $(document).ready(function(){
 
     $("#to_exit_btn").click( function(){location.href = $(this).attr("data-href");});
 
-    $("#checkbox-v-2b").click(function(){
-        var check = $(this).prop("checked");
+    $('input[type="radio"]').click(function(){
+        var enable= $('input[type="radio"]:checked').val();
 
-        if(check){
+        if(enable == 1){
             $("#limitBlock").show();
-            $('#permitTransactBlock').css('padding-left','0');
+            $('#permitExpensesBlock').css('padding-left','0');
         }
         else{
             $("#limitBlock").hide();
-            $('#permitTransactBlock').css('padding-left','10%');
+            $('#permitExpensesBlock').css('padding-left','10%');
         }
     });
 
@@ -38,12 +38,8 @@ $(document).ready(function(){
         var $selected = $("#checkbox-v-2d").prop("checked");
         if ($selected){$selected=1;}
         else{$selected=0;}
-        var $revenues = $("#checkbox-v-2a").prop("checked");
-        if ($revenues){$revenues=1;}
-        else{$revenues=0;}
-        var $expenses = $("#checkbox-v-2b").prop("checked");
-        if ($expenses){$expenses=1;}
-        else {$expenses=0;}
+        var $revenues = 1; //разрешать класть на счет деньги всегда
+        var $expenses = $('input[type="radio"]:checked').val();
         var $purpose_id = $("#checkbox-v-2i").prop("checked");
         if ($purpose_id){$purpose_id=1;}
         else {$purpose_id=null;}
@@ -92,14 +88,79 @@ $(document).ready(function(){
         );
     });
 
-    $("#decisionAccount_rel").click(function(e){
+//выделить в отдельную функцию
+    var $limit = $("#limit");
+
+    $limit.tap(function(){
+
+        $limit.attr('type','number'); //call numeric keypad
+            // $limit.removeAttr('readonly');
+
+        }
+    );
+
+    $limit.focus(function(){
+            //rur_format_clear($limit);
+            rur_format_clear($limit);
+        $limit.css({"font-weight":"normal"});
+        $limit.css({"text-align":"right"});
+
+        }
+    );
+//event 5
+    $limit.blur(function(){
+            // $limit.attr('readonly', 'readonly');
+        $limVal = $limit.val();
+        $limit.attr('type','text');
+        if($limVal>0){
+            rur_format($limit, false);
+        }
+
+        $limit.css({"font-weight":"bold"});
+        $limit.css({"text-align":"left"});
+
+        }
+    );
+//выделить в отдельную функцию
+
+    $("#createAccount").click(function(e){
         var $aName = $("#account_name").val();
+        var $dAr = $("#decisionAccount_rel");
 
         if ($aName.length > 0) {
-            $("#decisionAccount_rel").attr('href', '#decisionAccount');
+            var $accountData = 'account_name=' + $aName;
+            $.post(
+                "existsaccount.php",
+                $accountData,
+                function(result) {
+                    if (result.type == 'error') {
+                        return(false);
+                    }
+                    else{
+                        var $result_len = $(result.row).length;
+
+                        if ($result_len> 0) {
+                            $dAr.attr('href', '#warningAccount');
+                            $('#warningAccount').html('' +
+                            ' <h3>This Name of Account already exists!</h3>' +
+                            '<a href="#" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-mini">Ок</a>');
+                        }
+                        else{
+                            $dAr.attr('href', '#decisionAccount');
+                        }
+                        $dAr.click();
+                    }
+                },
+                "json"
+            );
+
         }
         else{
-            $("#decisionAccount_rel").attr('href', '#warningAccount');
+            $dAr.attr('href', '#warningAccount');
+            $('#warningAccount').html('' +
+                ' <h3>First enter the name of account!</h3>' +
+                '<a href="#" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-mini">Ок</a>');
+            $dAr.click();
         }
 
     });

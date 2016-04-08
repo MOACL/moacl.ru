@@ -39,22 +39,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_accounts_new_access.p
                         <textarea data-clear-btn="true" placeholder = "Description" name="description" id="description"></textarea>
                     </div>
 				</div>
-                <div id = "permitTransactBlock" >
-                    <div style = "display: inline-block; margin-bottom: 0; width: 50%; min-width: 14em !important; vertical-align: top; text-align: left;">
-                    <fieldset data-role="controlgroup" data-type="horizontal" >
-                        <legend>Permit type of transactions:</legend>
-                        <input type="checkbox" name="checkbox-v-2a" id="checkbox-v-2a" checked = "checked">
-                        <label for="checkbox-v-2a">INCOMES</label>
-                        <input type="checkbox" name="checkbox-v-2b" id="checkbox-v-2b" checked = "checked">
-                        <label for="checkbox-v-2b">EXPENSES</label>
 
-                    </fieldset>
-                    </div>
-                    <div id = "limitBlock" style = "bottom: 0; display: inline-block; margin-bottom: 0;width: 40%; min-width: 14em !important; vertical-align: bottom; text-align: left;">
-                        <label for="limit">Limit:</label>
-                        <input id = "limit"  type="text" name="limit" placeholder = "unlimited" />
-                    </div>
-                </div>
                 <div id = "cashPositionblock" data-role="fieldcontain" >
 	                <div style = "display: inline-block; margin-bottom: 0;width: 50%; vertical-align: top; text-align: left;">
 	 	                <label for="cashPosition" style="
@@ -74,15 +59,31 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_accounts_new_access.p
                         <select id="valute" name="valute" data-native-menu = "false"></select>
                     </div>
 				</div>
-                <div id = "propAccountblock" data-role="fieldcontain" >
-                <fieldset data-role="controlgroup" style = "display: inline-block; margin-bottom: 0;width: 90%;vertical-align: top; text-align: center;">
+                <div id = "permitExpensesBlock" >
+                    <div style = "display: inline-block; margin-bottom: 0; width: 50%; min-width: 14em !important; vertical-align: top; text-align: left;">
+                        <fieldset data-role="controlgroup" data-type="horizontal" >
+                            <legend>Expenses:</legend>
+                            <input type="radio" name="radio-v" id="radio-v-2a" value = 1 checked = "checked" >
+                            <label for="radio-v-2a">ENABLE</label>
+                            <input type="radio" name="radio-v" id="radio-v-2b" value = 0 >
+                            <label for="radio-v-2b">DISABLE</label>
 
-			        <input type="checkbox" name="checkbox-v-2e" id="checkbox-v-2e">
+                        </fieldset>
+                    </div>
+                    <div id = "limitBlock" style = "bottom: 0; display: inline-block; margin-bottom: 0;width: 40%; min-width: 14em !important; vertical-align: bottom; text-align: left;">
+                        <label for="limit">Limit:</label>
+                        <input id = "limit"  type="text" name="limit" placeholder = "unlimited" style = "color: blue;" />
+                    </div>
+                </div>
+                <div id = "propAccountblock" data-role="fieldcontain"  >
+                <fieldset data-role="controlgroup"  style = "display: inline-block; margin-bottom: 0;width: 90%;vertical-align: top; text-align: center;">
+
+			        <input type="checkbox" name="checkbox-v-2e" id="checkbox-v-2e" disabled>
 			        <label for="checkbox-v-2e">Credit position</label>
                 <div id = "creditBlock" style = "display: none;">
                 <fieldset data-role="controlgroup" data-type="horizontal" style ="text-align: left; line-height: 0.5">
                     <legend ></legend>
-                    <input type="radio" id="radio_credit" name="radio_credit_pos" value="credit"  />
+                    <input type="radio" id="radio_credit" name="radio_credit_pos" value="credit" />
                     <label for="radio_credit">CREDIT</label>
                     <input type="radio" id="radio_debit" name="radio_credit_pos" value="debit" />
                     <label for="radio_debit">DEBIT</label>
@@ -90,19 +91,20 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_accounts_new_access.p
                     <label for="radio_none">NONE</label>
                 </fieldset>
                 </div>
-			        <input type="checkbox" name="checkbox-v-2f" id="checkbox-v-2f">
+			        <input type="checkbox" name="checkbox-v-2f" id="checkbox-v-2f" disabled>
 
 			        <label for="checkbox-v-2f">Reserved</label>
-			        <input type="checkbox" name="checkbox-v-2i" id="checkbox-v-2i">
+			        <input type="checkbox" name="checkbox-v-2i" id="checkbox-v-2i" disabled>
 			        <label for="checkbox-v-2i">Purpose</label>
-			        <input type="checkbox" name="checkbox-v-2j" id="checkbox-v-2j">
+			        <input type="checkbox" name="checkbox-v-2j" id="checkbox-v-2j" disabled>
 			        <label for="checkbox-v-2j">Common</label>
 
 			</fieldset>
                 </div>
                 <div id = "createblock" data-role="fieldcontain" >
                     <div style = "display: inline-block; margin-bottom: 0;width: 90%;vertical-align: top; text-align: center;">
-                        <a href="#decisionAccount" id = "decisionAccount_rel" class ="ui-btn ui-shadow ui-corner-all ui-icon-check ui-btn-icon-top" data-rel="popup" data-position-to="window" data-transition="pop">Create!</a>
+                        <a href="#" id = "createAccount" class ="show-page-loading-msg ui-btn ui-shadow ui-corner-all ui-icon-check ui-btn-icon-top">Create!</a>
+                        <a href="#decisionAccount" id = "decisionAccount_rel" class = "hide-page-loading-msg" style = "display: none;" data-rel="popup" data-position-to="window" data-transition="pop"></a>
 
                     </div>
                 </div>
@@ -133,7 +135,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_accounts_new_access.p
             </div><!--форма ворнинг -->
 
             <a href="#account_info" class = "hide-page-loading-msg" id = "account"  data-position-to="window" data-rel="popup" style = "display: none"></a>
-            <!--форма после проводки транзакции -->
+            <!--форма после создания аккаунта -->
             <div data-role="popup" id="account_info" data-dismissible="false"  data-overlay-theme="b" class="ui-content" data-theme="a">
                 <form id = "postAccount_form" name="postAccount_form" action="" method="post">
 
