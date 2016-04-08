@@ -25,8 +25,7 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_accounts_new_access.p
 			<?require_once '../../header.php'?>
 			<div class="content moacl-common" data-role = "content">
 			<form id = "new_account_data" name="new_account_data">
-				
-				<div id = "nameBlock" data-role="fieldcontain" style = "text-align: left;" >
+				<div id = "nameBlock" data-role="fieldcontain"  >
 					<div style = "display: inline-block; margin-bottom: 0;width: 50%; vertical-align: top; text-align: left;">
                         <label for="account_name">Name of account:</label>
                         <input id = "account_name" maxlength=7 placeholder = "Max 7 symbols" type="text" name="account_name" />
@@ -35,14 +34,13 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_accounts_new_access.p
 						<label for="valid_thrue">Valid Thrue:</label>
 						<input id = "valid_thrue"  type="date" name="valid_thrue" value = "2099-01-01" />
 					</div>
-                    <div style = "display: inline-block; margin-bottom: 0;width: 100%; vertical-align: top; text-align: left;">
+                    <div style = "display: inline-block; margin-bottom: 0;width: 90%; vertical-align: top; text-align: left;">
                         <label for="description" ></label>
                         <textarea data-clear-btn="true" placeholder = "Description" name="description" id="description"></textarea>
                     </div>
 				</div>
-
-                <div id = "permitTransactBlock" style = "text-align: left; ">
-                    <div style = "display: inline-block; margin-bottom: 0; min-width: 14em !important; vertical-align: top; text-align: left;">
+                <div id = "permitTransactBlock" >
+                    <div style = "display: inline-block; margin-bottom: 0; width: 50%; min-width: 14em !important; vertical-align: top; text-align: left;">
                     <fieldset data-role="controlgroup" data-type="horizontal" >
                         <legend>Permit type of transactions:</legend>
                         <input type="checkbox" name="checkbox-v-2a" id="checkbox-v-2a" checked = "checked">
@@ -52,23 +50,22 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_accounts_new_access.p
 
                     </fieldset>
                     </div>
-                    <div style = "bottom: 0; display: inline-block; margin-bottom: 0; min-width: 14em !important; vertical-align: bottom; text-align: left;">
+                    <div id = "limitBlock" style = "bottom: 0; display: inline-block; margin-bottom: 0;width: 40%; min-width: 14em !important; vertical-align: bottom; text-align: left;">
                         <label for="limit">Limit:</label>
                         <input id = "limit"  type="text" name="limit" placeholder = "unlimited" />
                     </div>
                 </div>
-
-                <div id = "cashPositionblock" data-role="fieldcontain" style = "text-align: left;">
-	                <div style = "display: inline-block; width: 40%; margin-bottom: 0em;vertical-align: top; text-align: left;">
+                <div id = "cashPositionblock" data-role="fieldcontain" >
+	                <div style = "display: inline-block; margin-bottom: 0;width: 50%; vertical-align: top; text-align: left;">
 	 	                <label for="cashPosition" style="
                           margin-right: 15px;
-                                  margin-bottom: 15px;
+                          margin-bottom: 15px;
                           margin-top: 15px;
                           margin-left: 0px;">Cash position:</label>
 	 	        	    <select id="cashPosition" name="cashPosition" data-native-menu = "false"></select>
 				    </div>
 
-                    <div style = "display: inline-block; width: 30%; margin-bottom: 0em;vertical-align: top; text-align: left;">
+                    <div style = "display: inline-block; width: 40%; margin-bottom: 0;vertical-align: top; text-align: left;">
                         <label for="valute" style="
                           margin-right: 15px;
                           margin-bottom: 15px;
@@ -77,8 +74,8 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_accounts_new_access.p
                         <select id="valute" name="valute" data-native-menu = "false"></select>
                     </div>
 				</div>
-
-			<fieldset data-role="controlgroup">
+                <div id = "propAccountblock" data-role="fieldcontain" >
+                <fieldset data-role="controlgroup" style = "display: inline-block; margin-bottom: 0;width: 90%;vertical-align: top; text-align: center;">
 
 			        <input type="checkbox" name="checkbox-v-2e" id="checkbox-v-2e">
 			        <label for="checkbox-v-2e">Credit position</label>
@@ -102,9 +99,8 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_accounts_new_access.p
 			        <label for="checkbox-v-2j">Common</label>
 
 			</fieldset>
-						
-
-                <div id = "createblock" data-role="fieldcontain">
+                </div>
+                <div id = "createblock" data-role="fieldcontain" >
                     <div style = "display: inline-block; margin-bottom: 0;width: 90%;vertical-align: top; text-align: center;">
                         <a href="#decisionAccount" id = "decisionAccount_rel" class ="ui-btn ui-shadow ui-corner-all ui-icon-check ui-btn-icon-top" data-rel="popup" data-position-to="window" data-transition="pop">Create!</a>
 

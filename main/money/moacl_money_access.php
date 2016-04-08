@@ -27,7 +27,6 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_access.php' ) {
 <body>
 <section id="mfin_1" data-role = "page" data-position = "fixed"  >
     <?require_once '../../header.php'?>
-
     <div class="content moacl-common" data-role = "content" >
         <form id = "main_form" name="main_form" action="transaction.php" method="post">
             <div id = "accountblock" data-role="fieldcontain">
@@ -63,7 +62,6 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_access.php' ) {
                     </div>
                 </div>
             </div>
-
             <div id = "categoryblock" data-role="fieldcontain">
                 <div style = "display: inline-block; margin-bottom: 0em;width: 50%; vertical-align: top; text-align: left;">
                     <label for="category" style="
@@ -77,9 +75,9 @@ if ( basename($_SERVER['SCRIPT_FILENAME']) == 'moacl_money_access.php' ) {
                 <div style = "display: inline-block; margin-bottom: 0em; width: 40%; vertical-align: top;">
                     <fieldset data-role="controlgroup" data-type="horizontal" >
                         <input type="radio" id="radio_in" name="radio_tt" value=1 />
-                        <label for="radio_in">Gain</label>
+                        <label for="radio_in">INCOMES</label>
                         <input type="radio" id="radio_out" name="radio_tt" value=0 checked = "checked"  />
-                        <label for="radio_out">Cost</label>
+                        <label for="radio_out">EXPENSES</label>
                     </fieldset>
                 </div>
             </div>

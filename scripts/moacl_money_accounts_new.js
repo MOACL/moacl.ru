@@ -6,6 +6,18 @@ $(document).ready(function(){
 
     $("#to_exit_btn").click( function(){location.href = $(this).attr("data-href");});
 
+    $("#checkbox-v-2b").click(function(){
+        var check = $(this).prop("checked");
+
+        if(check){
+            $("#limitBlock").show();
+            $('#permitTransactBlock').css('padding-left','0');
+        }
+        else{
+            $("#limitBlock").hide();
+            $('#permitTransactBlock').css('padding-left','10%');
+        }
+    });
 
     $("#checkbox-v-2e").click(function(){
         var check = $(this).prop("checked");

@@ -62,7 +62,7 @@
 	text-align: right;
 }
 
-#main_form #date {
+#main_form #date, #account_name, #valid_thrue, #limit {
 	text-align: center;
 	font-weight: bold;
 	font-size: 16px;
@@ -202,4 +202,8 @@ input.datafilter
 {
 	border-bottom-width: 1px ;
     border-top-width: 0 ;
+}
+
+#permitTransactBlock .ui-controlgroup-controls {
+	margin-top: 4px;
 }
